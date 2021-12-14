@@ -31,6 +31,12 @@ class FieldBlocks extends React.Component<FieldTypeProps<Array<BlockEntry>>> {
         this.setValue(this.props.value);
     }
 
+    mavuActions = [
+        {title: 'preview classes', onClick: () => {
+            this.applySettingsFromOverlay();
+        }},
+    ];
+
     @action componentDidMount() {
         if (this.settingsFormKey) {
             // initialize empty blockSettingsFormStore because schema of the store is used for determining iconsMapping
@@ -482,6 +488,7 @@ class FieldBlocks extends React.Component<FieldTypeProps<Array<BlockEntry>>> {
                 />
                 {this.openedBlockSettingsIndex !== undefined && blockSettingsFormStore && (
                     <FormOverlay
+                        mavuActions={this.mavuActions}
                         confirmDisabled={!blockSettingsFormStore.dirty}
                         confirmText={translate('sulu_admin.apply')}
                         formStore={blockSettingsFormStore}

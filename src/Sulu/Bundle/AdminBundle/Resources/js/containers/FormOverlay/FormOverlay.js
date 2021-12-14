@@ -11,6 +11,9 @@ import type {ResourceFormStore} from '../Form';
 import type {Size} from '../../components/Overlay/types';
 import type {ElementRef} from 'react';
 
+
+import type {Action} from '../../components/Overlay/types';
+
 type Props = {|
     confirmDisabled: boolean,
     confirmLoading: boolean,
@@ -21,6 +24,7 @@ type Props = {|
     open: boolean,
     size?: Size,
     title: string,
+    mavuActions: Array<Action>,
 |};
 
 @observer
@@ -102,6 +106,7 @@ class FormOverlay extends React.Component<Props> {
             open,
             size,
             title,
+            mavuActions
         } = this.props;
 
         return (
@@ -117,6 +122,7 @@ class FormOverlay extends React.Component<Props> {
                 snackbarMessage={this.formErrors[this.formErrors.length - 1]}
                 snackbarType="error"
                 title={title}
+                actions={mavuActions}
             >
                 <div className={formOverlayStyles.form}>
                     <Form
