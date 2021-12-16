@@ -195,8 +195,8 @@ class Preview extends React.Component<Props> {
         if (!previewDocument) {
             return;
         }
-
         const preservedScrollPos=this.getPreviewScrollPos();
+         console.log('preservedScrollPos',preservedScrollPos);
         previewDocument.open(); // This will lose in Firefox the and safari previewDocument.location
         previewDocument.write(previewContent);
         previewDocument.close();
@@ -259,6 +259,7 @@ class Preview extends React.Component<Props> {
     setPreviewScrollPos = (pos)  => {
         const win=this.getPreviewWindow();
         if(win) {
+            console.log('scroll to',pos);
             win.scrollTo({ top: pos});
         }
     }

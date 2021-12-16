@@ -15,6 +15,7 @@
         "watch": "webpack --mode development --watch"
     },
     "dependencies": {
+        "scriptjs": "^2.5.9",
         "sulu-admin-bundle": "file:src/Sulu/Bundle/AdminBundle/Resources/js",
         "sulu-audience-targeting-bundle": "file:src/Sulu/Bundle/AudienceTargetingBundle/Resources/js",
         "sulu-category-bundle": "file:src/Sulu/Bundle/CategoryBundle/Resources/js",
