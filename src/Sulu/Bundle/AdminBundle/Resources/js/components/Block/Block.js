@@ -2,14 +2,9 @@
 import React, {Fragment} from 'react';
 import classNames from 'classnames';
 import Icon from '../Icon';
-import Popover from '../Popover';
 import SingleSelect from '../SingleSelect';
 import blockStyles from './block.scss';
 import type {Node} from 'react';
-import {action, computed, observable} from 'mobx';
-import {observer} from 'mobx-react';
-
-
 
 type Props<T: string> = {
     activeType?: T,
@@ -25,16 +20,10 @@ type Props<T: string> = {
     types?: {[key: T]: string},
 };
 
-@observer
 export default class Block<T: string> extends React.Component<Props<T>> {
     static defaultProps: {
         expanded: false,
     };
-
-    dropdownButtonRef: ?ElementRef<'button'>;
-    @observable dropdownOpen = false;
-
-
 
     handleCollapse = () => {
         const {expanded, onCollapse} = this.props;
@@ -44,7 +33,6 @@ export default class Block<T: string> extends React.Component<Props<T>> {
     };
 
     handleExpand = () => {
-        console.log('#log 3107 handle expand');
         const {expanded, onExpand} = this.props;
         if (!expanded && onExpand) {
             onExpand();
@@ -57,23 +45,6 @@ export default class Block<T: string> extends React.Component<Props<T>> {
         if (onTypeChange) {
             onTypeChange(type);
         }
-    };
-
-    setDropdownButtonRef = (ref: ?ElementRef<'button'>) => {
-        this.dropdownButtonRef = ref;
-    };
-
-
-    @action handleDropdownToggle = (event) => {
-        event.stopPropagation();
-        console.log('#log 1021 open', event);
-        this.dropdownOpen = !this.dropdownOpen;
-    };
-
-    @action handleDropdownClose = (event) => {
-        event.stopPropagation();
-        this.dropdownOpen = false;
-        console.log('#log 1021 close',event, this.dropdownOpen );
     };
 
     render() {
@@ -146,26 +117,6 @@ export default class Block<T: string> extends React.Component<Props<T>> {
                         }
                     </header>
                     <article className={blockStyles.children}>{children}</article>
-                    <button
-                            className={blockStyles.moreButton}
-                            onClick={this.handleDropdownToggle}
-                            ref={this.setDropdownButtonRef}
-                        >
-                            <Icon name="su-more-horizontal" />
-                        </button>
-                    <Popover
-                            anchorElement={this.dropdownButtonRef || undefined}
-                            onClose={this.handleDropdownClose}
-                            open={this.dropdownOpen}
-                        >
-                            {
-                                (setPopoverRef, styles) => (
-                                    <div ref={setPopoverRef} style={styles}>
-                                            <section>AAA</section>
-                                    </div>
-                                )
-                            }
-                    </Popover>
                 </div>
             </section>
         );
