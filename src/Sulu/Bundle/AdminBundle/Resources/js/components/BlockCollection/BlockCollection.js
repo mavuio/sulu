@@ -102,6 +102,27 @@ class BlockCollection<T: string, U: {type: T}> extends React.Component<Props<T, 
         }
     };
 
+
+    @action handlePasteBlocks = (blocksToPaste) => {
+        const {defaultType, onChange, value} = this.props;
+
+        if (this.hasMaximumReached()) {
+            throw new Error('The maximum amount of blocks has already been reached!');
+        }
+
+        if (value) {
+
+            for (let index = 0; index < blocksToPaste.length; index++) {
+                this.expandedBlocks.push(true);
+                this.generatedBlockIds.push(++BlockCollection.idCounter);
+            }
+
+            // $FlowFixMe
+            onChange([...value, ...blocksToPaste]);
+        }
+    };
+
+
     @action handleRemoveBlock = (index: number) => {
         const {onChange, value} = this.props;
 
@@ -185,6 +206,7 @@ class BlockCollection<T: string, U: {type: T}> extends React.Component<Props<T, 
                     icons={icons}
                     lockAxis="y"
                     movable={movable}
+                    onPasteBlocks={this.handlePasteBlocks}
                     onCollapse={collapsable ? this.handleCollapse : undefined}
                     onExpand={collapsable ? this.handleExpand : undefined}
                     onRemove={this.hasMinimumReached() ? undefined : this.handleRemoveBlock}

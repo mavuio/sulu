@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render a blockclipboardmenu 1`] = `
+<div
+  class="blockclipboardmenu"
+>
+  Hello world
+</div>
+`;

@@ -1,0 +1,24 @@
+@import "../../containers/Application/colors.scss";
+
+$blockCommandsListBackgroundColor: $alto;
+$blockCommandsListTransparentBackgroundColor: $white;
+$blockCommandsListBoxShadowColor: rgba($dustyGray, 0.5);
+$blockCommandsListTransparentBoxShadowColor: rgba($alto, 0.5);
+
+.block-commands-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    max-height: 70vh;
+    min-width: 10rem;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: $blockCommandsListBackgroundColor;
+    box-shadow: 2px 6px 12px 0 $blockCommandsListBoxShadowColor;
+    > li {
+        margin: 0.2rem 0;
+    }
+}

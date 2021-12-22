@@ -1,0 +1,38 @@
+@import "../../containers/Application/colors.scss";
+
+$blockCommandsListBackgroundColor: $alto;
+$blockCommandsListTransparentBackgroundColor: $white;
+$blockCommandsListBoxShadowColor: rgba($dustyGray, 0.5);
+$blockCommandsListTransparentBoxShadowColor: rgba($alto, 0.5);
+
+.blockclipboardmenu {
+    list-style: none;
+    margin: 0;
+    white-space: nowrap;
+    max-height: 70vh;
+    min-width: 10rem;
+    overflow: auto;
+    display: flex;
+    padding: 1rem 0;
+    flex-direction: column;
+    background-color: $blockCommandsListBackgroundColor;
+    box-shadow: 2px 6px 12px 0 $blockCommandsListBoxShadowColor;
+    span {
+        width: 2em;
+        margin-right: 0.5em;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    > li {
+        &:hover {
+            background-color: #bbb;
+        }
+
+        display: block;
+        margin: 0;
+        color: #222;
+        padding: 0.5em 0.9em;
+        text-decoration: none;
+    }
+}

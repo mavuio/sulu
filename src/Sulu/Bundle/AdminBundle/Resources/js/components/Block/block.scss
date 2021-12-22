@@ -100,19 +100,3 @@ $blockIconsColor: $gray;
         margin-left: 20px;
     }
 }
-
-.more-button {
-    flex: 0 0 auto;
-    border: none;
-    outline: none;
-    background: none;
-    box-shadow: none;
-    cursor: pointer;
-    padding: 10px;
-
-    background: $silver;
-    padding: 3px;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-}

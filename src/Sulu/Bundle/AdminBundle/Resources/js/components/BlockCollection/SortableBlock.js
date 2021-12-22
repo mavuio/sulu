@@ -3,14 +3,17 @@ import React from 'react';
 import {SortableElement} from 'react-sortable-hoc';
 import Block from '../Block';
 import SortableHandle from './SortableHandle';
+import BlockClipBoardCorner from '../BlockClipBoardCorner';
 import type {ComponentType} from 'react';
 import type {RenderBlockContentCallback} from './types';
+
 
 type Props<T: string, U: {type: T}> = {
     activeType: T,
     expanded: boolean,
     icons?: Array<string>,
     movable?: boolean,
+    onPasteBlocks: (items: array<object>) => void,
     onCollapse?: (index: number) => void,
     onExpand?: (index: number) => void,
     onRemove?: (index: number) => void,
@@ -69,6 +72,7 @@ class SortableBlock<T: string, U: {type: T}> extends React.Component<Props<T, U>
             expanded,
             icons,
             movable = true,
+            onPasteBlocks,
             onCollapse,
             onExpand,
             onRemove,
@@ -93,6 +97,8 @@ class SortableBlock<T: string, U: {type: T}> extends React.Component<Props<T, U>
                 types={types}
             >
                 {renderBlockContent(value, activeType, sortIndex, expanded)}
+                <BlockClipBoardCorner value={value} onPasteBlocks={onPasteBlocks} />
+
             </Block>
         );
     }

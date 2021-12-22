@@ -1,0 +1,11 @@
+@import "../../containers/Application/colors.scss";
+
+.blockclipboardbutton {
+    border: none;
+    outline: none;
+    background: none;
+    box-shadow: none;
+    cursor: pointer;
+    background: $silver;
+    padding: 3px;
+}
