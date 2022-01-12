@@ -107,7 +107,7 @@ export default class BlockClipBoardMenu extends React.PureComponent<Props> {
                     <li onClick={() => this.onPasteClick(sortIndex)} ><span>{this.paste_icon}</span>↑ paste before</li>
                     <li onClick={() => this.onPasteClick(sortIndex+1)}><span>{this.paste_icon}</span>↓ paste after</li>
                     <li onClick={() => this.onDeleteClick(sortIndex)}><span>{this.trash_icon}</span>delete</li>
-                    {value['settings']['hidden'] ?<li onClick={() => this.onUnhideClick(sortIndex)}><span>{this.cut_icon}</span>unhide</li>:<li onClick={() => this.onHideClick(sortIndex)}><span>{this.cut_icon}</span>hide</li>}
+                    {value?.settings?.hidden ?<li onClick={() => this.onUnhideClick(sortIndex)}><span>{this.cut_icon}</span>unhide</li>:<li onClick={() => this.onHideClick(sortIndex)}><span>{this.cut_icon}</span>hide</li>}
 
             </ul>);
     }
