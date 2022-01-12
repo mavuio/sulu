@@ -9,7 +9,8 @@ import {observer} from 'mobx-react';
 
 type Props = {|
     value: Object,
-    onPasteBlocks: (items: array<object>) => void
+    sortIndex: number,
+    onBlockMenuClick: (items: array<object>) => void
 |};
 
 
@@ -24,13 +25,11 @@ export default class BlockClipBoardButton<T: string> extends React.Component<Pro
 
     @action handleDropdownToggle = (event) => {
         event.stopPropagation();
-        console.log('#log 1021 open', event);
         this.dropdownOpen = !this.dropdownOpen;
     };
 
     @action handleDropdownClose = (event) => {
         this.dropdownOpen = false;
-        console.log('#log 1021 close',event, this.dropdownOpen );
     };
 
     ignorePopoverBackdropClick = (event) => {
@@ -43,7 +42,7 @@ export default class BlockClipBoardButton<T: string> extends React.Component<Pro
 
 
     render() {
-        const {value,onPasteBlocks} = this.props;
+        const {value,onBlockMenuClick,sortIndex} = this.props;
 
         return (
             <>
@@ -63,8 +62,7 @@ export default class BlockClipBoardButton<T: string> extends React.Component<Pro
                 {
                     (setPopoverRef, styles) => (
                         <div ref={setPopoverRef} style={styles}>
-                                 <BlockClipBoardMenu  value={value} onPasteBlocks={onPasteBlocks}
-/>
+                                 <BlockClipBoardMenu  value={value}  sortIndex={sortIndex} onBlockMenuClick={onBlockMenuClick} handleDropdownClose={this.handleDropdownClose} />
                         </div>
                     )
                 }

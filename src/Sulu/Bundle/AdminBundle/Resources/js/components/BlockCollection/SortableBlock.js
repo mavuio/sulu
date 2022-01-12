@@ -13,7 +13,8 @@ type Props<T: string, U: {type: T}> = {
     expanded: boolean,
     icons?: Array<string>,
     movable?: boolean,
-    onPasteBlocks: (items: array<object>) => void,
+    multiselect: Object,
+    onBlockMenuClick: (items: array<object>) => void,
     onCollapse?: (index: number) => void,
     onExpand?: (index: number) => void,
     onRemove?: (index: number) => void,
@@ -72,7 +73,8 @@ class SortableBlock<T: string, U: {type: T}> extends React.Component<Props<T, U>
             expanded,
             icons,
             movable = true,
-            onPasteBlocks,
+            multiselect,
+            onBlockMenuClick,
             onCollapse,
             onExpand,
             onRemove,
@@ -97,7 +99,7 @@ class SortableBlock<T: string, U: {type: T}> extends React.Component<Props<T, U>
                 types={types}
             >
                 {renderBlockContent(value, activeType, sortIndex, expanded)}
-                <BlockClipBoardCorner value={value} onPasteBlocks={onPasteBlocks} />
+                <BlockClipBoardCorner value={value} sortIndex={sortIndex} onBlockMenuClick={onBlockMenuClick} multiselect={multiselect} />
 
             </Block>
         );

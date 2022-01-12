@@ -13,7 +13,8 @@ type Props<T: string, U: {type: T}> = {|
     generatedBlockIds: Array<number>,
     icons?: Array<Array<string>>,
     movable: boolean,
-    onPasteBlocks: (items: array<object>) => void,
+    multiselect: Object,
+    onBlockMenuClick: (items: array<object>) => void,
     onCollapse?: (index: number) => void,
     onExpand?: (index: number) => void,
     onRemove?: (index: number) => void,
@@ -76,7 +77,8 @@ class SortableBlockList<T: string, U: {type: T}> extends React.Component<Props<T
             generatedBlockIds,
             icons,
             movable,
-            onPasteBlocks,
+            multiselect,
+            onBlockMenuClick,
             onCollapse,
             onExpand,
             onRemove,
@@ -103,7 +105,8 @@ class SortableBlockList<T: string, U: {type: T}> extends React.Component<Props<T
                         index={index}
                         key={generatedBlockIds[index]}
                         movable={movable}
-                        onPasteBlocks={onPasteBlocks}
+                        multiselect={multiselect}
+                        onBlockMenuClick={onBlockMenuClick}
                         onCollapse={onCollapse ? this.handleCollapse : undefined}
                         onExpand={onExpand ? this.handleExpand : undefined}
                         onRemove={onRemove ? this.handleRemove : undefined}

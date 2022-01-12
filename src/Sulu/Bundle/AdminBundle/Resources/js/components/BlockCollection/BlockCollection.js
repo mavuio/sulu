@@ -9,6 +9,10 @@ import SortableBlockList from './SortableBlockList';
 import blockCollectionStyles from './blockCollection.scss';
 import type {RenderBlockContentCallback} from './types';
 
+import BlockClipboard from '../../services/BlockClipboard';
+import BlockMultiSelectPanel from '../BlockMultiSelectPanel';
+
+
 type Props<T: string, U: {type: T}> = {|
     addButtonText?: ?string,
     collapsable: boolean,
@@ -39,6 +43,9 @@ class BlockCollection<T: string, U: {type: T}> extends React.Component<Props<T, 
 
     @observable generatedBlockIds: Array<number> = [];
     @observable expandedBlocks: Array<boolean> = [];
+
+    @observable multiselect = {enabled: false, selectedIndexes: [] };
+    @observable selectedBlocks: Array<boolean> = [];
 
     constructor(props: Props<T, U>) {
         super(props);
@@ -103,24 +110,61 @@ class BlockCollection<T: string, U: {type: T}> extends React.Component<Props<T, 
     };
 
 
-    @action handlePasteBlocks = (blocksToPaste) => {
+    @action handleBlockMenuClick = (command, args) => {
         const {defaultType, onChange, value} = this.props;
 
-        if (this.hasMaximumReached()) {
-            throw new Error('The maximum amount of blocks has already been reached!');
-        }
+        // TODO: handle this as well
+        // if (this.hasMaximumReached()) {
+        //     throw new Error('The maximum amount of blocks has already been reached!');
+        // }
 
         if (value) {
 
-            for (let index = 0; index < blocksToPaste.length; index++) {
-                this.expandedBlocks.push(true);
-                this.generatedBlockIds.push(++BlockCollection.idCounter);
-            }
+            switch (command) {
+                case "insert":
+                    onChange(
+                        BlockClipboard.insertItemsInPosition(
+                        value,
+                        args.items,
+                        args.position,
+                        this.generatedBlockIds,
+                        this.expandedBlocks)
+                        );
+                break;
+                case "delete":
+                    this.handleRemoveBlock(args.position);
+                    break;
+                case "delete_multiple":
+                    onChange(
+                        BlockClipboard.deleteItems(
+                        value,
+                        args.positions )
+                        );
+                    break;
+                case "hide":
+                    onChange(
+                        BlockClipboard.hideItem(
+                        value,
+                        args.position )
+                        );
+                    break;
+                case "unhide":
+                    onChange(
+                        BlockClipboard.unhideItem(
+                        value,
+                        args.position)
+                        );
+                    break;
+                case "selection_command":
+                    BlockClipboard.selectionCommand(args.command, this.multiselect, value, args);
 
-            // $FlowFixMe
-            onChange([...value, ...blocksToPaste]);
-        }
-    };
+                    break;
+                default:
+                    break;
+                }
+        };
+
+    }
 
 
     @action handleRemoveBlock = (index: number) => {
@@ -199,6 +243,7 @@ class BlockCollection<T: string, U: {type: T}> extends React.Component<Props<T, 
 
         return (
             <section className={blockCollectionStyles.blockCollection}>
+                { (this.multiselect.enabled && value.length>0) && <BlockMultiSelectPanel multiselect={this.multiselect} allBlocks={value} onBlockMenuClick={this.handleBlockMenuClick} />}
                 <SortableBlockList
                     disabled={disabled}
                     expandedBlocks={this.expandedBlocks}
@@ -206,7 +251,8 @@ class BlockCollection<T: string, U: {type: T}> extends React.Component<Props<T, 
                     icons={icons}
                     lockAxis="y"
                     movable={movable}
-                    onPasteBlocks={this.handlePasteBlocks}
+                    onBlockMenuClick={this.handleBlockMenuClick}
+                    multiselect={this.multiselect}
                     onCollapse={collapsable ? this.handleCollapse : undefined}
                     onExpand={collapsable ? this.handleExpand : undefined}
                     onRemove={this.hasMinimumReached() ? undefined : this.handleRemoveBlock}

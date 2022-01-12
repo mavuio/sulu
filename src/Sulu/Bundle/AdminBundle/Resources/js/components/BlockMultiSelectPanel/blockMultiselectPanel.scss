@@ -1,0 +1,14 @@
+@import "../../containers/Application/colors.scss";
+
+.blockmultiselectpanel {
+    border: 1px solid $silver;
+    margin: 1em 0;
+    padding: 0.5em;
+    background: white;
+
+    > section {
+        button {
+            margin: 0.2rem 0.5rem;
+        }
+    }
+}
