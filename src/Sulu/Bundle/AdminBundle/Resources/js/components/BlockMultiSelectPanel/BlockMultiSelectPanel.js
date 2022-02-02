@@ -37,6 +37,7 @@ export default class BlockMultiSelectPanel extends React.Component<Props> {
     @action copyClick() {
         const {multiselect, allBlocks} = this.props;
         BlockClipboard.setClipboardItems(multiselect.selectedIndexes.map( idx => allBlocks[idx] ));
+        this.cancelClick()
     }
 
 
@@ -44,6 +45,7 @@ export default class BlockMultiSelectPanel extends React.Component<Props> {
         const {multiselect, onBlockMenuClick} = this.props;
         onBlockMenuClick("delete_multiple",{positions: multiselect.selectedIndexes});
         multiselect.selectedIndexes=[];
+        this.cancelClick()
     }
 
     @action cutClick() {

@@ -202,6 +202,8 @@ class Preview extends React.Component<Props> {
         previewDocument.write(previewContent);
         previewDocument.close();
         setTimeout(() => this.setPreviewScrollPos(preservedScrollPos), 100);
+        setTimeout(() => this.setPreviewScrollPos(preservedScrollPos), 500);
+        setTimeout(() => this.setPreviewScrollPos(preservedScrollPos), 1000);
 
     };
 
@@ -260,7 +262,7 @@ class Preview extends React.Component<Props> {
     setPreviewScrollPos = (pos)  => {
         const win=this.getPreviewWindow();
         if(win) {
-            console.log('scroll to',pos);
+            console.log('Scroll to',pos);
             win.scrollTo({ top: pos});
         }
     }
