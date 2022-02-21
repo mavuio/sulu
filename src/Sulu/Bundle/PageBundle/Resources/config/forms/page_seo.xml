@@ -6,11 +6,11 @@
     <key>page_seo</key>
 
     <properties>
-        <property name="search_result" type="search_result" colspan="9">
+        <!-- mavu:  <property name="search_result" type="search_result" colspan="9">
             <meta>
                 <title>sulu_page.search_result</title>
             </meta>
-        </property>
+        </property> -->
         <property name="ext/seo/title" type="text_line">
             <meta>
                 <title>sulu_page.meta_title</title>
@@ -29,7 +29,7 @@
                 <param name="soft_max_length" value="160" />
             </params>
         </property>
-        <property name="ext/seo/keywords" type="text_line">
+        <!-- mavu: <property name="ext/seo/keywords" type="text_line">
             <meta>
                 <title>sulu_page.meta_keywords</title>
                 <info_text>sulu_page.meta_keywords_info_text</info_text>
@@ -38,7 +38,7 @@
                 <param name="segment_delimiter" value="," />
                 <param name="max_segments" value="5" />
             </params>
-        </property>
+        </property> -->
         <property name="ext/seo/canonicalUrl" type="text_line">
             <meta>
                 <title>sulu_page.canonical_url</title>
