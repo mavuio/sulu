@@ -23,6 +23,7 @@ const listAdapterDefaultProps = {
     onRequestItemDelete: undefined,
     onRequestItemMove: undefined,
     onRequestItemOrder: undefined,
+    onRequestItemDuplicate: undefined,
     // $FlowFixMe
     onSort: jest.fn(),
     options: {},

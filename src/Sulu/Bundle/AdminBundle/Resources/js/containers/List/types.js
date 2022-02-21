@@ -67,6 +67,7 @@ export type ListAdapterProps = {|
     onRequestItemDelete: ?(id: string | number) => Promise<{deleted: boolean}>,
     onRequestItemMove: ?(id: string | number) => Promise<{moved: boolean, parent: ?Object}>,
     onRequestItemOrder: ?(id: string | number, position: number) => Promise<{ordered: boolean}>,
+    onRequestItemDuplicate: ?(id: string | number) => Promise<{copied: boolean, parent: ?Object}>,
     onSort: (column: string, order: SortOrder) => void,
     options: Object,
     page: ?number,

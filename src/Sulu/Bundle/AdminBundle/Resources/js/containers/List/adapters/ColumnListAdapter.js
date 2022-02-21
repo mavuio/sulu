@@ -203,6 +203,7 @@ class ColumnListAdapter extends AbstractAdapter {
             onRequestItemDelete,
             onRequestItemMove,
             onRequestItemOrder,
+            onRequestItemDuplicate,
         } = this.props;
 
         if (!activeItems) {
@@ -309,6 +310,25 @@ class ColumnListAdapter extends AbstractAdapter {
                 },
             });
         }
+
+        if (onRequestItemDuplicate) {
+            settingOptions.push({
+                disabled: !hasActiveItem || !editPermission,
+                label: "Duplicate",
+                onClick: () => {
+                    const itemId = activeItems[index + 1];
+                    if (!itemId) {
+                        throw new Error(
+                            'An undefined itemId cannot be deleted! This should not happen and is likely a bug.'
+                        );
+                    }
+
+                    onRequestItemDuplicate(itemId, parentItem.id);
+                },
+            });
+        }
+
+
 
         if (onRequestItemOrder) {
             settingOptions.push({
