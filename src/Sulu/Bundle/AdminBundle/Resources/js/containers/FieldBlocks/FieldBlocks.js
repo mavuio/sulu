@@ -346,7 +346,8 @@ class FieldBlocks extends React.Component<FieldTypeProps<Array<BlockEntry>>> {
                 return (propertyTag2.priority || 0) - (propertyTag1.priority || 0);
             });
 
-        if (previewPropertyNames.length === 0) {
+        //mavu: 2022-02-21 disabled, do not show empty fallback-fields
+        if (previewPropertyNames.length === 0 && false) {
             for (const fieldTypeKey of blockPreviewTransformerRegistry.blockPreviewTransformerKeysByPriority) {
                 for (const propertyName of Object.keys(blockSchemaTypeForm)) {
                     if (blockSchemaTypeForm[propertyName].type === fieldTypeKey && value[propertyName]) {
