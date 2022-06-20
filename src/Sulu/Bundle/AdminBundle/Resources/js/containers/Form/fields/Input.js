@@ -2,7 +2,6 @@
 import React from 'react';
 import log from 'loglevel';
 import InputComponent from '../../../components/Input';
-import CustomComponent from '../../../components/Custom';
 import type {FieldTypeProps} from '../../../types';
 
 export default class Input extends React.Component<FieldTypeProps<?string>> {
@@ -63,21 +62,6 @@ export default class Input extends React.Component<FieldTypeProps<?string>> {
 
         if (segmentDelimiter !== undefined && typeof segmentDelimiter !== 'string') {
             throw new Error('The "segment_delimiter" schema option must be a string!');
-        }
-
-        //mavu:
-
-        if(segmentDelimiter=='mavu_tabbar') {
-            return (
-                <><div style={{visibility: 'hidden', height: '1px'}}><InputComponent
-                disabled={!!disabled}
-                headline={headline}
-                id={dataPath}
-                onChange={onChange}
-                valid={!error}
-                value={value}
-                ref={ref => this.myTextInput = ref}
-            /></div><CustomComponent parent_id={dataPath} ref={ref => this.myCustomInput = ref}/></>)
         }
 
         return (
