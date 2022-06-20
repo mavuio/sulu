@@ -3,8 +3,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.sulu.io/webspace/webspace http://schemas.sulu.io/webspace/webspace-1.1.xsd">
     <!-- See: http://docs.sulu.io/en/latest/book/webspaces.html how to configure your webspace-->
 
-    <name>hortencollection.com</name>
-    <key>hortencollection</key>
+    <name>home</name>
+    <key>mainsite</key>
 
     <localizations>
         <localization language="de" default="true"></localization>
@@ -44,24 +44,24 @@
 
     <portals>
         <portal>
-            <name>www.hortencollection.com</name>
-            <key>hc_www</key>
+            <name>reference_sulu.mavu.io</name>
+            <key>mainsite</key>
 
             <environments>
                 <environment type="stage">
                     <urls>
-                        <url language="de">hortencollection.mavu.io</url>
-                        <url language="en">hortencollection.mavu.io/{language}</url>
+                        <url language="de">reference_sulu.mavu.io</url>
+                        <url language="en">reference_sulu.mavu.io/{language}</url>
                     </urls>
                 </environment>
                 <environment type="prod">
                     <urls>
-                        <url language="de">hortencollection.com</url>
-                        <url language="en">hortencollection.com/{language}</url>
+                        <url language="de">reference_sulu.mavu.io</url>
+                        <url language="en">reference_sulu.mavu.io/{language}</url>
                     </urls>
                     <custom-urls>
-                        <custom-url>hortencollection.com/*</custom-url>
-                        <custom-url>cms.hortencollection.com/*</custom-url>
+                        <custom-url>reference_sulu.mavu.io/*</custom-url>
+                        <custom-url>cms.reference_sulu.mavu.io/*</custom-url>
                     </custom-urls>
                 </environment>
                 <environment type="test">
@@ -72,11 +72,11 @@
                 </environment>
                 <environment type="dev">
                     <urls>
-                        <url language="de">hortencollection.com.test</url>
-                        <url language="en">hortencollection.com.test/{language}</url>
+                        <url language="de">reference_sulu.mavu.io.test</url>
+                        <url language="en">reference_sulu.mavu.io.test/{language}</url>
                     </urls>
                     <custom-urls>
-                        <custom-url>hortencollection.com.test/*</custom-url>
+                        <custom-url>reference_sulu.mavu.io.test/*</custom-url>
                     </custom-urls>
                 </environment>
             </environments>

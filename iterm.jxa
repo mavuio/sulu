@@ -19,14 +19,14 @@ l[1] = lib.addRow(l[0]);
 
 
 [
-    ['cd /www/hortencollection', 'cd fe_assets', 'pnpm watch-css'],
-    ['cd /www/hortencollection', 'git status'],
-    ['cd /www/hortencollection', 'ssh  -t sub_4548360591@test.hortencollection.com', 'cd /var/www/vhosts/hortencollection.com/httpdocs']
+    ['cd /www/reference_sulu', 'cd fe_assets', 'pnpm watch-css'],
+    ['cd /www/reference_sulu', 'git status'],
+    ['cd /www/reference_sulu', 'ssh  -t manfred@test.reference_sulu.mavu.io', 'cd /var/www/reference_sulu/']
 ].reduce(lib.sendCmds, l);
 
 [
-    ['cd /www/hortencollection', "fswatch -o /www/hortencollection/mavu_src /www/hortencollection/templates  /www/hortencollection/public/be_assets  /www/hortencollection/public/fe_assets  | xargs -n1 -I {} osascript -e 'tell application \"Vivaldi Snapshot\" to tell the active tab of its first window to reload' "],
-    ['cd /www/hortencollection', 'git status', 'sleep 3;echo https://hortencollection.mavu.io.test'],
-    ['cd /www/hortencollection', 'ssh  -t sub_4548360591@test.hortencollection.com', 'cd /var/www/vhosts/hortencollection.com/httpdocs']
+    ['cd /www/reference_sulu', "fswatch -o /www/reference_sulu/mavu_src /www/reference_sulu/templates  /www/reference_sulu/public/be_assets  /www/reference_sulu/public/fe_assets  | xargs -n1 -I {} osascript -e 'tell application \"Vivaldi Snapshot\" to tell the active tab of its first window to reload' "],
+    ['cd /www/reference_sulu', 'git status', 'sleep 3;echo https://reference_sulu.mavu.io.test'],
+    ['cd /www/reference_sulu', 'ssh  -t manfred@test.reference_sulu.mavu.io', 'cd /var/www/reference_sulu/']
 
 ].reduce(lib.sendCmds, r);

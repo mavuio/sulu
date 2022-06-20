@@ -1,0 +1,4 @@
+mavu_local:
+    dummy:
+        # api_key: '%env(DUMMY_API_KEY)%'
+

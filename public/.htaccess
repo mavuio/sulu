@@ -55,37 +55,9 @@ DirectoryIndex index.php
 
 
     RewriteCond %{SERVER_PORT} 80
-    RewriteRule ^(.*)$ https://hortencollection.com/$1 [R=301,L]
+    RewriteRule ^(.*)$ https://reference_sulu.mavu.io/$1 [R=301,L]
 
 
-    Redirect 301  /das-palais /about/palais-goess-horten
-    Redirect 301  /die-sammlerin   /about/die-sammlungsgeschichte-heidi-goess-horten
-    Redirect 301  /sample-page/impressum   /info/impressum 
-    Redirect 301  /home4/die-ausstellung	/ausstellungen/aktuell
-    Redirect 301  /die-sammlung	/about/die-sammlungsgeschichte-heidi-goess-horten
-    Redirect 301  /baustellen-update-10 /news
-    Redirect 301  /tag/heidi-horten-collection /
-    Redirect 301  /baustellen-update-11	/news/2021/baustellen-update-11
-    Redirect 301  /type/gallery /
-    Redirect 301  /baustellen-update-01    /news/2020/baustellen-update-1
-    Redirect 301  /baustellen-update-03	/news/2020/baustellen-update-3
-    Redirect 301  /sample-page	/
-    Redirect 301  /baustellen-update-09	/news/2021/baustellen-update-9
-    Redirect 301  /sieger-steht-fest	/news
-    Redirect 301  /baustellen-update-07	/news/2021/baustellen-update-7
-    Redirect 301  /baustellen-update-04	/news/2020/baustellen-update-4
-    Redirect 301  /tag/sammlung	/about/die-sammlungsgeschichte-heidi-goess-horten
-    Redirect 301  /baustellen-update-05	/news/2021/baustellen-update-5
-    Redirect 301  /author/ps	/
-    Redirect 301  /partner	/
-    Redirect 301  /tag/privatmuseum	/
-    Redirect 301  /tag/thenextenterprisearchitects	/
-    Redirect 301  /baustellen-update-06	/news/2021/baustellen-update-6
-    Redirect 301  /baustellen-update-10/a4660_03	/news
-    Redirect 301  /baustellen-update-10/a4660_07	/news
-    Redirect 301  /baustellen-update-10/a4660_11	/news
-    Redirect 301  /tag/baustelle	/news
-    Redirect 301  /author/ps/page/2	/
 
 
 

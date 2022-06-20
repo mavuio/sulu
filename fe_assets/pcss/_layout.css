@@ -1,12 +1,12 @@
 /* ce auf top-ebene */
 .main-content {
-  p {
+  > * {
     @apply xs:max-w-[600px] xs:ml-0;
   }
 }
 
 .main-content > .ce {
-  /* max-width: 2000px; */
+  max-width: 1000px;
 
   @apply px-4 py-px;
   max-width: $w_container;
@@ -23,7 +23,7 @@
   /* border: 1px dotted #ddd; */
 }
 /* headline styles: */
-
+/* 
 h1 {
   @apply text-4xl;
 }
@@ -34,21 +34,17 @@ h2 {
 
 h3 {
   @apply text-lg;
-  &.ce-headline {
-    @apply uppercase;
-  }
 }
 
 h4 {
   @apply font-bold;
-}
+} */
 
 h1,
 h2,
 h3,
 h4 {
   position: relative;
-  @apply leading-tight;
 }
 
 h1 + p,
@@ -103,19 +99,12 @@ h4::after {
 
   @apply break-words;
 
-  p,
-  ul,
-  ol {
+  p {
     margin-bottom: 1em;
     &:last-child {
       margin-bottom: 0;
     }
   }
-
-  ul {
-    @apply ml-4 list-disc;
-  }
-
   table {
     @apply w-full;
     th {
@@ -151,13 +140,14 @@ h4::after {
   }
 }
 
+.preset_footer > .ce {
+  @apply pb-0;
+}
+
 /* https://van11y.net/accessible-hide-show/ */
 
 .ce-expander {
-  @apply border-b border-white border-opacity-50 py-2;
-  .stripe-white & {
-    @apply border-black border-opacity-40;
-  }
+  @apply border-b border-white border-opacity-80;
 }
 
 .js-to_expand[aria-hidden="true"],
@@ -211,37 +201,27 @@ h4::after {
   transition-delay: 1s, 0s, 0s;
 }
 
-/* send in blue overrides: */
-
-.sib-form {
-  background: none !important;
-
-  #sib-container {
-    border-color: transparent !important;
-    @apply ml-0 block;
+.ce-teaser_area {
+  @apply relative;
+  > .c1 {
+    @apply relative  w-full h-0;
+    > .c2 {
+      @apply pb-[100%] h-0 relative;
+    }
   }
-}
-
-.pretix-button {
-  @apply bg-[color:var(--current-stripe-textcolor)] text-[color:var(--current-stripe-color)] px-2 pt-2  pb-1 uppercase leading-none;
-}
-
-.main-box {
-  @apply font-serif;
-}
-
-.infotext {
-  p {
-    @apply mb-4;
-  }
-  a {
-    @apply underline;
-  }
-}
-
-.eventsuche {
-  input,
-  select {
-    @apply bg-transparent border-white focus:border-white focus:ring-white;
+  .teaser {
+    @apply absolute;
+    &.has_expander {
+      @apply max-h-32 overflow-y-hidden cursor-pointer transition-all duration-1000;
+      &.expanded {
+        @apply max-h-[2000px];
+        .expander-fade {
+          @apply opacity-0;
+        }
+      }
+    }
+    .expander-fade {
+      @apply opacity-100 absolute h-12 bottom-0 inset-x-0 bg-gradient-to-b from-transparent to-[rgb(25,25,25)];
+    }
   }
 }

@@ -33,6 +33,8 @@ class LocalHelpers
     protected $mediaRepository;
 
 
+    private string $projectDir;
+
 
 
     public function __construct(
@@ -40,11 +42,13 @@ class LocalHelpers
         PropertyAccessorInterface $propertyAccessor = null,
         MediaRepositoryInterface $mediaRepository,
         MediaManagerInterface $mediaManager,
+        string $projectDir
     ) {
         $this->accessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
         $this->documentManager = $documentManager;
         $this->mediaRepository = $mediaRepository;
         $this->mediaManager = $mediaManager;
+        $this->projectDir = $projectDir;
     }
 
     public function test(): string

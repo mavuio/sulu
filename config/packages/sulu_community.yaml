@@ -1,13 +1,13 @@
 # config/packages/sulu_community.yaml
 
 
-sulu_community:
-    webspaces:
-        hortencollection: 
-            from: "%env(SULU_ADMIN_EMAIL)%"
-            login:
-                embed_template: presse/login-embed.html.twig
-                template: presse/login.html.twig
+# sulu_community:
+#     webspaces:
+#         mainsite: 
+#             from: "%env(SULU_ADMIN_EMAIL)%"
+#             login:
+#                 embed_template: presse/login-embed.html.twig
+#                 template: presse/login.html.twig
 
 framework:
     esi: true

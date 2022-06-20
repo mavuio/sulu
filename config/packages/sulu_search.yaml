@@ -1,4 +1,4 @@
 sulu_search:
     website:
         indexes:
-            - page_hortencollection_published
+            - page_mainsite_published

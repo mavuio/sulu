@@ -15,7 +15,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode  // @phpstan-ignore-line
             ->children()
-            ->arrayNode('mavu_dummy')
+            ->arrayNode('dummy')
             ->children()
             ->scalarNode('api_key')->defaultValue("xxxx")->info('API key for some dummy API')->end()
             ->end()

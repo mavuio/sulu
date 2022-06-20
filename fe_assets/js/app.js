@@ -3,9 +3,9 @@ import collapse from '@alpinejs/collapse'
 
 import { SVGInjector } from '@tanem/svg-injector'
 
-import SwiperComponent from './alpineComponents/swiper/swiperComponent'
+import expander from './van11y-accessible-hide-show-aria.js'
 
-import SvelteComponent from './alpineComponents/svelte/svelteComponent'
+import SwiperComponent from './alpineComponents/swiper/swiperComponent'
 
 import StripesComponent from './alpineComponents/stripes/stripesComponent'
 
@@ -17,33 +17,39 @@ window.Alpine = Alpine
 const alpineComponents = {
     GlightboxComponent,
     SwiperComponent,
-    StripesComponent,
-    SvelteComponent
+    StripesComponent
 };
 
 import "regenerator-runtime/runtime.js";
+
 
 
 Alpine.data('loadComponent', (componentname, args)=> alpineComponents[`${componentname}Component`](args) );
 Alpine.plugin(collapse)
 Alpine.start();
 
+
 document.addEventListener("DOMContentLoaded", function() {
 // Elements to inject
-var mySVGsToInject = document.querySelectorAll('img.svg-icon,img[src*=".svg"]:not(.svg-as-image)');
+var mySVGsToInject = document.querySelectorAll('img.svg-icon');
 
-// console.log('#log 8530', mySVGsToInject);
+console.log('#log 8530', mySVGsToInject);
 // Do the injection
 SVGInjector(mySVGsToInject);
 });
 
 
-window.share=function(url) {
-    navigator
-    .share({
-        url: url
-    })
-//     .then(() => console.log('Successful share! 🎉'))
-//     .catch(err => console.error(err));
-}
+
+
+
+window.expander = expander();
+
+var loadExpander = function loadExpander() {
+    var expand_default = window.expander();
+    expand_default.attach();
+
+    document.removeEventListener('DOMContentLoaded', loadExpander);
+};
+
+document.addEventListener('DOMContentLoaded', loadExpander);
 

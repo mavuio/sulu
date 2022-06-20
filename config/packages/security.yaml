@@ -45,36 +45,36 @@ security:
             logout:
                 path: sulu_admin.logout
                 success_handler: sulu_security.logout_success_handler
-        hortencollection: 
-            pattern:  ^/presse(\/|$)
-            provider: sulu
-            # anonymous: true
-            lazy: true
-            form_login:
-                login_path: sulu_community.login
-                check_path: sulu_community.login
-            logout:
-                path: sulu_community.logout
-                target: /presse
-            remember_me:
-                secret:   "%kernel.secret%"
-                lifetime: 604800 # 1 week in seconds
-                path:     /
-        hortencollection_en: 
-            pattern:  ^/en/press(\/|$)
-            provider: sulu
-            # anonymous: true
-            lazy: true
-            form_login:
-                login_path: sulu_community.login_en
-                check_path: sulu_community.login_en
-            logout:
-                path: sulu_community.logout_en
-                target: /en/press
-            remember_me:
-                secret:   "%kernel.secret%"
-                lifetime: 604800 # 1 week in seconds
-                path:     /
+        # mainsite: 
+        #     pattern:  ^/presse(\/|$)
+        #     provider: sulu
+        #     # anonymous: true
+        #     lazy: true
+        #     form_login:
+        #         login_path: sulu_community.login
+        #         check_path: sulu_community.login
+        #     logout:
+        #         path: sulu_community.logout
+        #         target: /presse
+        #     remember_me:
+        #         secret:   "%kernel.secret%"
+        #         lifetime: 604800 # 1 week in seconds
+        #         path:     /
+        # mainsite_en: 
+        #     pattern:  ^/en/press(\/|$)
+        #     provider: sulu
+        #     # anonymous: true
+        #     lazy: true
+        #     form_login:
+        #         login_path: sulu_community.login_en
+        #         check_path: sulu_community.login_en
+        #     logout:
+        #         path: sulu_community.logout_en
+        #         target: /en/press
+        #     remember_me:
+        #         secret:   "%kernel.secret%"
+        #         lifetime: 604800 # 1 week in seconds
+        #         path:     /
 
 
 #        website:

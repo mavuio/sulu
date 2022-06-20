@@ -11,8 +11,7 @@ module.exports = {
         "../templates/**/*.twig",
         "./js/**/*.js",
         "./js/**/*.jsx",
-        "./svelte_widgets/src/**/*.svelte",
-        "../public/fe_assets/*.html",
+        "../public/fe_assets/*.html"
     ],
     theme: {
         container: {
@@ -43,22 +42,19 @@ module.exports = {
              
             },
             colors: {
-                'primary': colors.indigo
+                'primary': colors.indigo,
+                'darkbg': '#191919',
+                'lightbg': '#ffffff',
             },
             fontSize: settingsFontSizes,
             fontFamily: {
-                sans: ['Soleil-Regular', ...defaultTheme.fontFamily.sans],
-                soleil: ['Soleil-Regular', ...defaultTheme.fontFamily.sans],
-                soleil_book: ['Soleil-Book', ...defaultTheme.fontFamily.sans],
-                soleil_light: ['Soleil-Light', ...defaultTheme.fontFamily.sans],
-                soleil_bold: ['Soleil-Bold', ...defaultTheme.fontFamily.sans],
-                garamond: ['Garamond-Regular', ...defaultTheme.fontFamily.sans],
+                sans: ['SourceSansPro-Light', ...defaultTheme.fontFamily.sans],
             },
         }
     },
     plugins: [
         require('@tailwindcss/forms'),
-        require('@tailwindcss/typography'),
+        // require('@tailwindcss/typography'),
         require('@tailwindcss/aspect-ratio')
     ]
 

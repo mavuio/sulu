@@ -10,10 +10,10 @@ const production = process.env.NODE_ENV == 'production';
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    host: 'hortencollection.com.test',
+    host: 'reference_sulu.mavu.io.test',
     https:{
-      key: fs.readFileSync('/Users/manfred/.config/valet/Certificates/hortencollection.com.test.key'),
-      cert: fs.readFileSync('/Users/manfred/.config/valet/Certificates/hortencollection.com.test.crt')
+      key: fs.readFileSync('/Users/manfred/.config/valet/Certificates/reference_sulu.mavu.io.test.key'),
+      cert: fs.readFileSync('/Users/manfred/.config/valet/Certificates/reference_sulu.mavu.io.test.crt')
     }
   },
   plugins: [svelte({

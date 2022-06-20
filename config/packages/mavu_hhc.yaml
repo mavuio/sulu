@@ -1,4 +1,0 @@
-mavu_hhc:
-    pretix_import:
-        api_key: '%env(PRETIX_API_KEY)%'
-

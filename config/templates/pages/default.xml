@@ -36,6 +36,18 @@
             <tag name="sulu.rlp" />
         </property>
 
+        <property name="style_presets" type="dekor_selection" >
+            <meta>
+                <title>Seiten-Stil</title>
+            </meta>
+            <params>
+                <param name="request_parameters" type="collection">
+                    <param name="blockType" value="body"/>
+                </param>
+            </params>
+        </property>
+        
+        
 
         <xi:include href="blocks/toplevel_blocklist.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
                   xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks'])" />

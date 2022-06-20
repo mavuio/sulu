@@ -21,64 +21,9 @@
 
   .ce-textblock {
     @apply pt-8;
-    &:first-child {
-      @apply pt-0;
-    }
   }
 
   button {
     @apply inline-block bg-[color:var(--current-stripe-textcolor)] text-[color:var(--current-stripe-color)] px-2 pt-2  pb-1 uppercase leading-none;
-  }
-}
-
-.ce .sib-form {
-  @apply !px-0;
-  a {
-    @apply !text-black;
-  }
-  /* *[style*="padding: 8px 0"] {
-    @apply !px-0;
-    @apply !text-red-400;
-  } */
-
-  .sib-form-block {
-    @apply !px-0;
-  }
-  #sib-container {
-    @apply !px-0;
-  }
-  *[style*="Helvetica"] {
-    font-family: inherit !important;
-  }
-
-  *[style*="size:10px"],
-  *[style*="size:12px"] {
-    @apply !text-xs;
-  }
-
-  *[style*="size:15px"],
-  *[style*="size:16px"] {
-    @apply !text-base;
-  }
-
-  .entry__field {
-    @apply border-gray-400  border rounded-none;
-    .input {
-      @apply text-black border-none bg-white bg-opacity-50 focus:bg-opacity-100 focus:ring-0;
-    }
-  }
-
-  .checkbox {
-    @apply rounded-none;
-  }
-  .input_replaced:checked + .checkbox_tick_positive {
-    @apply bg-black border-black;
-  }
-
-  .sib-form-block__button {
-    @apply bg-[color:var(--current-stripe-textcolor)] text-[color:var(--current-stripe-color)] px-2 pt-2  pb-1 uppercase leading-none !rounded-none;
-  }
-  .entry__error {
-    @apply !bg-transparent !mb-4 !mt-1 !text-red-500 !text-base;
   }
 }

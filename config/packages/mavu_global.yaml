@@ -1,4 +1,4 @@
-mavu_mysite:
+mavu_global:
     tw_classes:
         npm_binary: '%env(NPM_BINARY)%'
 
