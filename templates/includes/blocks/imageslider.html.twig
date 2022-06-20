@@ -1,0 +1,50 @@
+<div class="ce ce-{{block.type}} c0  {{block | extract_classes('') }}"
+    {% if block.use_lightbox %}
+
+      x-data="loadComponent('Glightbox',{ 
+        elements: [
+            {% for im in block.images %}
+            {% set meta=im|merge_meta %}
+            {
+            'href': '{{ im.thumbnails['original_web'] }}',
+            'type': 'image',
+            'description': ' {{- meta.fototext -}}',
+            },
+            {% endfor %}
+        ]
+       })"
+    {% endif %}
+>
+   <div x-data="loadComponent('Swiper',{ speed: 400, spaceBetween: 100, navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  } })" class="swiper">
+
+        <div class="swiper-wrapper">
+            {% for im in block.images %}
+            <div class="swiper-slide"><img src="{{ im.thumbnails[block.image_format|default('original') ~ "_web"] }}"
+            
+                {%- if block.use_lightbox -%}
+                 class="cursor-pointer"
+                 @click="openLightbox({{loop.index0}})"
+                {%- endif -%} 
+            
+            ></div>
+            {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+    <div class=" {{block | extract_classes('cs','mt-3 leading-tight') }}">
+
+        {% if block.text %}
+            <div class=" opacity-50 {{block | extract_classes('ct','inline-block text-xs') }}">{{block.text | raw}}</div>
+        {% endif %}
+        {% if block.copyright %}
+            <div  class=" opacity-50 {{block | extract_classes('cc','inline-block text-xs') }}">{{block.copyright}}</div>
+        {% endif %}
+    </div>
+
+        
+</div>

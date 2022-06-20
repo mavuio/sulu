@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<formats xmlns="http://schemas.sulu.io/media/formats" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.sulu.io/media/formats http://schemas.sulu.io/media/formats-1.1.xsd">
+
+
+    <!-- <format key="sulu-50x50">
+        <meta>
+            <title lang="de">original aspect ratio</title>
+            <title lang="en">original aspect ratio</title>
+        </meta>
+        <scale x="80" y="80" mode="inset" />
+    </format> -->
+
+    <format key="original">
+        <meta>
+            <title lang="de">Original Image</title>
+            <title lang="en">Original Image</title>
+        </meta>
+
+        <scale x="9999"/>
+    </format>
+
+    <format key="og_image">
+        <meta>
+            <title lang="de">OpenGraph Image (max 2400)</title>
+            <title lang="en">OpenGraph Image (max 2400)</title>
+        </meta>
+
+        <scale x="2400"/>
+    </format>
+
+
+    
+    <format key="original_web">
+        <meta>
+            <title lang="de">original aspect ratio</title>
+            <title lang="en">original aspect ratio</title>
+        </meta>
+        <scale x="800" />
+    </format>
+
+    <format key="square_web">
+        <meta>
+            <title lang="de">quadratisch</title>
+            <title lang="en">square</title>
+        </meta>
+        <scale x="800" y="800" mode="outbound" forceRatio="true" />
+    </format>
+
+    <format key="landscape_web">
+        <meta>
+            <title lang="en">landscape</title>
+            <title lang="de">Querformat</title>
+        </meta>
+        <scale x="800" y="533" mode="outbound" forceRatio="true" />
+    </format>
+
+    <format key="original_wide">
+        <meta>
+            <title lang="de">original aspect ratio</title>
+            <title lang="en">original aspect ratio</title>
+        </meta>
+        <scale x="1200" />
+    </format>
+
+    <format key="square_wide">
+        <meta>
+            <title lang="de">quadratisch</title>
+            <title lang="en">square</title>
+        </meta>
+        <scale x="1200" y="1200" mode="outbound" forceRatio="true" />
+    </format>
+
+    <format key="landscape_wide">
+        <meta>
+            <title lang="en">landscape</title>
+            <title lang="de">Querformat</title>
+        </meta>
+        <scale x="1200" y="800" mode="outbound" forceRatio="true" />
+    </format>
+
+    <format key="mavu_preview">
+        <meta>
+            <title lang="de">CMS-thumbnail</title>
+            <title lang="en">CMS-thumbnail</title>
+        </meta>
+        <scale x="100" y="100" mode="inset" />
+    </format>
+
+
+    <!--
+    Render an image from the media_selection in a specific format the following way:
+
+    <img src="{{ image.thumbnails['300x'] }}" alt="{{ image.title }}" title="{{ image.description|default(image.title) }}">
+    -->
+</formats>

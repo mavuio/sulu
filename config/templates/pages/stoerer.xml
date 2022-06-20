@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<template xmlns="http://schemas.sulu.io/template/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+
+    <key>stoerer</key>
+
+    <view>pages/stoerer</view>
+    <controller>App\Controller\Website\CustomController::indexAction</controller>
+    <cacheLifetime>86400</cacheLifetime>
+
+    <meta>
+    <title>Störer</title>
+    </meta>
+
+    <properties>
+        <property name="title" type="text_line" mandatory="true">
+            <meta>
+            <title lang="en">Title</title>
+            <title lang="de">Titel</title>
+            </meta>
+            <params>
+                <param name="headline" value="true" />
+            </params>
+
+            <tag name="sulu.rlp.part" />
+        </property>
+
+        <property name="url" type="resource_locator" mandatory="true">
+            <meta>
+            <title lang="en">Resourcelocator</title>
+            <title lang="de">Adresse</title>
+            </meta>
+
+            <tag name="sulu.rlp" />
+        </property>
+
+        <property name="text" type="text_line"  >
+            <meta>
+                <title>Ticker-Text</title>
+            </meta>
+        </property>
+
+        <property name="link" type="link" >
+            <meta>
+                <title>Link(optional)</title>
+            </meta>
+        
+            <params>
+                <param name="enable_target" value="true"/>
+                <param name="enable_anchor" value="true"/>
+                <param name="enable_title" value="true"/>
+                <param name="types" type="collection">
+                    <param name="page"/>
+                    <param name="external"/>
+                    <param name="media"/>
+                </param>
+            </params>
+        </property>
+      
+    </properties>
+</template>

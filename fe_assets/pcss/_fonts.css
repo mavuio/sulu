@@ -1,0 +1,37 @@
+/* @import must be at top of file, otherwise CSS will not work */
+
+@font-face {
+  font-family: "Garamond-Regular";
+  src: url("/fonts/garamond/AdobeGaramond-Regular.otf") format("opentype"),
+    url("/fonts/garamond/AdobeGaramond-Regular.woff") format("woff"),
+    url("/fonts/garamond/AdobeGaramond-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Soleil-Book";
+  src: url("/fonts/soleil/SoleilBook.otf") format("opentype");
+}
+@font-face {
+  font-family: "Soleil-Bold";
+  src: url("/fonts/soleil/SoleilBold.otf") format("opentype");
+}
+@font-face {
+  font-family: "Soleil-Regular";
+  src: url("/fonts/soleil/SoleilRegular.otf") format("opentype");
+}
+@font-face {
+  font-family: "Soleil-Regular";
+  font-weight: bold;
+  src: url("/fonts/soleil/SoleilBold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Soleil-Light";
+  src: url("/fonts/soleil/SoleilLight.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Soleil-Light";
+  font-weight: bold;
+  src: url("/fonts/soleil/SoleilBook.otf") format("opentype");
+}

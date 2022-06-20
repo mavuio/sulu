@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<template xmlns="http://schemas.sulu.io/template/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+
+    <key>exhibition</key>
+
+    <view>pages/exhibition</view>
+    <controller>App\Controller\Website\CustomController::indexAction</controller>
+
+    <cacheLifetime>604800</cacheLifetime>
+
+    <meta>
+        <title lang="en">Exhibition</title>
+        <title lang="de">Exhibition</title>
+    </meta>
+
+
+    <properties>
+        <property name="title" type="text_line" mandatory="true">
+            <meta>
+                <title lang="en">Title</title>
+                <title lang="de">Titel</title>
+            </meta>
+            <params>
+                <param name="headline" value="true" />
+            </params>
+
+            <tag name="sulu.rlp.part" />
+        </property>
+
+        <property name="subtitle" type="text_line">
+            <meta>
+                <title>Subtitel</title>
+            </meta>
+
+            <tag name="sulu.rlp.part" />
+        </property>
+
+        <property name="url" type="resource_locator" mandatory="true">
+            <meta>
+                <title lang="en">Resourcelocator</title>
+                <title lang="de">Adresse</title>
+            </meta>
+
+            <tag name="sulu.rlp" />
+        </property>
+
+
+
+        <property name="date_str" type="text_line" mandatory="true">
+            <meta>
+                <title>Datums-Text</title>
+                <info_text>z.b.  'ab Herbst 2028' 'März - September 2022'</info_text>
+
+            </meta>
+        </property>
+
+        <property name="date1" type="date" colspan="6" visibleCondition="false">
+            <meta>
+                <title>from</title>
+            </meta>
+        </property>
+
+        <property name="date2" type="date" colspan="6"  visibleCondition="false" >
+            <meta>
+                <title>to</title>
+            </meta>
+        </property>
+
+        <section name="teaser">
+            <meta>
+                <title>Teaser</title>
+            </meta>
+            <properties>
+                <property name="image" type="single_media_selection">
+                    <meta>
+                        <title>Image</title>
+                    </meta>
+                    <params>
+                        <param name="types" value="image" />
+                        <param name="image_size" value="800x400" />
+                    </params>
+                </property>
+
+                <property name="teaser_text" type="text_area">
+                    <meta>
+                        <title>Teaser-Text</title>
+                    </meta>
+                </property>
+            </properties>
+        </section>
+
+        <section name="content">
+            <meta>
+                <title>Content</title>
+            </meta>
+            <properties>
+                <xi:include href="blocks/toplevel_blocklist.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                  xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks'])" />
+            </properties>
+        </section>
+
+    </properties>
+</template>

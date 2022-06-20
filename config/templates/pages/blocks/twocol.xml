@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<template xmlns="http://schemas.sulu.io/template/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+    <properties>
+        <block name="blocks">
+            <types>
+                <type name="twocol">
+                    <meta>
+                        <title lang="en">2-columns</title>
+                        <title lang="de">2-Spalter</title>
+                    </meta>
+                    <properties>
+
+
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='currentTab'])" />
+        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='classes'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='note'])" />
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_sm'])" />
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_md'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_lg'])" />
+
+
+                        <property name="style_presets" type="dekor_selection"  visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title>Style-Preset</title>
+                            </meta>
+                            <params>
+                                <param name="request_parameters" type="collection">
+                                    <param name="blockType" value="twocol"/>
+                                </param>
+                            </params>
+                        </property>
+
+                        
+                        <block name="leftcol" default-type="textblock" minOccurs="1" cssClass="my_col" >
+
+                            <meta>
+                                <title lang="en">Left Column</title>
+                                <title lang="de">Linke Spalte</title>
+                            </meta>
+                            <xi:include href="sublevel_blocklist.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                                xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types)" />
+
+
+                        </block>
+                        <block name="rightcol" default-type="textblock" minOccurs="1" >
+
+                            <meta>
+                                <title lang="en">Right Column</title>
+                                <title lang="de">Rechte Spalte</title>
+
+                            </meta>
+                            <xi:include href="sublevel_blocklist.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                            xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types)" />
+                        </block>
+
+                    </properties>
+                </type>
+            </types>
+        </block>
+    </properties>
+</template>

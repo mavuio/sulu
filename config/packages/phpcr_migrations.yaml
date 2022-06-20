@@ -1,0 +1,3 @@
+phpcr_migrations:
+    paths:
+        - '%kernel.project_dir%/phpcr-migrations'

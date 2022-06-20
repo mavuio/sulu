@@ -1,0 +1,40 @@
+<div class="ce ce-{{block.type}} c0 {{block | extract_classes }}" x-data="{expanded: false}">
+
+    <h3  class="pt-1">
+      <button 
+        class="flex items-center w-full space-x-2 text-left select-none hover_like_a" 
+        @click.prevent="expanded=!expanded" 
+        id="{{css_id}}-button" 
+        aria-controls="{{css_id}}-content" 
+        :aria-expanded="expanded ? 'true' : 'false'"
+      >
+        <svg
+          class="flex-shrink-0 w-6 h-6 transition-transform duration-500 transform"
+          :class="expanded ? 'rotate-180':''"
+          aria-hidden="true"
+          focusable="false"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-width="2" d="M19 9l-7 7-7-7" /> </svg>
+        <span>{{block.title}}</span>
+      </button>
+    </h3>
+
+    <section x-show="expanded" x-collapse.duration.500ms  aria-labelledby="{{css_id}}-button" class="c1 {{block | extract_classes("pb-8 pt-4 pl-8") }}">
+        
+        <div>
+         {{ include('includes/blocklist.html.twig',{blocks: block.maincol}) }}        
+        </div>
+        
+    </section>
+
+</div>
+
+
+
+
+
+

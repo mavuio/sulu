@@ -1,0 +1,2 @@
+monolog:
+    channels: ['mavu_debug']   # Custom channel

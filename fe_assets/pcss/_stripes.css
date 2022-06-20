@@ -1,0 +1,410 @@
+.bigpic {
+  transition: all 1s linear;
+}
+
+.paletteicons {
+  .tpl-intro & {
+    @apply hidden;
+  }
+  @apply flex;
+  > a {
+    > span {
+      @apply h-[7px] w-[8.4px];
+      @apply bl640:h-[1.375vw] bl640:w-[1.65vw];
+      display: block;
+      background-color: var(--current-stripe-color);
+    }
+  }
+}
+header .ticketicon {
+  @apply w-auto b640:h-[28px] bl640:h-[5.5vw] bl640:mr-[2.8vw] hover:opacity-60;
+}
+
+.intro-palettes-wrap {
+  @apply bl640:!px-0;
+}
+.intro-palettes {
+  @apply flex items-start;
+  justify-content: stretch;
+
+  > a {
+    @media (any-hover: hover) {
+      &:not(.cloned):hover {
+        > span {
+          @apply h-16 bl640:h-[15vw] text-white;
+          .intro-palettes-small & {
+            @apply sm:h-12;
+          }
+
+          > div {
+            line-height: 2rem;
+            .intro-palettes-small & {
+              @apply sm:text-sm sm:leading-[4rem];
+            }
+          }
+        }
+      }
+    }
+    @media (any-hover: none) {
+      &:not(.cloned):focus {
+        outline: none;
+        > span {
+          @apply h-16 bl640:h-[15vw] text-white;
+          > div {
+            line-height: 2rem;
+          }
+        }
+      }
+    }
+    @apply relative;
+    > span {
+      background-color: var(--current-stripe-color);
+      @apply block h-12 text-transparent transition-all;
+      .intro-palettes-small & {
+        @apply sm:h-4;
+      }
+
+      @apply bl640:h-[13vw] bl640:text-white bl640:overflow-visible;
+
+      > div {
+        @apply text-[12px] b640:text-center b640:inset-1;
+      }
+      @media (max-width: 639px) {
+        > div {
+          /* @apply absolute border border-red-500  origin-top-left overflow-visible left-0 bottom-0  z-20  w-64 rotate-90 h-[100%] text-right leading-[16vw] text-[3vw]; */
+          transform-origin: bottom left;
+          left: 50%;
+          bottom: 0;
+          transform: rotate(-90deg) translateY(50%);
+          position: absolute;
+          @apply pl-4 w-40 text-[4vw];
+        }
+      }
+    }
+  }
+}
+
+.stripe-bg {
+  --current-stripe-color: white;
+  --current-stripe-textcolor: black;
+}
+.stripe-bg-1 {
+  --current-stripe-textcolor: white;
+}
+.stripe-bg-2 {
+  --current-stripe-textcolor: white;
+}
+.stripe-bg-3 {
+  --current-stripe-textcolor: white;
+}
+.stripe-bg-4 {
+  --current-stripe-textcolor: white;
+}
+.stripe-bg-5 {
+  --current-stripe-textcolor: white;
+}
+.stripe-bg-6 {
+  --current-stripe-textcolor: white;
+}
+
+.stripe-bg-urgent {
+  color: white;
+}
+
+.stripe-bg-urgent .stripe-hl {
+  max-width: 100vw; /* iOS braucht das */
+  white-space: nowrap;
+  overflow: hidden;
+
+  > span {
+    display: inline-block;
+    padding-left: 50%; /* die zusätzlichen 5% erzeugen einen verzögerten Start und vermeiden so ein Ruckeln auf langsamen Seiten */
+    animation: marquee 30s linear infinite;
+  }
+
+  /* Optional: mouseover (oder Tipp auf dem Touchscreen) pausiert die Laufschrift */
+  > span:hover {
+    animation-play-state: paused;
+  }
+}
+
+main.stripe-white {
+  @apply pt-6;
+  body.tpl-intro & {
+    @apply pt-0;
+  }
+}
+
+.stripe-bg {
+  background-color: var(--current-stripe-color);
+  &.stripe-black {
+    @apply transition-all duration-500;
+    @apply bg-black border-t border-white;
+    &.active {
+      @apply text-black bg-white border-b border-black;
+    }
+  }
+}
+
+html {
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* scroll-snap-type: y proximity; */
+  overflow-y: scroll;
+  height: 100vh;
+  scroll-padding-top: 3rem;
+  &.tpl-homepage,
+  &.tpl-intro {
+    scroll-snap-type: none;
+    scroll-padding-top: 0;
+  }
+}
+
+header {
+  position: fixed;
+  body.tpl-intro &,
+  body.tpl-homepage & {
+    position: relative;
+  }
+}
+
+.stripes-top {
+  padding-top: 3rem;
+
+  body.tpl-homepage &,
+  body.tpl-intro & {
+    padding-top: 0;
+  }
+}
+
+.stripe {
+  /* scroll-snap-align: start; */
+  @apply relative min-h-[3rem] flex items-center pt-[0.35rem];
+  .overlay {
+    @apply absolute inset-0;
+    max-width: unset;
+  }
+  color: white;
+  &:hover {
+    .overlay {
+      @apply bg-black bg-opacity-20;
+    }
+  }
+  .text {
+    @apply w-full px-4;
+  }
+  /* transition: background-color 1s linear; */
+}
+
+/* Make it move */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@layer utilities {
+  .my_container {
+    max-width: $w_container;
+    @apply mx-auto;
+  }
+}
+
+.mc {
+  @apply my_container;
+}
+
+header > * {
+  @apply px-4 my_container;
+}
+nav.subnav {
+  @apply xs:max-w-none;
+  margin-top: -2rem;
+  padding-top: 2rem;
+
+  > .c0 {
+    font-size: clamp(16px, 2vw, 22px);
+
+    @apply flex justify-start font-normal sm:mx-auto;
+    @apply xs:flex-col;
+    color: var(--current-stripe-textcolor);
+    max-width: $w_container;
+    .last-tab.active + .tab-line-shoulder {
+      @apply border-y-0;
+      background-size: 100% 101%;
+    }
+    > * {
+      @apply sm:flex-auto sm:shrink-0 sm:py-1 sm:pr-10  sm:pl-0  sm:border-y sm:relative;
+      @apply xs:hover:text-opacity-50 xs:border-t xs:border-white xs:py-2 xs:text-lg xs:px-4;
+      border-color: var(--current-stripe-textcolor);
+      &.tab::before {
+        content: "";
+        /* @apply border border-red-500; */
+        background-image: url("/img/tabline.svg");
+        .stripe-white & {
+          background-image: url("/img/tabline_black.svg");
+        }
+        @apply w-[3rem] block absolute -inset-y-px left-[-39px] bg-contain bg-no-repeat;
+        @apply xs:hidden;
+      }
+      &.active.tab::before {
+        @apply border-t border-white bg-none;
+      }
+      &.active {
+        @apply sm:pl-4;
+
+        @apply font-bold no-underline sm:border-b-transparent sm:border-l sm:rounded-tl-lg xs:text-black xs:text-opacity-50;
+      }
+
+      &.inactive {
+        /* @apply; */
+      }
+      &.inactive.tab {
+        @apply sm:pr-5;
+      }
+
+      &:first-child {
+        @apply sm:pl-4;
+
+        @apply sm:rounded-tl-lg sm:border-l;
+      }
+      &.last-tab.active::after {
+        /* border-bottom: 1px solid var(--current-stripe-color); */
+        @apply z-10;
+      }
+
+      &.last-tab {
+        @apply xs:border-b;
+      }
+
+      &.tab-line-shoulder {
+        /* content: "";
+        background-image: url("/img/tabline.svg");
+        .stripe-white & {
+          background-image: url("/img/tabline_black.svg");
+        }
+
+        @apply w-[3rem] block absolute -inset-y-px right-[-3.1rem] bg-contain bg-no-repeat border border-red-500;
+        */
+        @apply self-stretch px-0 py-0 w-[37px] bg-no-repeat border-t-0 flex-none;
+        background-size: 100% 102.5%;
+        background-image: url("/img/tabline_shoulder.png");
+        .stripe-white & {
+          background-image: url("/img/tabline_shoulder_black.png");
+        }
+
+        @apply xs:hidden;
+      }
+
+      &.tab-line {
+        flex: 1 1 60%;
+        @apply sm:border-t-0 sm:border-l-0 sm:border-r-0;
+        @apply xs:hidden;
+      }
+    }
+  }
+}
+
+main {
+  @apply min-h-[10vh];
+  &.has-subnav-tab {
+    @apply pb-4;
+    @apply sm:px-1;
+  }
+  @apply text-white;
+  a,
+  .hover_like_a {
+    @apply hover:text-[rgba(0,0,0,0.5)];
+  }
+}
+
+.subnav-tab {
+  @apply px-4 pt-12 pb-8 sm:border-b sm:border-x;
+  @apply min-h-[10vh];
+  border-color: var(--current-stripe-textcolor);
+
+  max-width: $w_container;
+  @apply mx-auto;
+}
+
+.pc {
+  @apply absolute w-full z-20  bottom-4;
+  .mc {
+    @apply px-4;
+  }
+  span::after {
+    @apply drop-shadow text-sm bl640:text-[2.8vw] text-white opacity-70;
+    content: var(--current-theme-credits);
+  }
+}
+
+.loading-indicator {
+  @apply block h-12 w-auto mx-auto mt-16;
+  .text-white & {
+    @apply invert;
+  }
+}
+
+.langswitcher {
+  @apply relative font-bold leading-none tracking-wider b640:top-1;
+  @apply uppercase b640:text-lg  bl640:order-last bl640:text-[clamp(10px,7.5vw,20px)] bl640:top-[.7vw];
+}
+
+.svelte-ticker {
+  & {
+    transform: translate3d(0, 0, 0);
+  }
+  &.horizontal {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  &.vertical {
+    display: block;
+    white-space: normal;
+  }
+  &.horizontal > p {
+    max-width: unset !important;
+    display: inline-block !important;
+  }
+  &.vertical > p {
+    max-width: unset !important;
+    display: block !important;
+  }
+  &.animate {
+    animation-timing-function: linear;
+  }
+  &.pausing:hover {
+    animation-play-state: paused;
+  }
+  &.animate.horizontal {
+    animation-name: horizontal;
+  }
+  &.animate.vertical {
+    animation-name: vertical;
+  }
+}
+
+@keyframes horizontal {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@keyframes vertical {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}

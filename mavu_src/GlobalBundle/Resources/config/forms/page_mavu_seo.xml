@@ -1,0 +1,97 @@
+<?xml version="1.0" ?>
+<form xmlns="http://schemas.sulu.io/template/template"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/form-1.0.xsd"
+>
+    <key>page_mavu_seo</key>
+
+    <properties>
+
+        <property name="ext/seo/title" type="text_line">
+            <meta>
+                <title>sulu_page.meta_title</title>
+                <info_text>sulu_page.meta_title_info_text</info_text>
+            </meta>
+            <params>
+                <param name="soft_max_length" value="55" />
+            </params>
+        </property>
+        <property name="ext/seo/description" type="text_area">
+            <meta>
+                <title>sulu_page.meta_description</title>
+                <info_text>sulu_page.meta_description_info_text</info_text>
+            </meta>
+            <params>
+                <param name="soft_max_length" value="160" />
+            </params>
+        </property>
+
+
+        <property name="ext/mavu_seo/og_image" type="single_media_selection">
+            <meta>
+                <title>OG: Image</title>
+                <info_text>
+                    Format min: 1200x630px, max: 2400x1260px
+                </info_text>
+            </meta>
+            <params>
+                <param name="types" value="image"/>
+                <param name="formats" type="collection">
+                    <param name="og_image" />
+                </param>
+            </params>
+        </property>
+       
+        <property name="ext/seo/canonicalUrl" type="text_line">
+            <meta>
+                <title>sulu_page.canonical_url</title>
+            </meta>
+        </property>
+        <property name="ext/seo/noIndex" type="checkbox">
+            <params>
+                <param name="label">
+                    <meta>
+                        <title>sulu_page.no_index</title>
+                    </meta>
+                </param>
+                <param name="type" value="toggler" />
+            </params>
+        </property>
+        <property name="ext/seo/noFollow" type="checkbox">
+            <params>
+                <param name="label">
+                    <meta>
+                        <title>sulu_page.no_follow</title>
+                    </meta>
+                </param>
+                <param name="type" value="toggler" />
+            </params>
+        </property>
+        <property name="ext/seo/hideInSitemap" type="checkbox">
+            <params>
+                <param name="label">
+                    <meta>
+                        <title>sulu_page.hide_in_sitemap</title>
+                    </meta>
+                </param>
+                <param name="type" value="toggler" />
+            </params>
+        </property>
+
+        <section name="internal_only">
+            <meta>
+            <title>admin only (non SEO-related)</title>
+            </meta>
+            <properties>       
+                <property name="ext/mavu_seo/fixed_path" type="text_line" multilingual="false" colspan="6">
+                    <meta>
+                        <title>fixed path-segment</title>
+                    </meta>
+                    <params>
+                        <param name="soft_max_length" value="20" />
+                    </params>
+                </property>
+            </properties>
+        </section>
+    </properties>
+</form>

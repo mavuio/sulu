@@ -1,0 +1,51 @@
+# config/routes/sulu_community_website.yaml
+
+sulu_community.registration:
+    path: /presse/registration
+    controller: Sulu\Bundle\CommunityBundle\Controller\RegistrationController::indexAction
+
+sulu_community.confirmation:
+    path: /presse/confirmation/{token}
+    controller: Sulu\Bundle\CommunityBundle\Controller\ConfirmationController::indexAction
+
+sulu_community.completion:
+    path: /presse/completion
+    controller: Sulu\Bundle\CommunityBundle\Controller\CompletionController::indexAction
+
+sulu_community.password_forget:
+    path: /presse/password-forget
+    controller: Sulu\Bundle\CommunityBundle\Controller\PasswordController::forgetAction
+
+sulu_community.password_reset:
+    path: /presse/password-reset/{token}
+    controller: Sulu\Bundle\CommunityBundle\Controller\PasswordController::resetAction
+
+sulu_community.profile:
+    path: /presse/profile
+    controller: Sulu\Bundle\CommunityBundle\Controller\ProfileController::indexAction
+
+sulu_community.email_confirmation:
+    path: /presse/profile/email-confirmation
+    controller: Sulu\Bundle\CommunityBundle\Controller\EmailConfirmationController::indexAction
+
+sulu_community.login:
+    path: /presse/login
+    controller: Sulu\Bundle\CommunityBundle\Controller\LoginController::indexAction
+
+sulu_community.logout:
+    path: /presse/logout
+
+sulu_community.user_confirm:
+    path: /presse/_community/confirm
+    controller: Sulu\Bundle\CommunityBundle\Controller\BlacklistConfirmationController::confirmAction
+
+sulu_community.user_deny:
+    path: /presse/_community/deny
+    controller: Sulu\Bundle\CommunityBundle\Controller\BlacklistConfirmationController::denyAction
+
+sulu_community.login_en:
+    path: /en/press/login
+    controller: Sulu\Bundle\CommunityBundle\Controller\LoginController::indexAction
+
+sulu_community.logout_en:
+    path: /en/press/logout

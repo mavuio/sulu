@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+
+{% block palette_artwork_panel %}
+
+<div  class="p-8 border border-red-500">ARTWORK PALETTE</div>
+
+{% endblock %}
+
+
+{% block content %}
+{% set lang=app.request.locale|split('_')[0] %}
+
+
+{% set block = {
+    type: 'special_type',
+    special_type: 'news_list',
+    json_config: '{"limit": 1}'
+} %}
+
+{% include 'includes/special_elements/' ~ block.special_type ~ '.html.twig'  %}
+
+
+{% set news_page = find_page("/cmf/hortencollection/contents/news") %}
+{% set newspage1 = sulu_content_load(news_page.uuid, {
+    'urls': 'urls',
+}) %}
+
+<div class="ce">
+        <a class="flex items-center mr-4 space-x-1" href="{{   sulu_content_path(newspage1.urls[lang], newspage1.webspaceKey)}}" >
+        <img src="{{find_icon("Heidi-Horten-Collection-Icon-Link-intern.svg") }}"  class="w-6 h-6">
+        <span>{{trans(lang, "Ältere Beiträge", "older entries") }}</span></a>
+</div>
+
+
+
+{% endblock %}

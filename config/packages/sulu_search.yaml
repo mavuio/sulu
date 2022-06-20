@@ -1,0 +1,4 @@
+sulu_search:
+    website:
+        indexes:
+            - page_hortencollection_published

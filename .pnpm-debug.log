@@ -1,0 +1,23 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 info pnpm": {
+    "err": {
+      "name": "Error",
+      "message": "not found: tailwindcss",
+      "code": "ENOENT",
+      "stack": "Error: not found: tailwindcss\n    at getNotFoundError (/Users/manfred/.asdf/installs/nodejs/15.14.0/.npm/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:41576:51)\n    at Function.whichSync [as sync] (/Users/manfred/.asdf/installs/nodejs/15.14.0/.npm/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:41653:13)\n    at getCommandAbsolutePathSync (/Users/manfred/.asdf/installs/nodejs/15.14.0/.npm/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:43218:44)\n    at default_1 (/Users/manfred/.asdf/installs/nodejs/15.14.0/.npm/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:43227:32)\n    at /Users/manfred/.asdf/installs/nodejs/15.14.0/.npm/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:178035:39"
+    }
+  },
+  "2 error pnpm": {
+    "code": "ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL",
+    "prefix": "/Users/manfred/Documents/www/hortencollection",
+    "err": {
+      "name": "pnpm",
+      "message": "not found: tailwindcss",
+      "code": "ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL",
+      "stack": "Error: not found: tailwindcss\n    at getNotFoundError (/Users/manfred/.asdf/installs/nodejs/15.14.0/.npm/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:41576:51)\n    at Function.whichSync [as sync] (/Users/manfred/.asdf/installs/nodejs/15.14.0/.npm/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:41653:13)\n    at getCommandAbsolutePathSync (/Users/manfred/.asdf/installs/nodejs/15.14.0/.npm/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:43218:44)\n    at default_1 (/Users/manfred/.asdf/installs/nodejs/15.14.0/.npm/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:43227:32)\n    at /Users/manfred/.asdf/installs/nodejs/15.14.0/.npm/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:178035:39"
+    }
+  }
+}

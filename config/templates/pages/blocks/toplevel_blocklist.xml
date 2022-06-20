@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<template xmlns="http://schemas.sulu.io/template/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+    <properties>
+        <block name="blocks" default-type="textblock" cssClass="my_blocks">
+            <meta>
+                <title lang="en">Content:</title>
+                <title lang="en">Inhalte:</title>
+            </meta>
+            <params>
+                <!-- <param name="collapsable" value="false" /> -->
+                 <!-- <param name="settings_form_key" value="tailwind_block_settings" /> -->
+
+            </params>
+            <types>
+
+                <!-- <xi:include href="blocklib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                          xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='teasers'])" /> -->
+
+                <xi:include href="blocklib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                          xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='headline'])" />
+
+                <xi:include href="blocklib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                                    xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='textblock'])" />
+
+                <xi:include href="blocklib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                                    xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='image'])" />
+
+                <xi:include href="blocklib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                                    xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='imageslider'])" />
+
+                <xi:include href="blocklib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                                    xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='video'])" />
+
+                <xi:include href="blocklib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                                    xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='special_element'])" />
+
+                <xi:include href="blocklib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                                    xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='form_element'])" />
+
+
+                <xi:include href="twocol.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                                    xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='twocol'])" />
+
+                <xi:include href="threecol.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                                    xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='threecol'])" />
+
+                <xi:include href="blocklib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                                    xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='button'])" />
+
+                <xi:include href="expander.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                                    xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='expander'])" />
+                
+                <xi:include href="section.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                                    xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='section'])" />
+
+            </types>
+        </block>
+
+    </properties>
+</template>

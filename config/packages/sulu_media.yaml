@@ -1,0 +1,6 @@
+
+parameters:
+    sulu_media.collection.previews.format: mavu_preview
+
+sulu_media:
+    adapter: 'gd' # Can be set to a fixed adapter with 'gd', 'vips' or 'imagick'

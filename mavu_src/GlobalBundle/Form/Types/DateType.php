@@ -1,0 +1,68 @@
+<?php
+
+/*
+ * This file is part of Sulu.
+ *
+ * (c) Sulu GmbH
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+
+namespace Mavu\GlobalBundle\Form\Types;
+
+use Sulu\Bundle\FormBundle\Dynamic\FormFieldTypeConfiguration;
+use Sulu\Bundle\FormBundle\Dynamic\FormFieldTypeInterface;
+use Sulu\Bundle\FormBundle\Entity\FormField;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\DateType as TypeDateType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+/**
+ * The Date form field type.
+ */
+
+class DateType implements FormFieldTypeInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfiguration(): FormFieldTypeConfiguration
+    {
+        return new FormFieldTypeConfiguration(
+            'sulu_form.type.date',
+            __DIR__ . '/../../../../vendor/sulu/form-bundle/Resources/config/form-fields/field_date.xml',
+            'basic'
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function build(FormBuilderInterface $builder, FormField $field, string $locale, array $options): void
+    {
+        $type = TypeDateType::class;
+        $translation = $field->getTranslation($locale);
+        if ($translation && $translation->getOption('birthday')) {
+            $type = BirthdayType::class;
+        }
+        $options['input'] = 'string';
+
+        //mavu 2022-04-26:
+        // $options['format'] = \IntlDateFormatter::LONG;
+        $options['widget'] = 'single_text';
+
+        $builder->add($field->getKey(), $type, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultValue(FormField $field, string $locale)
+    {
+        $value = $field->getTranslation($locale)->getDefaultValue();
+
+        return $value;
+    }
+}

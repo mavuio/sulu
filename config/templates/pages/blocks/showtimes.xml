@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<template xmlns="http://schemas.sulu.io/template/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+    <properties>
+        <block name="showtime_blocks" default-type="showtime" cssClass="my_blocks">
+            <meta>
+                <title>Termine:</title>
+            </meta>
+            <params>
+                <!-- <param name="collapsable" value="false" /> -->
+                 <!-- <param name="settings_form_key" value="tailwind_block_settings" /> -->
+
+            </params>
+            <types>
+                <type name="showtime">
+                    <meta>
+                        <title>Termin</title>
+                    </meta>
+                    <properties>
+                        <property name="date1" type="date" colspan="6" mandatory="true">
+                            <meta>
+                                <title lang="en">from</title>
+                            </meta>
+                            <tag name="sulu.block_preview" priority="200" />
+
+                        </property>
+                        <property name="date2" type="date" colspan="6" >
+                            <meta>
+                                <title lang="en">to</title>
+                            </meta>
+                            <tag name="sulu.block_preview" priority="100" />
+
+                        </property>
+                    </properties>
+                </type>
+            </types>
+        </block>
+    </properties>
+</template>

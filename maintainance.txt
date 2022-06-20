@@ -1,0 +1,68 @@
+#on server:
+
+mysqldump  --no-tablespaces -uhortencollection_cms -p$PW_MYSQL_WEBSERVER hortencollection_cms>~/tmp/dump.sql
+
+mysqldump  --no-tablespaces -uhortencollection_cms -p$PW_MYSQL_WEBSERVER hortencollection_cms phpcr_binarydata phpcr_internal_index_types phpcr_namespaces phpcr_nodes phpcr_nodes_references phpcr_nodes_weakreferences phpcr_type_childs phpcr_type_nodes  phpcr_type_props phpcr_workspaces  hhc_veranstaltungen hhc_termine >~/tmp/dump.sql
+
+
+#on macbook:
+
+rsync -z sub_4548360591@test.hortencollection.com:/var/www/vhosts/hortencollection.com/tmp/dump.sql /tmp/dump.sql; cat /tmp/dump.sql | mysql -uwebserver -p$PW_MYSQL_WEBSERVER hortencollection
+
+rsync -av --progress --exclude "*.zip" sub_4548360591@test.hortencollection.com:/var/www/vhosts/hortencollection.com/httpdocs/var/uploads/ /www/hortencollection/var/uploads/
+rsync -av --progress --exclude "*.zip" sub_4548360591@test.hortencollection.com:/var/www/vhosts/hortencollection.com/httpdocs/public/uploads/ /www/hortencollection/public/uploads/
+
+
+
+cd /www/hortencollection
+php bin/adminconsole cache:clear --no-warmup --env=dev
+php bin/websiteconsole cache:clear --no-warmup --env=dev
+
+
+fswatch -o /www/hortencollection/templates | xargs -n1 -I {} osascript -e 'tell application "Google Chrome Canary" to tell the active tab of its first window to reload'
+
+
+
+php bin/console doctrine:phpcr:shell --session=live
+PHPCRSH > 
+select i18n:de-title,i18n:en-title FROM nt:unstructured;
+
+select i18n:de-tw_classes FROM nt:unstructured where i18n:de-tw_classes is not null;
+select i18n:en-tw_classes FROM nt:unstructured where i18n:en-tw_classes is not null;
+
+
+
+content-getters:
+ function getContentData(
+
+getLanguageCode from PageBridge determines Image-Language
+
+
+
+php bin/console massive:search:reindex --env=prod
+sudo launchctl limit maxfiles 9000000 9999999    
+ulimit -Sn 9000000
+
+
+/opt/homebrew/bin/pnpm exec tailwindcss -c tailwind_usercontent.config.js --minify -o /Users/manfred/Documents/www/hortencollection/public/fe_assets2/custom.bf7b196dbef87775cfb3e8fd4bd121a5.css
+
+
+sudo runuser -u www-data -- php bin/websiteconsole cache:clear --no-warmup --env=prod;  sudo runuser -u www-data -- php bin/adminconsole cache:clear --no-warmup --env=prod
+
+
+------------------
+custom admin:
+
+cd assets/admin
+npm install
+npm run watch
+
+node-version: 14, no pnpm !
+
+error: "Module not found: Error: Can't resolve 'sulu-website-bundle' in" ?  ➜  run npm install again
+
+
+
+
+
+

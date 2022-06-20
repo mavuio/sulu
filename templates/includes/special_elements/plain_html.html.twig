@@ -1,0 +1,20 @@
+<div class="ce ce-{{block.type}} st-{{block.special_type}} c0 {{block | extract_classes('') }}">
+
+
+{{block.html_source | raw}}
+
+
+{% if block.json_config %}
+
+{% set conf = block.json_config |decode_json %}
+
+{% if conf.debug |default('') == 'phpinfo' %}
+    PHPINFO:
+{% set phpi=HhcHelpers.phpInfo() %}
+        {{phpi}}
+{% endif %}
+
+{% endif %}
+
+</div>
+

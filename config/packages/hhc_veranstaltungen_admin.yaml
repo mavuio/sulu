@@ -1,0 +1,11 @@
+sulu_admin:
+    resources:
+        veranstaltungen:
+            routes:
+                list: 'app.cget_veranstaltung'
+                detail: 'app.get_veranstaltung'
+        termine:
+            routes:
+                list: 'app.cget_termin'
+                detail: 'app.get_termin'
+

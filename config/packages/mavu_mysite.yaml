@@ -1,0 +1,4 @@
+mavu_mysite:
+    tw_classes:
+        npm_binary: '%env(NPM_BINARY)%'
+

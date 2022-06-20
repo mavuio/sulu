@@ -1,0 +1,62 @@
+<header  class="z-50 w-full bg-white">
+    <div class="flex items-center justify-between h-12 toprow bl640:py-4">
+        <div class="langswitcher">
+
+            {% apply spaceless %}
+            {% for localization in localizations|default([]) %}
+            <a href="{{ localization.url }}" class="{{app.request.locale==localization.locale ? "font-soleil_bold bl640:hidden": "font-soleil_light bl640:font-soleil_book"}} hover:opacity-50">{{ localization.locale }}</a>
+            {% if not loop.last %}<span  class="bl640:hidden">/</span>{% endif %}
+            {% endfor %}
+
+            {% endapply %}
+        </div>
+
+        <a href="{{sulu_content_path("/")}}" class="flex b640:max-w-md bl640:flex-auto b640:px-8 hover:opacity-60"><img src="/img/hortencollection_logo.svg"
+                alt="Heidi Horten Collection"  class="bl640:w-[50vw] svg-as-image"></a>
+        <div class="relative flex items-center b640:space-x-4 ">
+        
+            
+            <div class="paletteicons bl640:mx-[3vw] hover:opacity-60" :class="{'opacity-60':expanded_palettechooser}" >
+                {% for p in colorPalettes | default([])|slice(0, 5) %}
+                <a href="#" @click.prevent="togglePaletteChooser()" title="{{p.name}}" class="theme-{{p.slug}}">
+                    <span class="stripe-bg-1"></span>
+                    <span class="stripe-bg-2"></span>
+                    <span class="stripe-bg-3"></span>
+                    <span class="stripe-bg-4"></span>
+                </a>
+                {% endfor %}
+            </div>
+            
+            {% set shop_page = find_page("/cmf/hortencollection/contents/shop") %}
+            {% set shop = sulu_content_load(shop_page.uuid,{'urls': 'urls'}) %}
+            <a href="{{sulu_content_path(shop.urls[lang], shop.webspaceKey) }}"  >
+            <img src="/img/ticketicon.svg"  class="ticketicon " title="Tickets">
+            </a>
+
+        </div>
+    </div>
+
+{# palette-picker: #}
+
+    {% if isIntro|default(false)==false %}
+    
+
+    <div class="relative z-30 h-0 max-h-[4.5rem] intro-palettes-wrap">
+        <div  class="relative z-20 w-full overflow-visible mc intro-palettes" x-show="expanded_palettechooser" x-collapse.duration.250ms>
+            {% for p in colorPalettes | default([]) %}
+                            <a href="/" @click.prevent="setColorpalette('{{p.slug}}')" title="{{p.name}}" class="theme-{{p.slug}}  flex-auto b640:w-40 " id="colorpalette-{{p.slug}}"
+                            @touchstart.prevent=" if(window.screen.width < 640) {$event.target.closest('a').focus();setColorpalette('{{p.slug}}')} 
+                            else { ($event.target.closest('a') == document.activeElement) ? setColorpalette('{{p.slug}}') : $event.target.closest('a').focus(); }">
+                                <span class="stripe-bg-1"></span>
+                                <span class="stripe-bg-2"></span>
+                                <span class="stripe-bg-3"></span>
+                                <span class="stripe-bg-4"></span>
+                                <span class="stripe-bg-5"></span>
+                                <span class="stripe-bg-6"><div>{{p.name}}</div></span>
+                            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+</header>

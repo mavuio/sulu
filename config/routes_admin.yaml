@@ -1,0 +1,33 @@
+
+# news_post.admin:
+#   type: rest
+#   resource: sulu_news_post.rest.controller
+#   prefix: /admin/api
+#   name_prefix: app.
+
+
+# termin_post.admin:
+#   type: rest
+#   resource: sulu_termin_post.rest.controller
+#   prefix: /admin/api
+#   name_prefix: app.
+
+
+app_dekor_api:
+    type: rest
+    prefix: /admin/api
+    resource:  mavu_mysite_dekor.rest.controller
+    name_prefix: app.
+
+app_veranstaltungen_api:
+    type: rest
+    prefix: /admin/api
+    resource:  Mavu\LocalBundle\Controller\Admin\VeranstaltungenController
+    name_prefix: app.
+
+
+app_termine_api:
+    type: rest
+    prefix: /admin/api
+    resource:  Mavu\LocalBundle\Controller\Admin\TermineController
+    name_prefix: app.

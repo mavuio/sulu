@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<template xmlns="http://schemas.sulu.io/template/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+
+    <key>styletab_lib</key>
+
+    <view>pages/default</view>
+    <controller>App\Controller\Website\CustomController::indexAction</controller>
+    <cacheLifetime>604800</cacheLifetime>
+
+    <meta>
+        <title lang="en">styletab_lib</title>
+        <title lang="de">styletab_lib</title>
+    </meta>
+
+
+    <properties>
+        <!-- keep these two tags for compatibility: -->
+        <property name="title" type="text_line" mandatory="true">
+            <meta>
+                <title>Dummy</title>
+            </meta>
+            <params>
+                <param name="headline" value="true" />
+            </params>
+
+            <tag name="sulu.rlp.part" />
+        </property>
+
+        <property name="url" type="resource_locator" mandatory="true">
+            <meta>
+                <title>Dummy</title>
+            </meta>
+
+            <tag name="sulu.rlp" />
+        </property>
+
+        <!-- keep these two tags for compatibility END -->
+
+
+        <block name="blocks">
+            <meta>
+                <title>Dummy:</title>
+            </meta>
+
+            <params>
+                <param name="collapsable" value="false" />
+            </params>
+            <types>
+                <type name="styletab_lib">
+                    <meta>
+                        <title lang="en">styletab_lib</title>
+                        <title lang="de">styletab_lib</title>
+                    </meta>
+                    <properties>
+
+                        <property name="currentTab" type="mavu_svelte_field" >    
+                            <params>
+                                <param name="svelteModulePath" value="/be_assets/tabbar" />
+                                <param name="tabs" type="collection">
+                                    <param name="content">
+                                        <meta>
+                                            <title lang="de">Inhalte</title>
+                                            <title lang="en">Content</title>
+                                        </meta>
+                                    </param>
+                        
+                                    <param name="styles">
+                                        <meta>
+                                            <title>Styles</title>
+                                        </meta>
+                                    </param>
+                                </param>
+                            </params>
+                        </property>
+
+                        <property name="classes" type="text_area"  visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title lang="en">Custom Classes</title>
+                                <title lang="de">Custom Classes</title>
+                            </meta>
+                            <params>
+                                <param name="headline" value="true" />
+                            </params>
+                        </property>
+
+                        <property name="bp_sm" colspan="4" type="number" visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title>Breakpoint SM:</title>
+                            </meta>
+                        
+                            <params>
+                                <param name="min" value="640"/>
+                                <param name="max" value="1200"/>
+                                <param name="step" value="10"/>
+                            </params>
+                        </property>
+
+                        <property name="bp_md" colspan="4" type="number" visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title>Breakpoint MD:</title>
+                            </meta>
+                        
+                            <params>
+                                <param name="min" value="640"/>
+                                <param name="max" value="1200"/>
+                                <param name="step" value="10"/>
+                            </params>
+                        </property>
+
+                        <property name="bp_lg" colspan="4" type="number" visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title>Breakpoint LG:</title>
+                            </meta>
+                        
+                            <params>
+                                <param name="min" value="640"/>
+                                <param name="max" value="1200"/>
+                                <param name="step" value="10"/>
+                            </params>
+                        </property>
+
+                        
+                        <property name="note" type="text_line" visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title lang="en">Internal Note</title>
+                                <title lang="de">Interne Notiz</title>
+                            </meta>
+
+                            <tag name="sulu.block_preview" priority="500" />
+
+                        </property>
+                    </properties>
+                </type>
+            </types>
+        </block>
+
+    </properties>
+</template>

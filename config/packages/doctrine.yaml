@@ -1,0 +1,34 @@
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+
+        # IMPORTANT: You MUST configure your server version,
+        # either here or in the DATABASE_URL env var (see .env file)
+        #server_version: '5.7'
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            Mavu\LocalBundle:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/mavu_src/LocalBundle/Entity'
+                prefix: 'Mavu\LocalBundle'
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App
+        dql:
+            string_functions:
+                JSON_CONTAINS: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonContains
+                JSON_QUOTE: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonQuote
+            datetime_functions:
+                DATE_FORMAT: DoctrineExtensions\Query\Mysql\DateFormat
+                EXTRACT: DoctrineExtensions\Query\Mysql\Extract
+                # DAY: DoctrineExtensions\Query\Mysql\Day
+                # MONTH: DoctrineExtensions\Query\Mysql\Month
+                # YEAR: DoctrineExtensions\Query\Mysql\Year
+            

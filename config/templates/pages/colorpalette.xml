@@ -1,0 +1,103 @@
+<?xml version="1.0" ?>
+<template xmlns="http://schemas.sulu.io/template/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+
+    <key>colorpalette</key>
+
+    <view>pages/colorpalette</view>
+    <controller>App\Controller\Website\CustomController::indexAction</controller>
+    <cacheLifetime>86400</cacheLifetime>
+
+    <meta>
+    <title>Color-Palette</title>
+    </meta>
+
+    <properties>
+        <property name="title" type="text_line" mandatory="true">
+            <meta>
+            <title lang="en">Title</title>
+            <title lang="de">Titel</title>
+            </meta>
+            <params>
+                <param name="headline" value="true" />
+            </params>
+
+            <tag name="sulu.rlp.part" />
+        </property>
+
+        <property name="url" type="resource_locator" mandatory="true">
+            <meta>
+            <title lang="en">Resourcelocator</title>
+            <title lang="de">Adresse</title>
+            </meta>
+
+            <tag name="sulu.rlp" />
+        </property>
+
+
+        <section name="artwork">
+            <meta>
+            <title>Kunstwerk</title>
+            </meta>
+            <properties>
+                <property name="artwork" type="single_media_selection">
+                    <meta>
+                    <title>Image</title>
+                    </meta>
+                    <params>
+                        <param name="types" value="image" />
+                        <param name="image_size" value="800x400" />
+                    </params>
+                </property>
+
+
+
+            </properties>
+        </section>
+
+        <section name="colors">
+            <meta>
+            <title>Farben</title>
+            </meta>
+            <properties>
+                <property name="color_1" type="color">
+                    <meta>
+                    <title>Farbe 1</title>
+                    </meta>
+                </property>
+                <property name="color_2" type="color">
+                    <meta>
+                    <title>Farbe 2</title>
+                    </meta>
+                </property>
+                <property name="color_3" type="color">
+                    <meta>
+                    <title>Farbe 3</title>
+                    </meta>
+                </property>
+                <property name="color_4" type="color">
+                    <meta>
+                    <title>Farbe 4</title>
+                    </meta>
+                </property>
+                <property name="color_5" type="color">
+                    <meta>
+                    <title>Farbe 5</title>
+                    </meta>
+                </property>
+                <property name="color_6" type="color">
+                    <meta>
+                    <title>Farbe 6</title>
+                    </meta>
+                </property>
+                <property name="color_urgent" type="color">
+                    <meta>
+                    <title>Farbe Highlight</title>
+                    </meta>
+                </property>
+            </properties>
+        </section>
+
+
+    </properties>
+</template>

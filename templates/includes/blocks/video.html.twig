@@ -1,0 +1,55 @@
+<div class="ce ce-{{block.type}} c0 {{block | extract_classes }}">
+    <div class=" c1 {{block | extract_classes('c1') }}">
+        {% set player_url = 'https://www.youtube.com/embed/' ~ block.youtube_id %}
+        <style>
+            .embed-container {
+                position: relative;
+                padding-bottom: 56.25%;
+                height: 0;
+                overflow: hidden;
+                max-width: 100%;
+            }
+
+            .embed-container iframe,
+            .embed-container object,
+            .embed-container embed {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+
+
+        <div x-data="{
+            consent_given: false,
+            init() {
+                console.log('#log 9199 video loaded');
+            }
+        }">
+            <div x-show="!consent_given" @click="consent_given=true" class="bg-cover aspect-w-16 aspect-h-9"
+                {% if block.image %}
+                style="background-image: url('{{ block.image.thumbnails[block.image_format|default('original') ~ "_web"] }}')"
+                {% endif %}>
+                <div
+                    class="flex flex-col items-center justify-around p-8 bg-gray-800 bg-opacity-50 border cursor-pointer border-white-500 ">
+                    <img src="{{find_icon("Heidi-Horten-Collection-Icon-Play.svg") }}"
+                        class="b640:w-32 b640:h-32  bl640:w-[40vw] bl640:h-[40vw] opacity-75 fill-white hover:opacity-100">
+
+                    <div class="b640:text-sm bl640:text-[3.5vw] bl640:leading-snug  text-center text-white drop-shadow-lg">
+                        {{trans(lang,"Zum Abspielen dieses YouTube-Videos auf unserer Webseite müssen Sie auf den Play-Button klicken. Wir weisen Sie darauf hin, dass durch den Start des YouTube-Videos Daten an YouTube übermittelt werden.","To see this YouTube Video on our website, you must click on the Play-Button. We would like to point out that by starting the YouTube video, data is transmitted to YouTube.")}}
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div x-show="consent_given">
+                <div class="embed-container"><iframe src="{{player_url}}" frameborder="0" webkitAllowFullScreen
+                        mozallowfullscreen allowFullScreen></iframe></div>
+            </div>
+
+        </div>
+    </div>
+</div>

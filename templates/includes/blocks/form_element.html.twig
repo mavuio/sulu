@@ -1,0 +1,21 @@
+<div class="ce ce-{{block.type}} c0 {{block | extract_classes }}">
+    <div class=" c1 {{block | extract_classes('c1') }}">
+     
+
+    {% if block.form %}
+        {% if app.request.get('send') != 'true' %}
+            {# FORM THEME #}
+            {% form_theme block.form 'form/themes/dynamic_form.html.twig' %}
+            {{ form(block.form) }}
+        {% else %}
+            {{ view.blocks|filter(block => block.form | default(false) ) | first .form.entity.successText|raw }}
+        {% endif %}
+    {% endif %}
+    </div>
+</div>
+
+
+
+
+
+

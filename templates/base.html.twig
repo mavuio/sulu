@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+{% set lang=app.request.locale|split('_')[0] %}
+{% set colorPalettes = hhc_colorpalettes() %}
+{% set stripes = hhc_stripe_info(request, sulu_navigation_root_tree("main"),sulu_breadcrumb( uuid | default("f745cbfd-6be9-4dec-bf2c-9f58bc9c6780"))) %}
+
+{% if template is not defined %}
+    {% set template = 'login' %}
+{% endif %}
+
+<html lang="{{ lang }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification" content="7WBcEcgIIqZF3Z12kiX4h6fTXjnn1HdzzM4GMVkU5WA" />
+
+     {{ render_esi(controller('App\\Controller\\Website\\CustomController::assetsAction', {})) }}
+
+    <script  {{template!="homepage" ? "defer" }} type="text/javascript" src="/fe_assets/app.js?20220603030045"></script>
+    {% if template=="homepage" or true %}
+    <script>
+        if(window.checkForIntro) {
+            window.checkForIntro('{{trans(lang,"/intro","/en/intro")}}');
+        }
+    </script>
+    {% endif %}
+    {# <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" /> #}
+
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+
+<link rel="apple-touch-icon" sizes="192x192" href="/favicons/android-chrome-192x192.png" >
+<link rel="apple-touch-icon" sizes="512x512" href="/favicons/android-chrome-512x512.png" >
+<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" >
+
+    {% block meta %}
+      {% include "includes/seo.html.twig" with {
+            "seo": extension.seo|default([]),
+            "mavu_seo": extension.mavu_seo|default([]),
+            "content": content|default([]),
+            "localizations": localizations|default([]),
+            "shadowBaseLocale": shadowBaseLocale|default(),
+        } %}
+
+    {% endblock %}
+
+    {% block style %}{% endblock %}
+   
+
+    {% block head_addon %}{% endblock %}
+    <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+        var u="https://hortencollection.matomo.cloud/";
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
+        _paq.push(['setSiteId', '1']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src='//cdn.matomo.cloud/hortencollection.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+    </script>
+</head>
+
+
+<body id="body" class="text-base tpl-{{template}} initialoffset"  x-data="loadComponent('Stripes',{template:'{{template}}', expanded_stripe_num: {{stripes.current_stripe_num}},colorpalettes: [{%- for p in colorPalettes -%} '{{p.slug}}', {%- endfor -%}] })"
+
+
+>
+  
+ 
+
+  {{ include('includes/header.html.twig') }}
+  {% if stripes.show_stripes %}
+        {{ include('includes/stripes_top.html.twig') }}
+  {% endif %}
+
+    <main class=" main-content  stripe-bg {{ stripes.current_stripe_num<=6 ? "stripe-bg-#{stripes.current_stripe_num} stripe-colored" : "bg-white text-black stripe-white" }} {{stripes.current_subnav_page? "has-subnav-tab" }} {{ (template == 'intro')?'':'pb-12' }}"
+    x-show="expanded_stripe_num!==0" x-collapse.duration.1000ms 
+    >
+    
+
+        {% if stripes.current_subnav_page %}
+        
+            {% set parent_page = sulu_content_load(stripes.current_stripe.id,{'blocks': 'blocks'}) %}
+
+            {% if parent_page.content  %}
+    
+                {{ include('includes/blocklist.html.twig', {'blocks': parent_page.content.blocks  | mavu_add_block_paths , 'block_views': parent_page.view.blocks }) }}
+                <div  class="h-12"></div> 
+            {% endif %}
+
+            {{ include('includes/subnav.html.twig') }}
+            <section class="subnav-tab">
+        {% endif %}
+        
+        {% if stripes.current_stripe and stripes.current_stripe.template=='stripecontainer' %}
+                <div>&nbsp;</div>            
+        {% endif %}
+        {% block content %}{% endblock %}
+        
+        {% if stripes.current_subnav_page %}
+            </section>
+        {% endif %}
+    </main>
+
+  {% if stripes.show_stripes %}
+    {{ include('includes/stripes_bottom.html.twig') }}
+
+    <footer class="text-white bg-black ">
+        <article class="text-2xl leading-snug border-b border-white footer_info">
+                        
+            <div class="px-4 py-8 text-base my_container">
+                    {% set snippet = sulu_snippet_load_by_area('footer_contact') %}
+                    {% if snippet %}
+                        {{ snippet.content.description|raw }}
+                    {% endif %}
+            </div>
+        </article>
+    </footer>
+  {% endif %}
+
+    {% block javascripts %}{% endblock %}
+
+    {% block body_addon %}
+    
+
+    
+    {% endblock %}
+
+</body>
+
+</html>

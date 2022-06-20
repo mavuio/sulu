@@ -1,0 +1,7 @@
+framework:
+    assets:
+        packages:
+            fe_assets2:
+                base_path: "/fe_assets2/"
+                json_manifest_path: "%kernel.project_dir%/public/fe_assets2/manifest.json"
+

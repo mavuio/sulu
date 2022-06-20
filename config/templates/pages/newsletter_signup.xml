@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<template xmlns="http://schemas.sulu.io/template/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+
+    <key>newsletter_signup</key>
+
+    <view>pages/newsletter_signup</view>
+    <controller>App\Controller\Website\CustomController::indexAction</controller>
+
+    <cacheLifetime>604800</cacheLifetime>
+
+    <meta>
+        <title>newsletter_signup</title>
+    </meta>
+
+
+    <properties>
+        <property name="title" type="text_line" mandatory="true">
+            <meta>
+                <title lang="en">Title</title>
+                <title lang="de">Titel</title>
+            </meta>
+            <params>
+                <param name="headline" value="true" />
+            </params>
+
+            <tag name="sulu.rlp.part" />
+        </property>
+
+        <property name="url" type="resource_locator" mandatory="true">
+            <meta>
+                <title lang="en">Resourcelocator</title>
+                <title lang="de">Adresse</title>
+            </meta>
+
+            <tag name="sulu.rlp" />
+        </property>
+
+
+    
+
+
+        <xi:include href="blocks/toplevel_blocklist.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                  xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks'])" />
+
+
+
+        <section name="addons">
+            <meta>
+            <title>HTML-Addons für Newsletter</title>
+            </meta>
+            <properties>
+
+                <property name="head_addon" type="text_area" >
+                    <meta>
+                        <title>HEAD-Addon-HTML</title>
+                    </meta>
+                </property>
+        
+                <property name="body_addon" type="text_area" >
+                    <meta>
+                        <title>Footer-Addon-HTML</title>
+                    </meta>
+                </property>
+            </properties>
+        </section>
+
+    </properties>
+</template>

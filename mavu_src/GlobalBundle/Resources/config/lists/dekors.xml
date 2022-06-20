@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<list xmlns="http://schemas.sulu.io/list-builder/list">
+    <key>dekors</key>
+
+    <properties>
+        <property name="id"  translation="sulu_admin.id">
+            <field-name>id</field-name>
+            <entity-name>Mavu\GlobalBundle\Entity\Dekor</entity-name>
+        </property>
+
+
+       <property name="blockType"  visibility="always"  searchability="yes" translation="Block-Type">
+            <field-name>blockType</field-name>
+            <entity-name>Mavu\GlobalBundle\Entity\Dekor</entity-name>
+        </property>
+ 
+        <property name="name" visibility="always" searchability="yes" translation="sulu_admin.name">
+            <field-name>name</field-name>
+            <entity-name>Mavu\GlobalBundle\Entity\Dekor</entity-name>
+        </property>
+
+        <property name="classes"  searchability="yes" translation="classes">
+            <field-name>classes</field-name>
+            <entity-name>Mavu\GlobalBundle\Entity\Dekor</entity-name>
+        </property>
+
+        <property name="slug"  searchability="yes" translation="slug">
+            <field-name>slug</field-name>
+            <entity-name>Mavu\GlobalBundle\Entity\Dekor</entity-name>
+        </property>
+
+        <property name="notes" visibility="always" searchability="yes" translation="notes">
+            <field-name>notes</field-name>
+            <entity-name>Mavu\GlobalBundle\Entity\Dekor</entity-name>
+        </property>
+
+
+    </properties>
+</list>

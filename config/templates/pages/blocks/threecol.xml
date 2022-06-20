@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<template xmlns="http://schemas.sulu.io/template/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+    <properties>
+        <block name="blocks">
+            <types>
+                <type name="threecol">
+                    <meta>
+                        <title lang="en">3-columns</title>
+                        <title lang="de">3-Spalter</title>
+                    </meta>
+                    <properties>
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='currentTab'])" />
+        
+
+                        <property name="style_presets" type="dekor_selection"  visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title>Style-Preset</title>
+                            </meta>
+                            <params>
+                                <param name="request_parameters" type="collection">
+                                    <param name="blockType" value="threecol"/>
+                                </param>
+                            </params>
+                        </property>
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='classes'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='note'])" />
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_sm'])" />
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_md'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_lg'])" />
+
+
+
+                        <block name="leftcol" default-type="textblock" cssClass="my_col"  visibleCondition="__parent.currentTab == 'content'">
+
+                            <meta>
+                                <title lang="en">Left Column</title>
+                                <title lang="de">Linke Spalte</title>
+                            </meta>
+                            <xi:include href="sublevel_blocklist.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                                xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types)" />
+
+
+                        </block>
+
+                        <block name="middlecol" default-type="textblock"  visibleCondition="__parent.currentTab == 'content'">
+
+                            <meta>
+                                <title lang="en">Middle Column</title>
+                                <title lang="de">Mittlere Spalte</title>
+
+                            </meta>
+                            <xi:include href="sublevel_blocklist.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                            xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types)" />
+                        </block>
+
+
+
+                        <block name="rightcol" default-type="textblock"  visibleCondition="__parent.currentTab == 'content'">
+
+                            <meta>
+                                <title lang="en">Right Column</title>
+                                <title lang="de">Rechte Spalte</title>
+
+                            </meta>
+                            <xi:include href="sublevel_blocklist.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                            xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types)" />
+                        </block>
+
+                    </properties>
+                </type>
+            </types>
+        </block>
+    </properties>
+</template>

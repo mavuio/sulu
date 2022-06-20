@@ -1,0 +1,64 @@
+@import "./_fonts.css";
+/* This file is for your main application css. */
+
+$w_container: 1200px;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @import "./_fonts.pcss"; */
+/* @import "../node_modules/nprogress/nprogress.css"; */
+@import "./_mavu_generic.css";
+@import "./_mavu_form_md.css";
+@import "./_buttons.css";
+@import "./_stripes.css";
+@import "./_layout.css";
+@import "./_forms.css";
+@import "./_glightbox.css";
+@import "./_pretix.css";
+
+@import "../node_modules/swiper/swiper-bundle.css";
+
+:root {
+  --swiper-theme-color: white;
+  --swiper-navigation-size: 26px;
+}
+
+.opacity-pulse {
+  animation: opacityPulse 2s ease-out;
+  animation-iteration-count: infinite;
+  opacity: 1;
+}
+
+.pulsate {
+  animation: pulsate 2s ease-out;
+  animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes opacityPulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+@-webkit-keyframes pulsate {
+  0% {
+    -webkit-transform: scale(0.9, 0.9);
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+    -webkit-transform: scale(1, 1);
+  }
+  100% {
+    -webkit-transform: scale(0.9, 0.9);
+    opacity: 0.5;
+  }
+}

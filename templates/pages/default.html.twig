@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+
+{% block content %}
+{% set lang=app.request.locale|split('_')[0] %}
+
+
+
+{% if content.blocks %}
+
+
+
+
+{{ include('includes/blocklist.html.twig', {'blocks': content.blocks | mavu_add_block_paths, 'block_views': view.blocks  }) }}
+
+
+{% else %}
+<p class="">Hier ist noch kein Inhalt definiert</p>
+
+{% endif %}
+
+
+
+{% endblock %}

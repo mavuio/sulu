@@ -1,0 +1,32 @@
+#!/usr/bin/env osascript -l JavaScript
+
+// open with atom
+
+lib = Library("iterm2lib")
+tab = lib.createNewTab()
+
+var r = [],
+    l = [];
+
+l[0] = tab.sessions[0];
+r[0] = lib.addCol(l[0]);
+
+r[2] = lib.addRow(r[0]);
+r[1] = lib.addRow(r[0]);
+
+l[2] = lib.addRow(l[0]);
+l[1] = lib.addRow(l[0]);
+
+
+[
+    ['cd /www/hortencollection', 'cd fe_assets', 'pnpm watch-css'],
+    ['cd /www/hortencollection', 'git status'],
+    ['cd /www/hortencollection', 'ssh  -t sub_4548360591@test.hortencollection.com', 'cd /var/www/vhosts/hortencollection.com/httpdocs']
+].reduce(lib.sendCmds, l);
+
+[
+    ['cd /www/hortencollection', "fswatch -o /www/hortencollection/mavu_src /www/hortencollection/templates  /www/hortencollection/public/be_assets  /www/hortencollection/public/fe_assets  | xargs -n1 -I {} osascript -e 'tell application \"Vivaldi Snapshot\" to tell the active tab of its first window to reload' "],
+    ['cd /www/hortencollection', 'git status', 'sleep 3;echo https://hortencollection.mavu.io.test'],
+    ['cd /www/hortencollection', 'ssh  -t sub_4548360591@test.hortencollection.com', 'cd /var/www/vhosts/hortencollection.com/httpdocs']
+
+].reduce(lib.sendCmds, r);

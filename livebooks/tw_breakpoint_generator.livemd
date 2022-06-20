@@ -1,0 +1,18 @@
+# tailwind- breakpoint generator
+
+## Section
+
+```elixir
+ret =
+  640..1200//10
+  |> Enum.flat_map(fn i ->
+    [
+      ~s('b#{i}': {'min':'#{i}px'}),
+      ~s('bl#{i}': {'max':'#{i - 1}px'})
+    ]
+  end)
+  |> Enum.join(", ")
+
+IO.puts(ret)
+ret
+```

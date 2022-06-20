@@ -1,0 +1,65 @@
+
+
+{% if block.image %}
+
+
+{% set meta=block.image|merge_meta %}
+
+
+<div class="ce ce-{{block.type}} c0 media {{block | extract_classes('') }}"
+    {%- if block.use_lightbox -%}
+      x-data="loadComponent('Glightbox',{ 
+        elements: [
+        {
+            'href': '{{ block.image.thumbnails['original_web'] }}',
+            'type': 'image'
+             {% if meta.fototext %}
+            ,'description': '{{meta.fototext}}',
+            {% endif %}            
+
+        }]
+       })"
+    {%- endif -%}
+>
+    {%- if not block.use_lightbox and block.link -%} 
+      <a class="cl {{block | extract_classes('cl') }}" href="{{ block.link }}" >
+    {%- endif -%}
+
+    {% set imageconf = {
+        src: (block.image_format|default('original')) ~ "_" ~ (block.image_size | default("web")),
+        alt: meta.title,
+        title: meta.description|default(meta.title),
+        class: (block | extract_classes('ci') ) ~ (block.use_lightbox ? 'cursor-pointer':'') 
+        } %}
+
+    {%- if block.use_lightbox -%}
+    {% set imageconf = imageconf|merge({'@click.stop': 'openLightbox(0)'}) %}
+    {%- endif -%}            
+
+        
+
+    {{ get_image(block.image, imageconf) }}
+{# 
+
+     <img src="{{ block.image.thumbnails[block.image_format|default('original') ~ "_web"] }}" alt="{{ meta.title }}"
+            title="{{ meta.description|default(meta.title) }}"  class="{{block | extract_classes('ci') }} {%- if block.use_lightbox -%}cursor-pointer{%- endif -%} " 
+        {%- if block.use_lightbox -%}
+        @click="openLightbox(0)"
+        {%- endif -%}            
+            >  #}
+
+    {%- if block.link -%}
+    </a>
+    {%- endif -%}
+
+    <div class=" {{block | extract_classes('cs','mt-3 leading-tight') }}">
+        {% if block.text | default('') %}
+            <div class=" {{block | extract_classes('ct','inline-block text-xs opacity-50') }}">{{block.text | raw}}</div>
+        {% endif %}
+        {% if meta.fototext %}
+            <div  class=" {{block | extract_classes('cc','inline-block text-xs opacity-50') }}" id="desc_{{css_id}}">{{meta.fototext}}</div>
+        {% endif %}
+    </div>
+</div> 
+
+{% endif %}

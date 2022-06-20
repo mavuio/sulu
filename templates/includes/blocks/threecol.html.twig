@@ -1,0 +1,6 @@
+
+<div class="ce ce-{{block.type}} c0  {{block | extract_classes('','sm:flex sm:space-x-6 ce-inner xs:space-y-6') }}">
+    <div class="col {{block | extract_classes('cl','sm:w-1/3') }}">{{ include('includes/blocklist.html.twig',{blocks: block.leftcol} ) }}</div>
+    <div class="col {{block | extract_classes('cm','sm:w-1/3') }}">{{ include('includes/blocklist.html.twig',{blocks: block.middlecol} ) }}</div>
+    <div class="col {{block | extract_classes('cr','sm:w-1/3') }}">{{ include('includes/blocklist.html.twig' ,{blocks: block.rightcol} ) }}</div>
+</div>

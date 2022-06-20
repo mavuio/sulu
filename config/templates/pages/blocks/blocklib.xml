@@ -1,0 +1,711 @@
+<?xml version="1.0"?>
+<template xmlns="http://schemas.sulu.io/template/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+
+    <key>blocklib</key>
+
+    <view>pages/default</view>
+    <controller>App\Controller\Website\CustomController::indexAction</controller>
+    <cacheLifetime>604800</cacheLifetime>
+
+    <meta>
+        <title lang="en">blocklib</title>
+        <title lang="de">blocklib</title>
+    </meta>
+
+
+    <properties>
+        <!-- keep these two tags for compatibility: -->
+        <property name="title" type="text_line" mandatory="true">
+            <meta>
+                <title>Dummy</title>
+            </meta>
+            <params>
+                <param name="headline" value="true" />
+            </params>
+
+            <tag name="sulu.rlp.part" />
+        </property>
+
+        <property name="url" type="resource_locator" mandatory="true">
+            <meta>
+                <title>Dummy</title>
+            </meta>
+
+            <tag name="sulu.rlp" />
+        </property>
+
+        <!-- keep these two tags for compatibility END -->
+
+
+        <block name="blocks">
+            <meta>
+                <title>Dummy:</title>
+            </meta>
+
+            <params>
+                <param name="collapsable" value="false" />
+            </params>
+            <types>
+                <type name="textblock">
+                    <meta>
+                        <title>Text</title>
+                    </meta>
+                    <properties>
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='currentTab'])" />
+        
+                        <property name="style_presets" type="dekor_selection"  visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title>Style-Preset</title>
+                            </meta>
+                            <params>
+                                <param name="request_parameters" type="collection">
+                                    <param name="blockType" value="textblock"/>
+                                </param>
+                            </params>
+                        </property>
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='classes'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='note'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_sm'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_md'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_lg'])" />
+
+                      
+
+                        <property name="richtext" type="text_editor"  visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title lang="en">Text Editor</title>
+                            </meta>
+                            <tag name="sulu.block_preview" priority="100" />
+                            <tag name="sulu.search.field"/>
+                        </property>
+                    </properties>
+                </type>
+                <type name="headline">
+                    <meta>
+                        <title>Headline (standalone)</title>
+                    </meta>
+                    <properties>
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='currentTab'])" />
+        
+                        <property name="style_presets" type="dekor_selection"  visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title>Style-Preset</title>
+                            </meta>
+                            <params>
+                                <param name="request_parameters" type="collection">
+                                    <param name="blockType" value="textblock"/>
+                                </param>
+                            </params>
+                        </property>
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='classes'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='note'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_sm'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_md'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_lg'])" />
+
+                      
+                        <property name="tag_name" type="single_select"   colspan="4" visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title>Headline-Typ</title>
+                            </meta>
+                        
+                            <params>          
+                                <param name="default_value" value="h1"/>              
+                                <param name="values" type="collection">
+                                    <param name="h1">
+                                        <meta>
+                                            <title>H1</title>
+                                        </meta>
+                                    </param>                        
+                                    <param name="h2">
+                                        <meta>
+                                            <title>H2</title>
+                                        </meta>
+                                    </param>                        
+                                    <param name="h3">
+                                        <meta>
+                                            <title>H3</title>
+                                        </meta>
+                                    </param>                        
+                                    <param name="h4">
+                                        <meta>
+                                            <title>H4</title>
+                                        </meta>
+                                    </param>                        
+                                </param>
+                            </params>
+                        </property>
+
+                        <property name="text" type="text_line"  visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title>Text</title>
+                            </meta>
+                            <tag name="sulu.block_preview" priority="100" />
+                            <tag name="sulu.search.field"/>
+                        </property>
+
+
+
+                    </properties>
+                </type>
+                <type name="image">
+                    <meta>
+                        <title>Image</title>
+                    </meta>
+                    <properties>
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='currentTab'])" />
+
+                        <property name="style_presets" type="dekor_selection"  visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title>Style-Presets</title>
+                            </meta>
+                            <params>
+                                <param name="request_parameters" type="collection">
+                                    <param name="blockType" value="image"/>
+                                </param>
+                            </params>
+                        </property>
+        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='classes'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='note'])" />
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_sm'])" />
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_md'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_lg'])" />
+
+                      
+
+
+                        <property name="image" type="single_media_selection"  visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title lang="en">Image</title>
+                                <title lang="de">Bild</title>
+                            </meta>
+
+                            <params>
+                                <param name="types" value="image,video" />
+                            </params>
+
+                            <tag name="sulu.block_preview" priority="100" />
+                        </property>
+
+
+                        <property name="image_format" type="single_select"   colspan="4" visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title lang="de">aspect-ratio:</title>
+                                <title lang="en">Seitenverhältnis:</title>
+                            </meta>
+                        
+                            <params>          
+                                <param name="default_value" value="original"/>              
+                                <param name="values" type="collection">
+                                    <param name="original">
+                                        <meta>
+                                            <title>original</title>
+                                        </meta>
+                                    </param>                        
+                                    <param name="square">
+                                        <meta>
+                                            <title>square (crop)</title>
+                                        </meta>
+                                    </param>
+                                    <param name="landscape">
+                                        <meta>
+                                            <title>landscape (crop to 3:2)</title>
+                                        </meta>
+                                    </param>
+                                </param>
+                            </params>
+                        </property>
+
+                        <property name="image_size" type="single_select"   colspan="8" visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title>Grösse</title>
+                            </meta>
+                        
+                            <params>          
+                                <param name="default_value" value="web"/>              
+                                <param name="values" type="collection">
+                                    <param name="web">
+                                        <meta>
+                                            <title>medium (800px breit)</title>
+                                        </meta>
+                                    </param>                        
+                                    <param name="wide">
+                                        <meta>
+                                            <title>full (1200px breit)</title>
+                                        </meta>
+                                    </param>
+                                </param>
+                            </params>
+                        </property>
+
+                       
+
+                        <property name="use_lightbox" type="checkbox"  colspan="6" visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title>Original in 'LightBox' öffnen</title>
+                            </meta>
+                            <tag name="sulu.block_preview" priority="90" />
+                        </property>
+                        
+                        <property name="link" type="link"   visibleCondition="__parent.currentTab == 'content'  AND __parent.use_lightbox != true ">
+                            <meta>
+                                <title>Link (optional)</title>
+                            </meta>
+                        
+                            <params>
+                                <param name="enable_target" value="true"/>
+                                <param name="enable_anchor" value="true"/>
+                                <param name="enable_title" value="true"/>
+                                <param name="types" type="collection">
+                                    <param name="page"/>
+                                    <param name="external"/>
+                                    <param name="media"/>
+                                </param>
+                            </params>
+                        </property>
+
+                        <property name="text" type="text_editor"  visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title lang="en">Image-Caption</title>
+                                <title lang="de">Bild-Untertitel</title>
+                            </meta>
+                            <tag name="sulu.block_preview" priority="100" />
+                        </property>
+                      
+
+                    </properties>
+                </type>
+                <type name="imageslider">
+                    <meta>
+                        <title>Image-Slider</title>
+                    </meta>
+                    <properties>
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='currentTab'])" />
+        
+                        <property name="style_presets" type="dekor_selection"  visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title>Style-Preset</title>
+                            </meta>
+                            <params>
+                                <param name="request_parameters" type="collection">
+                                    <param name="blockType" value="imageslider"/>
+                                </param>
+                            </params>
+                        </property>
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='classes'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='note'])" />
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_sm'])" />
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_md'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_lg'])" />
+
+                      
+
+
+                        <property name="images" type="media_selection">
+                            <meta>
+                                <title lang="en">Images</title>
+                            </meta>
+                        
+                            <params>
+                                <param name="types" value="image"/>
+                            </params>
+                        </property>
+
+                        <property name="image_format" type="single_select"   colspan="4" visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title lang="de">aspect-ratio:</title>
+                                <title lang="en">Seitenverhältnis:</title>
+                            </meta>
+                        
+                            <params>          
+                                <param name="default_value" value="original"/>              
+                                <param name="values" type="collection">
+                                    <param name="original">
+                                        <meta>
+                                            <title>original</title>
+                                        </meta>
+                                    </param>                        
+                                    <param name="square">
+                                        <meta>
+                                            <title>square (crop)</title>
+                                        </meta>
+                                    </param>
+                                    <param name="landscape">
+                                        <meta>
+                                            <title>landscape (crop to 3:2)</title>
+                                        </meta>
+                                    </param>
+                                </param>
+                            </params>
+                        </property>
+
+                        <property name="use_lightbox" type="checkbox"  visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title>Original in 'LightBox' öffnen</title>
+                            </meta>
+                            <tag name="sulu.block_preview" priority="90" />
+                        </property>
+
+                        <property name="text" type="text_editor"  visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title lang="en">Image-Caption</title>
+                                <title lang="de">Bild-Untertitel</title>
+                            </meta>
+                            <tag name="sulu.block_preview" priority="100" />
+                        </property>
+
+                        <property name="copyright" type="text_line"  visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title lang="en">Copyright</title>
+                                <title lang="de">Copyright</title>
+                            </meta>
+                            <tag name="sulu.block_preview" priority="100" />
+                        </property>
+                      
+
+                    </properties>
+                </type>
+                <type name="video">
+                    <meta>
+                        <title>Video</title>
+                    </meta>
+                    <properties>
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='currentTab'])" />
+                        <property name="style_presets" type="dekor_selection"  visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title>Style-Preset</title>
+                            </meta>
+                            <params>
+                                <param name="request_parameters" type="collection">
+                                    <param name="blockType" value="video"/>
+                                </param>
+                            </params>
+                        </property>
+        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='classes'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='note'])" />
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_sm'])" />
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_md'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_lg'])" />
+
+                       
+
+                        <property name="image" type="single_media_selection" visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title>Vorschau-Bild</title>
+                            </meta>
+
+                            <params>
+                                <param name="types" value="image" />
+                                
+                            </params>
+
+                            <tag name="sulu.block_preview" priority="100" />
+                        </property>
+
+                        <property name="youtube_id" type="text_line">
+                            <meta>
+                                <title >Youtube-ID</title>
+                            </meta>
+                        </property>
+
+                    </properties>
+                </type>
+
+
+                <type name="special_element">
+                    <meta>
+                        <title>SpecialElement</title>
+                    </meta>
+                    <properties>
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='currentTab'])" />
+
+                        <property name="style_presets" type="dekor_selection"  visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title>Style-Preset</title>
+                            </meta>
+                            <params>
+                                <param name="request_parameters" type="collection">
+                                    <param name="blockType" value="special_element"/>
+                                </param>
+                            </params>
+                        </property>
+        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='classes'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='note'])" />
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_sm'])" />
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_md'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_lg'])" />
+
+
+                      
+
+
+                        <property name="special_type" type="single_select"   visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title lang="en">Spezial-Element-Typ:</title>
+                            </meta>
+                        
+                            <params>                        
+                                <param name="values" type="collection">
+                                    <param name="news_list">
+                                        <meta>
+                                            <title>News-Liste</title>
+                                        </meta>
+                                    </param>
+                        
+                                    <param name="event_list">
+                                        <meta>
+                                            <title>Termin-Liste</title>
+                                        </meta>
+                                    </param>
+
+                                    <param name="exhibition_list">
+                                        <meta>
+                                            <title>Ausstellungs-Liste</title>
+                                        </meta>
+                                    </param>
+
+                                    <param name="presse_loginform">
+                                        <meta>
+                                            <title>Presse-Login-Form</title>
+                                        </meta>
+                                    </param>
+
+                                    <param name="artwork_list">
+                                        <meta>
+                                            <title>Artwork-Liste</title>
+                                        </meta>
+                                    </param>
+
+                                    <param name="plain_html">
+                                        <meta>
+                                            <title>Plain HTML</title>
+                                        </meta>
+                                    </param>
+
+                                    <param name="pretix_widget">
+                                        <meta>
+                                            <title>Pretix Widget</title>
+                                        </meta>
+                                    </param>
+                                </param>
+                            </params>
+                        </property>
+
+                        <property name="json_config" type="text_area"  visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title >Konfiguration (im JSON-Format)</title>
+                            </meta>
+                        </property>
+
+                        <property name="html_source" type="text_area"  visibleCondition="__parent.special_type == 'plain_html'">
+                            <meta>
+                                <title >HTML</title>
+                            </meta>
+                        </property>
+
+                    </properties>
+                </type>
+
+
+                <type name="form_element">
+                    <meta>
+                        <title>Formular</title>
+                    </meta>
+                    <properties>
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='currentTab'])" />
+
+                        <property name="style_presets" type="dekor_selection"  visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title>Style-Preset</title>
+                            </meta>
+                            <params>
+                                <param name="request_parameters" type="collection">
+                                    <param name="blockType" value="special_element"/>
+                                </param>
+                            </params>
+                        </property>
+        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='classes'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='note'])" />
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_sm'])" />
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_md'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_lg'])" />
+
+                        <property name="form" type="single_form_selection" visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title lang="de">Formular</title>
+                                <title lang="en">Form</title>
+                            </meta>
+                
+                            <params>
+                                <param name="resourceKey" value="page"/>
+                            </params>
+                        </property>
+
+                    </properties>
+                </type>
+
+
+
+                <type name="button">
+                    <meta>
+                        <title>Button</title>
+                    </meta>
+                    <properties>
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='currentTab'])" />
+        
+                        <property name="style_presets" type="dekor_selection"  visibleCondition="__parent.currentTab == 'styles'">
+                            <meta>
+                                <title>Style-Preset</title>
+                            </meta>
+                            <params>
+                                <param name="request_parameters" type="collection">
+                                    <param name="blockType" value="button"/>
+                                </param>
+                            </params>
+                        </property>
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='classes'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='note'])" />
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_sm'])" />
+                        
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_md'])" />
+
+                        <xi:include href="styletab_lib.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:template/sulu:properties/sulu:block[@name='blocks']/sulu:types/sulu:type[@name='styletab_lib']/sulu:properties/sulu:property[@name='bp_lg'])" />
+
+                       
+
+                        
+                        <property name="icon" type="single_media_selection" visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title lang="en">Image</title>
+                                <title lang="de">Bild</title>
+                            </meta>
+
+                            <params>
+                                <param name="types" value="image" />
+                            </params>
+
+                            <tag name="sulu.block_preview" priority="100" />
+                        </property>
+
+                        <property name="text" type="text_editor"  visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title lang="en">Text</title>
+                            </meta>
+                            <tag name="sulu.block_preview" priority="100" />
+                            <tag name="sulu.search.field"/>
+
+                        </property>
+
+     
+
+                        <property name="link" type="link"   visibleCondition="__parent.currentTab == 'content'">
+                            <meta>
+                                <title lang="en">Link</title>
+                                <title lang="de">Link</title>
+                            </meta>
+                        
+                            <params>
+                                <param name="enable_target" value="true"/>
+                                <param name="enable_anchor" value="true"/>
+                                <param name="enable_title" value="true"/>
+                                <param name="types" type="collection">
+                                    <param name="page"/>
+                                    <param name="external"/>
+                                    <param name="media"/>
+                                </param>
+                            </params>
+                        </property>
+
+                    </properties>
+                </type>
+
+
+
+
+            </types>
+        </block>
+
+    </properties>
+</template>

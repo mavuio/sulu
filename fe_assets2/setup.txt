@@ -1,0 +1,2 @@
+pnpm add tailwindcss
+pnpx tailwindcss -c tailwind_usercontent.config.js  -o tailwind.css 

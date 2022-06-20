@@ -1,0 +1,27 @@
+<section  class="ce ce-{{block.type}} c0 {{block | extract_classes }}">
+
+
+
+{% if block.link %}
+    {% set block_view =  mavu_get_by_path(block_views,block.path) %}
+    <a class="c1  {{block | extract_classes('c1','flex items-center') }}" href="{{ block.link }}"
+    {%- if block_view.link.target ?? false -%} target="{{block_view.link.target}}" {%- endif -%} 
+    {%- if block_view.link.title ?? false -%} title="{{block_view.link.title}}" {%- endif -%} 
+    >
+{% else %}
+    <span class="c1  {{block | extract_classes('c1','flex items-center') }}" >    
+{% endif %}
+    
+        {% if block.icon %}
+            <img src="{{ block.icon.thumbnails['original_web'] }}" 
+            class="svg-icon {{block | extract_classes('ci')}} " >
+        {% endif %}
+    
+        <div class="{{block | extract_classes('ct') }}">{{block.text | raw}}</div>
+    
+{% if block.link %}
+    </a>
+{% else %}
+    </span>
+{% endif %}
+</section>

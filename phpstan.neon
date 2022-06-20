@@ -1,0 +1,9 @@
+parameters:
+	level: 4
+	paths:
+		- mavu_src
+	ignoreErrors:
+		- '#Ternary operator condition is always true.#'
+		- '*Tarsana*'
+	checkMissingIterableValueType: false
+	checkGenericClassInNonGenericObjectType: false
