@@ -10,6 +10,7 @@ listItemActionRegistry.add('mavu_global.duplicate', DuplicateItemAction);
 import MavuSvelteField from "./fields/MavuSvelteField.js";
 fieldRegistry.add('mavu_svelte_field', MavuSvelteField);
 
+import "./app.css";
 
 ckeditorConfigRegistry.add((config) => {
     return {

@@ -1,0 +1,7 @@
+div[class^="snackbar--"],
+div[class*=" snackbar--"] {
+  white-space: pre-wrap;
+  height: auto;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
