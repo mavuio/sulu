@@ -1,0 +1,229 @@
+/* all content-element related stuff goes here */
+
+/* ce auf top-ebene */
+.main-content {
+  > * {
+    @apply xs:max-w-[600px] xs:ml-0;
+  }
+}
+
+.main-content > .ce {
+  max-width: 1000px;
+
+  @apply px-4 py-px;
+  max-width: $w_container;
+
+  @apply mx-auto;
+}
+
+.ce > .c1 {
+  > .c0 {
+  }
+}
+
+.ce .col {
+  /* border: 1px dotted #ddd; */
+}
+/* headline styles: */
+/* 
+h1 {
+  @apply text-4xl;
+}
+
+h2 {
+  @apply text-2xl;
+}
+
+h3 {
+  @apply text-lg;
+}
+
+h4 {
+  @apply font-bold;
+} */
+
+h1,
+h2,
+h3,
+h4 {
+  position: relative;
+}
+
+h1 + p,
+h2 + p,
+h3 + p,
+h4 + p {
+  @apply mt-3;
+}
+
+p + h1,
+p + h2,
+p + h3,
+p + h4 {
+  @apply mt-12;
+}
+/* 
+h1::after,
+h2::after,
+h3::after,
+h4::after {
+  border: 1px solid currentColor;
+  font-size: 0.5em;
+  padding: 0.1em;
+  margin-left: 1em;
+  display: block;
+  position: absolute;
+  right: 0px;
+  top: 0.5em;
+  opacity: 0.4;
+}
+
+h1::after {
+  content: "H1";
+}
+
+h2::after {
+  content: "H2";
+}
+
+h3::after {
+  content: "H3";
+}
+
+h4::after {
+  content: "H4";
+} */
+
+/* headline styles END */
+
+.ce-textblock {
+  @apply text-sm;
+
+  @apply break-words;
+
+  p {
+    margin-bottom: 1em;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  table {
+    @apply w-full;
+    th {
+      @apply text-left bg-white bg-opacity-50;
+    }
+    td {
+      @apply border-b border-white border-opacity-40 p-1 align-top;
+    }
+    td:first-child {
+      @apply pl-0;
+    }
+    td:last-child {
+      @apply pr-0;
+    }
+    tr:first-child {
+      td {
+        @apply border-t;
+      }
+    }
+  }
+  a {
+    text-decoration: underline;
+  }
+}
+
+.ce {
+  &.border-defaultcolor {
+    @apply border-white border-opacity-40;
+  }
+  @apply pb-8;
+  &:last-child {
+    @apply pb-0;
+  }
+}
+
+.preset_footer > .ce {
+  @apply pb-0;
+}
+
+/* https://van11y.net/accessible-hide-show/ */
+
+.ce-expander {
+  @apply border-b border-white border-opacity-80;
+}
+
+.js-to_expand[aria-hidden="true"],
+.js-to_expand[data-hidden="true"] {
+  display: none;
+}
+
+.expandmore__button {
+  background: none;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  padding: 0;
+  text-align: left;
+  text-indent: -1em;
+  padding-left: 1em;
+}
+/* optional */
+.expandmore__button:before,
+.expandmore__button:before {
+  content: "+ ";
+  width: 1em;
+  display: inline-block;
+  /* padding-left: 1em; */
+  text-indent: 0;
+}
+.expandmore__button[aria-expanded="true"]:before,
+.expandmore__button[data-expanded="true"]:before {
+  content: "- ";
+}
+
+/* This is the opened state */
+.expandmore__to_expand {
+  display: block;
+  overflow: hidden;
+  opacity: 1;
+  margin-top: 1em;
+  transition: visibility 0s ease, max-height 1s ease, opacity 1s ease;
+  max-height: 200em;
+  /* magic number for max-height = enough height */
+  visibility: visible;
+  transition-delay: 0s;
+  padding-left: 1.8rem;
+}
+/* This is the hidden state */
+[data-hidden="true"].expandmore__to_expand {
+  display: block;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition-delay: 1s, 0s, 0s;
+}
+
+.ce-teaser_area {
+  @apply relative;
+  > .c1 {
+    @apply relative  w-full h-0;
+    > .c2 {
+      @apply pb-[100%] h-0 relative;
+    }
+  }
+  .teaser {
+    @apply absolute;
+    &.has_expander {
+      @apply max-h-32 overflow-y-hidden cursor-pointer transition-all duration-1000;
+      &.expanded {
+        @apply max-h-[2000px];
+        .expander-fade {
+          @apply opacity-0;
+        }
+      }
+    }
+    .expander-fade {
+      @apply opacity-100 absolute h-12 bottom-0 inset-x-0 bg-gradient-to-b from-transparent to-[rgb(25,25,25)];
+    }
+  }
+}

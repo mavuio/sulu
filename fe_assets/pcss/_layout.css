@@ -1,3 +1,5 @@
+/* all generic layout stuff goes here , all content-element related stuff goes into _content.css  */
+
 /* ce auf top-ebene */
 .main-content {
   > * {

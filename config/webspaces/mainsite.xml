@@ -33,12 +33,12 @@
                     <title lang="de">Hauptnavigation</title>
                 </meta>
             </context>
-            <!-- <context key="footer">
+            <context key="footer">
                 <meta>
                     <title lang="en">Footer Navigation</title>
                     <title lang="de">Footer-Navigation</title>
                 </meta>
-            </context> -->
+            </context> 
         </contexts>
     </navigation>
 

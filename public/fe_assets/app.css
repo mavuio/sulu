@@ -1585,6 +1585,291 @@ select {
   opacity: 0.4;
 }
 
+/* all generic layout stuff goes here , all content-element related stuff goes into _content.css  */
+
+/* ce auf top-ebene */
+
+@media (max-width: 839px) {
+
+  .main-content > * {
+    margin-left: 0px;
+    max-width: 600px;
+  }
+}
+
+.main-content > .ce {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ce > .c1 > .c0 {
+  }
+
+.ce .col {
+  /* border: 1px dotted #ddd; */
+}
+
+/* headline styles: */
+
+/* 
+h1 {
+  @apply text-4xl;
+}
+
+h2 {
+  @apply text-2xl;
+}
+
+h3 {
+  @apply text-lg;
+}
+
+h4 {
+  @apply font-bold;
+} */
+
+h1,
+h2,
+h3,
+h4 {
+  position: relative;
+}
+
+h1 + p, 
+h2 + p, 
+h3 + p, 
+h4 + p {
+  margin-top: 0.75rem;
+}
+
+p + h1, 
+p + h2, 
+p + h3, 
+p + h4 {
+  margin-top: 3rem;
+}
+
+/* 
+h1::after,
+h2::after,
+h3::after,
+h4::after {
+  border: 1px solid currentColor;
+  font-size: 0.5em;
+  padding: 0.1em;
+  margin-left: 1em;
+  display: block;
+  position: absolute;
+  right: 0px;
+  top: 0.5em;
+  opacity: 0.4;
+}
+
+h1::after {
+  content: "H1";
+}
+
+h2::after {
+  content: "H2";
+}
+
+h3::after {
+  content: "H3";
+}
+
+h4::after {
+  content: "H4";
+} */
+
+/* headline styles END */
+
+.ce-textblock {
+  font-size: clamp(1rem, calc(1rem + (1.0416666666666667 - 1) * ((100vw - 20rem) / (96 - 20))), 1.0416666666666667rem);
+  overflow-wrap: break-word;
+}
+
+.ce-textblock p {
+    margin-bottom: 1em;
+  }
+
+.ce-textblock p:last-child {
+      margin-bottom: 0;
+    }
+
+.ce-textblock table {
+  width: 100%;
+}
+
+.ce-textblock table th {
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.5;
+  text-align: left;
+}
+
+.ce-textblock table td {
+  border-bottom-width: 1px;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
+  --tw-border-opacity: 0.4;
+  padding: 0.25rem;
+  vertical-align: top;
+}
+
+.ce-textblock table td:first-child {
+  padding-left: 0px;
+}
+
+.ce-textblock table td:last-child {
+  padding-right: 0px;
+}
+
+.ce-textblock table tr:first-child td {
+  border-top-width: 1px;
+}
+
+.ce-textblock a {
+    text-decoration: underline;
+  }
+
+.ce.border-defaultcolor {
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
+  --tw-border-opacity: 0.4;
+}
+
+.ce {
+  padding-bottom: 2rem;
+}
+
+.ce:last-child {
+  padding-bottom: 0px;
+}
+
+.preset_footer > .ce {
+  padding-bottom: 0px;
+}
+
+/* https://van11y.net/accessible-hide-show/ */
+
+.ce-expander {
+  border-bottom-width: 1px;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
+  --tw-border-opacity: 0.8;
+}
+
+.js-to_expand[aria-hidden="true"],
+.js-to_expand[data-hidden="true"] {
+  display: none;
+}
+
+.expandmore__button {
+  background: none;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  padding: 0;
+  text-align: left;
+  text-indent: -1em;
+  padding-left: 1em;
+}
+
+/* optional */
+
+.expandmore__button:before,
+.expandmore__button:before {
+  content: "+ ";
+  width: 1em;
+  display: inline-block;
+  /* padding-left: 1em; */
+  text-indent: 0;
+}
+
+.expandmore__button[aria-expanded="true"]:before,
+.expandmore__button[data-expanded="true"]:before {
+  content: "- ";
+}
+
+/* This is the opened state */
+
+.expandmore__to_expand {
+  display: block;
+  overflow: hidden;
+  opacity: 1;
+  margin-top: 1em;
+  transition: visibility 0s ease, max-height 1s ease, opacity 1s ease;
+  max-height: 200em;
+  /* magic number for max-height = enough height */
+  visibility: visible;
+  transition-delay: 0s;
+  padding-left: 1.8rem;
+}
+
+/* This is the hidden state */
+
+[data-hidden="true"].expandmore__to_expand {
+  display: block;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition-delay: 1s, 0s, 0s;
+}
+
+.ce-teaser_area {
+  position: relative;
+}
+
+.ce-teaser_area > .c1 {
+  position: relative;
+  height: 0px;
+  width: 100%;
+}
+
+.ce-teaser_area > .c1 > .c2 {
+  position: relative;
+  height: 0px;
+  padding-bottom: 100%;
+}
+
+.ce-teaser_area .teaser {
+  position: absolute;
+}
+
+.ce-teaser_area .teaser.has_expander {
+  max-height: 8rem;
+  cursor: pointer;
+  overflow-y: hidden;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 1000ms;
+}
+
+.ce-teaser_area .teaser.has_expander.expanded {
+  max-height: 2000px;
+}
+
+.ce-teaser_area .teaser.has_expander.expanded .expander-fade {
+  opacity: 0;
+}
+
+.ce-teaser_area .teaser .expander-fade {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  height: 3rem;
+  background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
+  --tw-gradient-from: transparent;
+  --tw-gradient-to: rgb(0 0 0 / 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  --tw-gradient-to: rgb(25,25,25);
+  opacity: 1;
+}
+
+/* all content-element related stuff goes here */
+
 /* ce auf top-ebene */
 
 @media (max-width: 839px) {

@@ -36,7 +36,7 @@
             <tag name="sulu.rlp" />
         </property>
 
-        <property name="style_presets" type="dekor_selection" >
+        <property name="style_presets" type="dekor_selection" multilingual="false"  >
             <meta>
                 <title>Seiten-Stil</title>
             </meta>

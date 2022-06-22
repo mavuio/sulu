@@ -58,6 +58,19 @@ class CustomController extends DefaultController
     public function indexAction($structure, $preview = false, $partial = false)
     {
 
+        $response = $this->renderStructure(
+            $structure,
+            [],
+            $preview,
+            $partial
+        );
+        return $response;
+    }
+
+
+    public function redirectAction($structure, $preview = false, $partial = false)
+    {
+
         $locale = $this->get('request_stack')->getCurrentRequest()->getLocale();
         $pageId = $structure->getUuid();
 
@@ -82,6 +95,8 @@ class CustomController extends DefaultController
         );
         return $response;
     }
+
+
 
     /**
      * Handle Login page.
@@ -133,10 +148,16 @@ class CustomController extends DefaultController
         if ($pageId == null) {
             return [];
         }
+        $document = $this->documentManager->find($pageId);
+        $structure = $document->getStructure();
+
+
         $segment = $this->requestAnalyzer->getSegment();
         $webspaceKey = $this->requestAnalyzer->getWebspace()->getKey();
         $locale = $this->requestAnalyzer->getCurrentLocalization()->getLocale();
 
+
+        $navigationContext = $structure->getProperty('redirectNavContext')->getValue();
 
         try {
             return $this->navigationMapper->getNavigation(
@@ -145,7 +166,7 @@ class CustomController extends DefaultController
                 $locale,
                 1, // $depth
                 true,
-                "main", //$context,
+                $navigationContext,
                 false, //$loadExcerpt
             );
         } catch (DocumentNotFoundException $exception) {

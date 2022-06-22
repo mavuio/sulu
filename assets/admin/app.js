@@ -4,7 +4,7 @@ import {listItemActionRegistry,formToolbarActionRegistry,listToolbarActionRegist
 import {ckeditorPluginRegistry, ckeditorConfigRegistry, fieldRegistry} from 'sulu-admin-bundle/containers';
 
 import DuplicateItemAction from "./listItemActions/DuplicateItemAction";
-listItemActionRegistry.add('mavu_mysite.duplicate', DuplicateItemAction);
+listItemActionRegistry.add('mavu_global.duplicate', DuplicateItemAction);
 
 
 import MavuSvelteField from "./fields/MavuSvelteField.js";

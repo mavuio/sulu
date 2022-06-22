@@ -371,13 +371,21 @@ class TwClassesCore
 
         // executes after the command finishes
         if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
+
+            throw new \Exception($this->generateFriendlyErrorMessage($process->getErrorOutput()));
+            // throw new ProcessFailedException($process);
         }
 
         $res = $process->getOutput();
         $this->logger->info(implode(" ", $cmd), ["res" => print_r($res, 1)]);
         $this->removeOtherCssFiles("presets", $targetFileName);
         return ["ok"];
+    }
+
+    public function generateFriendlyErrorMessage(string $output)
+    {
+        $cleanedOutput = str_replace($this->projectDir, '', $output);
+        return "presets.css was not generated: ➜ {$cleanedOutput}";
     }
 
 
@@ -387,7 +395,7 @@ class TwClassesCore
 
         $npmBinary = $this->bundleConfig["tw_classes"]['npm_binary'];
 
-        $cmd = [$npmBinary, "exec", "--", "tailwindcss", "-c", "tailwind_usercontent.config.js", "-o", $targetFileName, "--minify"];
+        $cmd = [$npmBinary, "exec", "--", "tailwindcss", "-o", $targetFileName, "--minify"];
 
 
         $this->logger->info("bundleconf", ["bc" => print_r($this->bundleConfig, 1)]);

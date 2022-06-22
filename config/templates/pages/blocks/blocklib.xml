@@ -107,7 +107,7 @@
                             </meta>
                             <params>
                                 <param name="request_parameters" type="collection">
-                                    <param name="blockType" value="textblock"/>
+                                    <param name="blockType" value="headline"/>
                                 </param>
                             </params>
                         </property>

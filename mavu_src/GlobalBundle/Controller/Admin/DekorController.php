@@ -4,28 +4,32 @@ declare(strict_types=1);
 
 namespace Mavu\GlobalBundle\Controller\Admin;
 
+use Exception;
+use Tarsana\Functional as F;
 use Mavu\GlobalBundle\Entity\Dekor;
 use Mavu\GlobalBundle\Admin\DekorAdmin;
-use Doctrine\ORM\EntityManagerInterface;
-use Tarsana\Functional as F;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Mavu\GlobalBundle\Core\TwClassesCore;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Serializer\Serializer;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sulu\Component\Rest\AbstractRestController;
 use Sulu\Component\Security\SecuredControllerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Mavu\GlobalBundle\Admin\DoctrineListRepresentationFactory;
+
+
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+use Mavu\GlobalBundle\Exception\CustomizableException;
+
+
 use HandcraftedInTheAlps\RestRoutingBundle\Routing\ClassResourceInterface;
 use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Mavu\GlobalBundle\Core\TwClassesCore;
-
-use Symfony\Component\Validator\Validation;
-
-
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 
 /**
@@ -37,8 +41,8 @@ class DekorController extends AbstractRestController implements ClassResourceInt
     private EntityManagerInterface $entityManager;
 
     /**
-    * @var TwClassesCore
-    */
+     * @var TwClassesCore
+     */
     private $classesCoreService;
     public function __construct(
         DoctrineListRepresentationFactory $doctrineListRepresentationFactory,
@@ -46,20 +50,20 @@ class DekorController extends AbstractRestController implements ClassResourceInt
         ViewHandlerInterface $viewHandler,
         ?TokenStorageInterface $tokenStorage = null,
         TwClassesCore $classesCoreService,
-            ) {
-                $this->doctrineListRepresentationFactory = $doctrineListRepresentationFactory;
-                $this->entityManager = $entityManager;
-                $this->classesCoreService = $classesCoreService;
+    ) {
+        $this->doctrineListRepresentationFactory = $doctrineListRepresentationFactory;
+        $this->entityManager = $entityManager;
+        $this->classesCoreService = $classesCoreService;
 
         parent::__construct($viewHandler, $tokenStorage);
     }
 
     public function cgetAction(Request $request): Response
     {
-        
+
         $blockType = $request->query->get('blockType');
-        $filters=[];
-        if($blockType) {
+        $filters = [];
+        if ($blockType) {
             $filters["blockType"] = $blockType;
         }
 
@@ -84,33 +88,32 @@ class DekorController extends AbstractRestController implements ClassResourceInt
     {
 
         $normalizers = [new ObjectNormalizer()];
-    
+
         $serializer = new Serializer($normalizers, []);
         return $serializer->normalize($entity, null);
     }
 
     public function putAction(Request $request, int $id): Response
     {
-        if($request->query->get('action')=='duplicate') {
+        if ($request->query->get('action') == 'duplicate') {
             $oldRec = $this->entityManager->getRepository(Dekor::class)->find($id);
-            $oldData=$this->toArray($oldRec);
-            $oldData['name']=$oldData['name']." (copy)";
-            $oldData['slug']= null;
+            $oldData = $this->toArray($oldRec);
+            $oldData['name'] = $oldData['name'] . " (copy)";
+            $oldData['slug'] = null;
             $dekor = new Dekor();
-
             $this->mapDataToEntity($oldData, $dekor);
             $this->entityManager->persist($dekor);
-            $this->entityManager->flush();
-    
         } else {
             $dekor = $this->entityManager->getRepository(Dekor::class)->find($id);
             if (!$dekor) {
                 throw new NotFoundHttpException();
             }
             $this->mapDataToEntity($request->request->all(), $dekor);
-            $this->entityManager->flush();
         }
+
         $this->updateStylesheet();
+
+        $this->entityManager->flush();
 
         return $this->handleView($this->view($dekor));
     }
@@ -122,7 +125,14 @@ class DekorController extends AbstractRestController implements ClassResourceInt
         $this->mapDataToEntity($request->request->all(), $dekor);
         $this->entityManager->persist($dekor);
         $this->entityManager->flush();
-        $this->updateStylesheet();
+        try {
+            $this->updateStylesheet();
+        } catch (\Exception $e) {
+            //remove again, if it caused an error
+            $this->entityManager->remove($dekor);
+            $this->entityManager->flush();
+            throw $e;
+        }
 
         return $this->handleView($this->view($dekor, 201));
     }
@@ -133,6 +143,7 @@ class DekorController extends AbstractRestController implements ClassResourceInt
         $dekor = $this->entityManager->getReference(Dekor::class, $id);
         $this->entityManager->remove($dekor);
         $this->entityManager->flush();
+        $this->updateStylesheet();
 
         return $this->handleView($this->view(null, 204));
     }
@@ -151,70 +162,77 @@ class DekorController extends AbstractRestController implements ClassResourceInt
         $entity->setSlug($data['slug']);
     }
 
+    /**
+     * @throws CustomizableException
+     */
+    function updateStylesheet()
+    {
 
-    function updateStylesheet() {
 
-        $dekors=$this->entityManager->getRepository(Dekor::class)->findAll();
+        $dekors = $this->entityManager->getRepository(Dekor::class)->findAll();
 
-        $strings=array_map(function ($dekor) {
+        $strings = array_map(function ($dekor) {
             return $this->getClassesForDekor($dekor);
         }, $dekors);
 
 
-        $content=implode("\n", $strings);
+        $content = implode("\n", $strings);
         // echo $content;
-        $this->classesCoreService->writeDekorStylesheet($content);
+        try {
+            $this->classesCoreService->writeDekorStylesheet($content);
+        } catch (\Exception $e) {
+            throw new CustomizableException($e->getMessage());
+        }
     }
-    
+
     public function getClassesForDekor($dekor)
     {
-        $classString=$dekor->getClasses()??"";
+        $classString = $dekor->getClasses() ?? "";
 
-        $classString=$this->classesCoreService->removeComments($classString);
-        $classString=$this->classesCoreService->customizeBreakpointPrefixes( $classString, $this->classesCoreService->getDefaultBreakpoints() );
-        
-        $classes=$this->getClassesFromString($classString);
+        $classString = $this->classesCoreService->removeComments($classString);
+        $classString = $this->classesCoreService->customizeBreakpointPrefixes($classString, $this->classesCoreService->getDefaultBreakpoints());
+
+        $classes = $this->getClassesFromString($classString);
 
 
-        $css=F\Stream::of($classes)
-        ->map(function ($class) {
-            return $this->splitClassIntoPrefix($class);
-        })
-        ->groupBy(function($class_w_prefix){
-            [$prefix,$_] = $class_w_prefix;
-            return $prefix;
-        })
-        ->toPairs()
-        ->map(function($class_w_prefix){
-            [$prefix,$vals] = $class_w_prefix;
-
-            $twClassStr=F\Stream::of($vals)
-            ->map(function($val) {
-                return $val[1];
+        $css = F\Stream::of($classes)
+            ->map(function ($class) {
+                return $this->splitClassIntoPrefix($class);
             })
-            ->join(" ") 
-            ->result();
-            
-            $twClassStr=trim($twClassStr);
-            if($twClassStr) {
-                if($prefix) {
-                    return ".$prefix { @apply $twClassStr; }";
-                }  else {
-                    return "@apply $twClassStr;";
+            ->groupBy(function ($class_w_prefix) {
+                [$prefix, $_] = $class_w_prefix;
+                return $prefix;
+            })
+            ->toPairs()
+            ->map(function ($class_w_prefix) {
+                [$prefix, $vals] = $class_w_prefix;
+
+                $twClassStr = F\Stream::of($vals)
+                    ->map(function ($val) {
+                        return $val[1];
+                    })
+                    ->join(" ")
+                    ->result();
+
+                $twClassStr = trim($twClassStr);
+                if ($twClassStr) {
+                    if ($prefix) {
+                        return ".$prefix { @apply $twClassStr; }";
+                    } else {
+                        return "@apply $twClassStr;";
+                    }
                 }
-            }
-            return "";
-
-        })
-        ->join("\n") 
-        ->result();
+                return "";
+            })
+            ->join("\n")
+            ->result();
 
 
-        if(trim($css)) {
-            $selector=".preset_{$dekor->getId()}";
-            $slug=$dekor->getSlug();
-            if($slug) {
-                $selector.=", .preset_{$slug}";
+        if (trim($css)) {
+            $selector = ".preset_{$dekor->getId()}";
+            $slug = $dekor->getSlug();
+            if ($slug) {
+                $selector .= ", .preset_{$slug}";
             }
             return "
             /*{$dekor->getName()}: */ 
@@ -230,12 +248,11 @@ class DekorController extends AbstractRestController implements ClassResourceInt
 
     public function splitClassIntoPrefix($str)
     {
-        if(preg_match("/^(c.)\:(.*)$/", $str,$m)) {
-            return [$m[1],$m[2]];
+        if (preg_match("/^(c.)\:(.*)$/", $str, $m)) {
+            return [$m[1], $m[2]];
         } else {
-            return ["",$str];
+            return ["", $str];
         }
-
     }
 
 
