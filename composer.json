@@ -22,12 +22,8 @@
         "docs": "http://docs.sulu.io/",
         "chat": "https://sulu.io/services-and-support#chat"
     },
-    "repositories": [{
-        "type": "git",
-        "url": "https://github.com/mavuio/sulu"
-    }],
     "require": {
-        "php": "^7.2 || ^8.0",
+        "php": "^8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "beberlei/doctrineextensions": "^1.3",
@@ -44,7 +40,7 @@
         "scienta/doctrine-json-functions": "~4.3",
         "sulu/community-bundle": "^2.0@dev",
         "sulu/form-bundle": "2.3.0",
-        "sulu/sulu": "dev-enhancement/copy-paste-blocks as 2.4.0",
+        "sulu/sulu": "~2.5.0",
         "sulu/web-twig": "^2.5",
         "symfony/config": "^5.4",
         "symfony/dotenv": "^5.4",
