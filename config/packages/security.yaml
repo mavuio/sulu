@@ -5,7 +5,7 @@ security:
         strategy: unanimous
         allow_if_all_abstain: true
 
-    encoders:
+    password_hashers:
         Sulu\Bundle\SecurityBundle\Entity\User: bcrypt
 
     providers:
@@ -13,14 +13,14 @@ security:
             id: sulu_security.user_provider
 
     access_control:
-        - { path: ^/admin/reset, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/security/reset, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/_wdt, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/translations, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/p/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/reset, roles: PUBLIC_ACCESS }
+        - { path: ^/admin/security/reset, roles: PUBLIC_ACCESS }
+        - { path: ^/admin/login$, roles: PUBLIC_ACCESS }
+        - { path: ^/admin/_wdt, roles: PUBLIC_ACCESS }
+        - { path: ^/admin/translations, roles: PUBLIC_ACCESS }
+        - { path: ^/admin$, roles: PUBLIC_ACCESS }
+        - { path: ^/admin/$, roles: PUBLIC_ACCESS }
+        - { path: ^/admin/p/, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: ROLE_USER }
 
         - { path: ^/presse/login, roles: PUBLIC_ACCESS }
@@ -34,7 +34,6 @@ security:
             security: false
         admin:
             pattern: ^/admin(\/|$)
-            # anonymous: true
             lazy: true
             provider: sulu
             entry_point: sulu_security.authentication_entry_point
@@ -75,11 +74,17 @@ security:
         #         secret:   "%kernel.secret%"
         #         lifetime: 604800 # 1 week in seconds
         #         path:     /
+        #     # activate different ways to authenticate
+        #     # https://symfony.com/doc/current/security.html#the-firewall
+        #
+        #     # https://symfony.com/doc/current/security/impersonating_user.html
+        #     # switch_user: true
 
 
 #        website:
 #            pattern: ^/
-#            anonymous: lazy
+#            lazy: true
+#            provider: sulu
 #            # The login and logout routes need to be created.
 #            # For an advanced user management with registration and opt-in emails have a look at the:
 #            # https://github.com/sulu/SuluCommunityBundle
