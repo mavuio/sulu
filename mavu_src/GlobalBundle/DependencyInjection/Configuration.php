@@ -7,7 +7,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): \Symfony\Component\Config\Definition\Builder\TreeBuilder
     {
         $treeBuilder = new TreeBuilder('mavu_global');
         $rootNode = $treeBuilder->getRootNode();

@@ -93,7 +93,7 @@ class UrlBasedAutoNameSubscriber  implements EventSubscriberInterface
         $this->liveSession = $liveSession;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             Events::CONFIGURE_OPTIONS => 'configureOptions',

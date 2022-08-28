@@ -69,7 +69,8 @@ class TwClassesCore
         LoggerInterface $mavuDebugLogger,
         ManagerRegistry $registry,
         array $bundleConfig,
-        string $projectDir
+        string $projectDir,
+        private \Sulu\Bundle\DocumentManagerBundle\Session\Session $session2
     ) {
 
 
@@ -81,8 +82,8 @@ class TwClassesCore
         // $this->registry = $registry;
         $this->projectDir = $projectDir;
         $this->bundleConfig = $bundleConfig;
-        $this->session = $this->container->get('sulu_document_manager.default_session');
-        $this->liveSession = $this->container->get('sulu_document_manager.live_session');
+        $this->session = $this->session2;
+        $this->liveSession = $this->session2;
         $this->dekorRepository = $registry->getRepository(Dekor::class);
     }
 
