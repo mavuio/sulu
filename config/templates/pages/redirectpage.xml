@@ -6,7 +6,7 @@
     <view>pages/default</view>
     <controller>App\Controller\Website\CustomController::redirectAction</controller>
 
-    <cacheLifetime>604800</cacheLifetime>
+    <cacheLifetime>43200</cacheLifetime>
 
     <meta>
         <title>Redirection-Page</title>

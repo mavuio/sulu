@@ -5,7 +5,7 @@
 
     <view>pages/default</view>
     <controller>App\Controller\Website\CustomController::indexAction</controller>
-    <cacheLifetime>604800</cacheLifetime>
+    <cacheLifetime>43200</cacheLifetime>
 
     <meta>
         <title lang="en">styletab_lib</title>
