@@ -133,7 +133,7 @@ class CustomController extends DefaultController
         return $attributes;
     }
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         $subscribedServices = parent::getSubscribedServices();
         $subscribedServices['Mavu\LocalBundle\Core\LocalHelpers'] = 'Mavu\LocalBundle\Core\LocalHelpers';
