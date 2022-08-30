@@ -10,6 +10,10 @@
             <bind key="$projectDir">%kernel.project_dir%</bind>
         </defaults>
 
+        <service
+            id="Symfony\Component\DependencyInjection\ContainerInterface"
+            alias="service_container"
+        />
 
         <service id="mavu.tw_classes_core" class="Mavu\GlobalBundle\Core\TwClassesCore" public="false">
             <argument key="$bundleConfig" />
@@ -17,7 +21,7 @@
 
         <service id="Mavu\GlobalBundle\Core\TwClassesCore" alias="mavu.tw_classes_core" public="false" />
 
-        
+
 
         <service id="mavu.document.subscriber.tw_class_collector"
             class="Mavu\GlobalBundle\Document\Subscriber\TwClassCollectorSubscriber">

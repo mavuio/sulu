@@ -3,16 +3,16 @@
 
 namespace App\Controller\Website;
 
-use Sulu\Bundle\WebsiteBundle\Controller\DefaultController;
-use Sulu\Component\Content\Compat\StructureInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Sulu\Bundle\WebsiteBundle\Navigation\NavigationMapperInterface;
-use Sulu\Component\DocumentManager\Exception\DocumentNotFoundException;
-use Sulu\Component\Webspace\Analyzer\RequestAnalyzerInterface;
-use Sulu\Component\DocumentManager\DocumentManager;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sulu\Component\DocumentManager\DocumentManager;
+use Sulu\Component\Content\Compat\StructureInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Sulu\Bundle\WebsiteBundle\Controller\DefaultController;
+
+use Sulu\Component\Webspace\Analyzer\RequestAnalyzerInterface;
+use Sulu\Bundle\WebsiteBundle\Navigation\NavigationMapperInterface;
+use Sulu\Component\DocumentManager\Exception\DocumentNotFoundException;
 
 
 class CustomController extends DefaultController
@@ -71,7 +71,7 @@ class CustomController extends DefaultController
     public function redirectAction($structure, $preview = false, $partial = false)
     {
 
-        $locale = $this->get('request_stack')->getCurrentRequest()->getLocale();
+        $locale = $this->container->get('request_stack')->getCurrentRequest()->getLocale();
         $pageId = $structure->getUuid();
 
         $sub = $this->getSubnavForPage($pageId);
@@ -97,39 +97,10 @@ class CustomController extends DefaultController
     }
 
 
-
-    /**
-     * Handle Login page.
-     */
-    public function loginAction(Request $request): Response
-    {
-
-        dd("Login controller");
-        // $document = $this->documentManager->find("6532f5a6-3e6a-46d2-bd86-523bebebf958");
-        // $structure= $document->getStructure();
-
-        // return $this->indexAction($structure);
-        //         $authenticationUtils = $this->getAuthenticationUtils();
-
-        //         // get the login error if there is one
-        //         $error = $authenticationUtils->getLastAuthenticationError();
-
-
-        //         // last username entered by the user
-        //         $lastUsername = $authenticationUtils->getLastUsername();
-
-        // // dd([$error, $lastUsername]);
-
-        //         return $this->renderTemplate(Configuration::TYPE_LOGIN, [
-        //             'last_username' => $lastUsername,
-        //             'error' => $error,
-        //         ]);
-    }
-
     protected function getAttributes($attributes, StructureInterface $structure = null, $preview = false)
     {
         $attributes = parent::getAttributes($attributes, $structure, $preview);
-        $attributes['LocalHelpers'] = $this->get('Mavu\LocalBundle\Core\LocalHelpers');
+        $attributes['LocalHelpers'] = $this->container->get('Mavu\LocalBundle\Core\LocalHelpers');
         return $attributes;
     }
 

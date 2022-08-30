@@ -7,15 +7,15 @@ use Psr\Log\NullLogger;
 use PHPCR\SessionInterface;
 use Psr\Log\LoggerInterface;
 use Tarsana\Functional as F;
+use Mavu\GlobalBundle\Entity\Dekor;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Process\Process;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Sulu\Bundle\PageBundle\Document\BasePageDocument;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Finder\Finder;
-use Mavu\GlobalBundle\Entity\Dekor;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
-use Doctrine\Persistence\ManagerRegistry;
 
 
 class TwClassesCore
@@ -70,7 +70,7 @@ class TwClassesCore
         ManagerRegistry $registry,
         array $bundleConfig,
         string $projectDir,
-        private \Sulu\Bundle\DocumentManagerBundle\Session\Session $session2
+        \PHPCR\SessionInterface $session2
     ) {
 
 
@@ -82,8 +82,8 @@ class TwClassesCore
         // $this->registry = $registry;
         $this->projectDir = $projectDir;
         $this->bundleConfig = $bundleConfig;
-        $this->session = $this->session2;
-        $this->liveSession = $this->session2;
+        $this->session = $session2;
+        $this->liveSession = $session2;
         $this->dekorRepository = $registry->getRepository(Dekor::class);
     }
 
