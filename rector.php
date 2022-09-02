@@ -26,51 +26,15 @@
 
 // };
 
+use Rector\Doctrine\Set\DoctrineSetList;
+use Rector\Symfony\Set\SymfonySetList;
+use Rector\Symfony\Set\SensiolabsSetList;
+use Rector\Config\RectorConfig;
 
-
-use Rector\Core\Configuration\Option;
-use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
-use Rector\Php80\ValueObject\AnnotationToAttribute;
-use Rector\Set\ValueObject\SetList;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use TheCodingMachine\GraphQLite\Annotations as GraphQLite;
-
-return static function (ContainerConfigurator $containerConfigurator): void {
-    // Here we can define, what sets of rules will be applied
-    // tip: use "SetList" class to autocomplete sets
-    // $containerConfigurator->import(SetList::CODE_QUALITY);
-
-    // Set parameters
-    $parameters = $containerConfigurator->parameters();
-    $parameters->set(Option::PATHS, [
-        __DIR__ . '/src',
-        __DIR__ . '/tests',
+return function (RectorConfig $rectorConfig): void {
+    $rectorConfig->sets([
+        DoctrineSetList::ANNOTATIONS_TO_ATTRIBUTES,
+        SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES,
+        SensiolabsSetList::FRAMEWORK_EXTRA_61,
     ]);
-
-    $services = $containerConfigurator->services();
-
-    // @Validate and @Assertion are part of other libraries, include if necessary
-    $services->set(AnnotationToAttributeRector::class)
-        ->configure([
-            new AnnotationToAttribute(GraphQLite\Query::class),
-            new AnnotationToAttribute(GraphQLite\Mutation::class),
-            new AnnotationToAttribute(GraphQLite\Type::class),
-            new AnnotationToAttribute(GraphQLite\ExtendType::class),
-            new AnnotationToAttribute(GraphQLite\Input::class),
-            new AnnotationToAttribute(GraphQLite\Field::class),
-            new AnnotationToAttribute(GraphQLite\SourceField::class),
-            new AnnotationToAttribute(GraphQLite\MagicField::class),
-            new AnnotationToAttribute(GraphQLite\Logged::class),
-            new AnnotationToAttribute(GraphQLite\Right::class),
-            new AnnotationToAttribute(GraphQLite\FailWith::class),
-            new AnnotationToAttribute(GraphQLite\HideIfUnauthorized::class),
-            new AnnotationToAttribute(GraphQLite\InjectUser::class),
-            new AnnotationToAttribute(GraphQLite\Security::class),
-            new AnnotationToAttribute(GraphQLite\Factory::class),
-            new AnnotationToAttribute(GraphQLite\UseInputType::class),
-            new AnnotationToAttribute(GraphQLite\Decorate::class),
-            new AnnotationToAttribute(GraphQLite\Autowire::class),
-            new AnnotationToAttribute(GraphQLite\HideParameter::class),
-            new AnnotationToAttribute(GraphQLite\EnumType::class),
-        ]);
 };
