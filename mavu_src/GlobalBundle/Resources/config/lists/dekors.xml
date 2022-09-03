@@ -29,6 +29,11 @@
             <entity-name>Mavu\GlobalBundle\Entity\Dekor</entity-name>
         </property>
 
+        <property name="ignoreDefaults"  searchability="yes" translation="ignoreDefaults" type="bool">
+            <field-name>ignoreDefaults</field-name>
+            <entity-name>Mavu\GlobalBundle\Entity\Dekor</entity-name>
+        </property>
+
         <property name="notes" visibility="always" searchability="yes" translation="notes">
             <field-name>notes</field-name>
             <entity-name>Mavu\GlobalBundle\Entity\Dekor</entity-name>

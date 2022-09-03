@@ -10,20 +10,20 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220405193524 extends AbstractMigration
+final class Version20220903095820 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'add fields to dekor-db';
+        return '';
     }
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE mavu_global_dekor ADD slug VARCHAR(255) DEFAULT NULL, ADD notes LONGTEXT DEFAULT NULL');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_DA59F6B1989D9B62_SLUG ON mavu_global_dekor (slug)');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE mavu_global_dekor DROP slug, DROP notes');
+        $this->addSql('DROP INDEX UNIQ_DA59F6B1989D9B62_SLUG ON mavu_global_dekor');
     }
 }

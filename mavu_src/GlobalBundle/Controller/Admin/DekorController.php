@@ -11,6 +11,7 @@ use Mavu\GlobalBundle\Admin\DekorAdmin;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Mavu\GlobalBundle\Core\TwClassesCore;
+use Mavu\GlobalBundle\Core\DekorCore;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Serializer\Serializer;
 use FOS\RestBundle\View\ViewHandlerInterface;
@@ -44,22 +45,38 @@ class DekorController extends AbstractRestController implements ClassResourceInt
      * @var TwClassesCore
      */
     private $classesCoreService;
+
+
+    /**
+     * @var DekorCore
+     */
+    private $dekorCoreService;
+
+
+
     public function __construct(
         DoctrineListRepresentationFactory $doctrineListRepresentationFactory,
         EntityManagerInterface $entityManager,
         ViewHandlerInterface $viewHandler,
         ?TokenStorageInterface $tokenStorage = null,
         TwClassesCore $classesCoreService,
+        DekorCore $dekorCoreService,
     ) {
         $this->doctrineListRepresentationFactory = $doctrineListRepresentationFactory;
         $this->entityManager = $entityManager;
         $this->classesCoreService = $classesCoreService;
+        $this->dekorCoreService = $dekorCoreService;
 
         parent::__construct($viewHandler, $tokenStorage);
     }
 
     public function cgetAction(Request $request): Response
     {
+
+        $updatedStyleCount = $this->dekorCoreService->checkDefaultStyles();
+        if ($updatedStyleCount > 0) {
+            $this->updateStylesheet();
+        }
 
         $blockType = $request->query->get('blockType');
         $filters = [];
@@ -81,6 +98,7 @@ class DekorController extends AbstractRestController implements ClassResourceInt
         if (!$dekor) {
             throw new NotFoundHttpException();
         }
+
         return $this->handleView($this->view($dekor));
     }
 
@@ -157,6 +175,7 @@ class DekorController extends AbstractRestController implements ClassResourceInt
 
         $entity->setName($data['name']);
         $entity->setBlockType($data['blockType']);
+        $entity->setIgnoreDefaults($data['ignoreDefaults'] ? true : false);
         $entity->setClasses($data['classes']);
         $entity->setNotes($data['notes']);
         $entity->setSlug($data['slug']);
@@ -229,14 +248,18 @@ class DekorController extends AbstractRestController implements ClassResourceInt
 
 
         if (trim($css)) {
-            $selector = ".preset_{$dekor->getId()}";
+            $selectorParts = [];
+            if ($dekor->isDefaultStyle() == false) {
+                $selectorParts[] = ".preset_{$dekor->getId()}";
+            }
             $slug = $dekor->getSlug();
             if ($slug) {
-                $selector .= ", .preset_{$slug}";
+                $selectorParts[] = ".preset_{$slug}";
             }
+            $selectorString = implode(', ', $selectorParts);
             return "
             /*{$dekor->getName()}: */ 
-            {$selector} {
+            {$selectorString} {
                 {$css}
             }
             ";

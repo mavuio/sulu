@@ -42,5 +42,16 @@
             </meta>
         </property>
 
+        <property name="ignoreDefaults" type="checkbox">
+            <params>
+                <param name="label">
+                    <meta>
+                        <title>do not use default styles</title>
+                    </meta>
+                </param>
+                <!-- <param name="type" value="toggler" /> -->
+            </params>
+        </property>
+
     </properties>
 </form>

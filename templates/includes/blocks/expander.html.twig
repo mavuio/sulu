@@ -23,7 +23,7 @@
       </button>
     </h3>
 
-    <section x-show="expanded" x-collapse.duration.500ms  aria-labelledby="{{css_id}}-button" class="c1 {{block | extract_classes("pb-8 pt-4 pl-8") }}">
+    <section x-show="expanded" x-collapse.duration.500ms  aria-labelledby="{{css_id}}-button" class="c1 {{block | extract_classes('c1','') }}">
         
         <div>
          {{ include('includes/blocklist.html.twig',{blocks: block.maincol}) }}        

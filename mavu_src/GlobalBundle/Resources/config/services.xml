@@ -21,6 +21,10 @@
 
         <service id="Mavu\GlobalBundle\Core\TwClassesCore" alias="mavu.tw_classes_core" public="false" />
 
+        <service id="mavu.dekor_core" class="Mavu\GlobalBundle\Core\DekorCore" public="false">
+        </service>
+        <service id="Mavu\GlobalBundle\Core\DekorCore" alias="mavu.dekor_core" public="false" />
+
 
 
         <service id="mavu.document.subscriber.tw_class_collector"

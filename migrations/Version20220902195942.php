@@ -10,20 +10,20 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220405193524 extends AbstractMigration
+final class Version20220902195942 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'add fields to dekor-db';
+        return 'add  ignore fields to dekor-db';
     }
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE mavu_global_dekor ADD slug VARCHAR(255) DEFAULT NULL, ADD notes LONGTEXT DEFAULT NULL');
+        $this->addSql('ALTER TABLE mavu_global_dekor ADD ignore_defaults TINYINT(1) NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE mavu_global_dekor DROP slug, DROP notes');
+        $this->addSql('ALTER TABLE mavu_global_dekor DROP ignore_defaults');
     }
 }

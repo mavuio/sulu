@@ -141,7 +141,6 @@ class TwClassesCore
         $classString = $this->removeComments($classString);
 
         $classString = $this->enrichWithStylePresetsForBlock($classString, $block);
-        $classString = $this->enrichWithDefaultClassesForBlock($classString, $block);
         $classString = $this->customizeBreakpointPrefixes($classString, $block);
         return $classString;
     }
@@ -165,17 +164,25 @@ class TwClassesCore
             ->result();
     }
 
-    public function enrichWithDefaultClassesForBlock($classString, array $settings): string
-    {
-        return "{$classString} " . $this->getDefaultClassesForBlock($settings["type"]);
-    }
+
 
     public function enrichWithStylePresetsForBlock($classString, array $settings): string
     {
-
+        $blockType = $settings['type'];
+        $useDefaultClass = true;
         if (array_key_exists('style_presets', $settings) && $settings["style_presets"]) {
-            return "{$classString} " . $this->getClassesForDekor($settings["style_presets"]);
+            [$ignoreDefaultStyles, $presetClassString] = $this->getClassesForDekor($settings['style_presets']);
+
+            if ($useDefaultClass && $ignoreDefaultStyles) {
+                $useDefaultClass = false;
+            }
+            $classString .= ' ' . $presetClassString;
         }
+
+        if ($useDefaultClass) {
+            $classString =  "preset_" . DekorCore::getSlugForContentTypeName($blockType) . ' ' . $classString;
+        }
+
         return $classString;
     }
 
@@ -184,48 +191,29 @@ class TwClassesCore
 
         if (is_array($style_presets)) {
 
+            $ignoreDefaultStyles = false;
 
-            $strings = array_map(function ($dekor) {
+            $strings = array_map(function ($dekor) use (&$ignoreDefaultStyles) {
                 if (is_integer($dekor)) {
                     $dekor = $this->dekorRepository->find($dekor);
                 }
                 if ($dekor) {
+                    if ($ignoreDefaultStyles == false &&  $dekor->isIgnoreDefaults()) {
+                        $ignoreDefaultStyles = true;
+                    }
                     return  "preset_{$dekor->getId()}";
                     // return $dekor->getClasses()." preset_{$dekor->getId()}";
                 } else {
                     return "";
                 }
             }, $style_presets);
-            return implode(" ", $strings);
+            return [$ignoreDefaultStyles, implode(" ", $strings)];
         }
-        return "";
+        return [false, ""];
     }
 
 
-    public function getDefaultClassesForBlock(string $type): string
-    {
-        // copied from html-templates, otherwise tailwind  won't know about them
 
-        switch ($type) {
-
-            case 'expander':
-                return "pb-8 pt-4 pl-8";
-
-
-            case 'twocol':
-                return "sm:flex sm:space-x-6 ce-inner xs:space-y-6 sm:w-1/2";
-
-            case 'threecol':
-                return "sm:flex sm:space-x-6 ce-inner xs:space-y-6 sm:w-1/3";
-
-            case 'image':
-            case 'video':
-                return  'inline-block text-xs opacity-50 mt-3';
-
-            default:
-                return "";
-        }
-    }
 
     /**
      *

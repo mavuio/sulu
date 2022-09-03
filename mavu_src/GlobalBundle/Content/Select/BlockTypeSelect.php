@@ -11,20 +11,23 @@ class BlockTypeSelect
     public function getValues(string $locale): array
     {
         return [
-            ['name' => 'textblock', 'title' => 'textblock'],
-            ['name' => 'image', 'title' => 'image'],
-            ['name' => 'imageslider', 'title' => 'imageslider'],
-            ['name' => 'video', 'title' => 'video'],
-            ['name' => 'special_element', 'title' => 'special_element'],
-            ['name' => 'twocol', 'title' => '2-columns'],
-            ['name' => 'threecol', 'title' => '3-columns'],
-            ['name' => 'button', 'title' => 'button'],
-            ['name' => 'expander', 'title' => 'expander'],
-            ['name' => 'section', 'title' => 'section'],
-            ['name' => 'headline', 'title' => 'Headline (standalone)'],
+            ['name' => 'textblock', 'title' => 'textblock', 'defaultClasses' => ''],
+            ['name' => 'image', 'title' => 'image', 'defaultClasses' => 'inline-block text-xs opacity-50 mt-3'],
+            ['name' => 'imageslider', 'title' => 'imageslider', 'defaultClasses' => ''],
+            ['name' => 'video', 'title' => 'video', 'defaultClasses' => 'inline-block text-xs opacity-50 mt-3'],
+            ['name' => 'special_element', 'title' => 'special_element', 'defaultClasses' => ''],
+            ['name' => 'twocol', 'title' => '2-columns', 'defaultClasses' => 'sm:flex sm:space-x-6  xs:space-y-6  cl:sm:w-1/2 cr:sm:w-1/2'],
+            ['name' => 'threecol', 'title' => '3-columns', 'defaultClasses' => 'sm:flex sm:space-x-6  xs:space-y-6  cl:sm:w-1/3 cm:sm:w-1/3 cr:sm:w-1/3 '],
+            ['name' => 'button', 'title' => 'button', 'defaultClasses' => ''],
+            ['name' => 'expander', 'title' => 'expander', 'defaultClasses' => 'c1:pb-8 c1:pt-4 c1:pl-8'],
+            ['name' => 'section', 'title' => 'section', 'defaultClasses' => ''],
+            ['name' => 'headline', 'title' => 'Headline (standalone)', 'defaultClasses' => ''],
             // [ 'name'=>'common', 'title'=>'common'],
         ];
     }
+
+
+
 
 
     /**

@@ -3,13 +3,15 @@
 namespace Mavu\GlobalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Mavu\GlobalBundle\Core\DekorCore;
 use JMS\Serializer\Annotation as Serializer;
-use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
 
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @Serializer\ExclusionPolicy("all")
@@ -28,6 +30,7 @@ class Dekor
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
+    #[UniqueEntity(fields: "slug", message: "This Slug is already taken.")]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
     /**
@@ -38,7 +41,7 @@ class Dekor
     /**
      * @Serializer\Expose()
      */
-    #[ORM\Column(type: 'string', nullable: true, length: 255)]
+    #[ORM\Column(type: 'string', nullable: true, length: 255, unique: true)]
     private $slug;
     /**
      * @Serializer\Expose()
@@ -55,14 +58,19 @@ class Dekor
      */
     #[ORM\Column(type: 'text', nullable: true)]
     private $notes;
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $metadata->addConstraint(new UniqueEntity([
-            'fields' => 'slug',
-        ]));
-        dd("loadvalidator");
+    /**
+     *
+     * @Serializer\Expose()
+     */
+    #[ORM\Column]
+    private ?bool $ignoreDefaults = null;
 
-    }
+    // public static function loadValidatorMetadata(ClassMetadata $metadata)
+    // {
+    //     $metadata->addConstraint(new UniqueEntity([
+    //         'fields' => 'slug',
+    //     ]));
+    // }
     public function getId(): ?int
     {
         return $this->id;
@@ -86,7 +94,7 @@ class Dekor
             $safeslug = $slugger->slug($slug);
             $this->slug = $safeslug;
         } else {
-            $this->slug=null;
+            $this->slug = null;
         }
     }
     public function getNotes(): string
@@ -99,16 +107,16 @@ class Dekor
     }
     public function getBlockType(): ?array
     {
-        return explode(",",$this->blockType);
+        return explode(",", $this->blockType);
     }
-    public function setBlockType( $blockType): self
+    public function setBlockType($blockType): self
     {
         if (is_string($blockType)) {
-            $blockType= [ $blockType ];
-        } 
-        
-        $this->blockType = implode(",",$blockType);
-        
+            $blockType = [$blockType];
+        }
+
+        $this->blockType = implode(",", $blockType);
+
 
         return $this;
     }
@@ -121,5 +129,32 @@ class Dekor
         $this->classes = $classes;
 
         return $this;
+    }
+
+
+    public function isDefaultStyle(): ?bool
+    {
+        return $this->slug == DekorCore::getSlugForContentTypeName($this->blockType);
+    }
+
+
+
+
+    public function isIgnoreDefaults(): ?bool
+    {
+        return $this->ignoreDefaults;
+    }
+
+    public function setIgnoreDefaults(bool $ignoreDefaults): self
+    {
+        $this->ignoreDefaults = $ignoreDefaults;
+
+        return $this;
+    }
+
+
+    public function getIgnoreDefaults(): bool
+    {
+        return $this->ignoreDefaults ? true : false;
     }
 }
