@@ -198,9 +198,14 @@ class Preview extends React.Component<Props> {
             return;
         }
 
+        const preservedScrollPosition = this.getPreviewScrollPosition();
+
         previewDocument.open(); // This will lose in Firefox the and safari previewDocument.location
         previewDocument.write(previewContent);
         previewDocument.close();
+
+        setTimeout(() => this.setPreviewScrollPosition(preservedScrollPosition), 100);
+
     };
 
     componentWillUnmount() {
@@ -235,6 +240,34 @@ class Preview extends React.Component<Props> {
 
         return this.iframeRef.contentDocument;
     };
+
+
+    getPreviewWindow = (): ?Window => {
+        if (this.previewWindow) {
+            return this.previewWindow;
+        }
+
+        if (!(this.iframeRef instanceof HTMLIFrameElement)) {
+            return;
+        }
+
+        return this.iframeRef.contentWindow;
+    };
+
+    getPreviewScrollPosition = ()  => {
+        const win = this.getPreviewWindow();
+        if(win) {
+            return win.document.documentElement.scrollTop || win.pageYOffset || win.document.body.scrollTop;
+        }
+    };
+
+    setPreviewScrollPosition = (pos)  => {
+        const win = this.getPreviewWindow();
+        if(win) {
+            win.scrollTo({ top: pos});
+        }
+    }
+
 
     @action setIframe = (iframeRef: ?Object) => {
         this.iframeRef = iframeRef;
