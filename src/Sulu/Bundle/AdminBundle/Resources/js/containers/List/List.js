@@ -426,6 +426,12 @@ class List extends React.Component<Props> {
         return copyPromise;
     };
 
+
+       @action handleRequestItemDuplicate = (id: string | number,parentId: string | number) => {
+        this.props.store.copy(id, parentId, this.props?.onCopyFinished);
+    };
+
+
     @action handleCopyOverlayConfirmClick = (parent: Object) => {
         if (!this.resolveCopy) {
             throw new Error('The resolveCopy function is not set. This should not happen, and is likely a bug.');
@@ -740,6 +746,7 @@ class List extends React.Component<Props> {
                             onLimitChange={this.handleLimitChange}
                             onPageChange={this.handlePageChange}
                             onRequestItemCopy={copyable ? this.handleRequestItemCopy : undefined}
+                            onRequestItemDuplicate={copyable ? this.handleRequestItemDuplicate : undefined}
                             onRequestItemDelete={deletable ? this.handleRequestItemDelete : undefined}
                             onRequestItemMove={movable ? this.handleRequestItemMove : undefined}
                             onRequestItemOrder={orderable ? this.handleRequestItemOrder : undefined}
