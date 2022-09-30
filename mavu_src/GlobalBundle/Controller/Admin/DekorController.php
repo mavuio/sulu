@@ -176,7 +176,9 @@ class DekorController extends AbstractRestController implements ClassResourceInt
         $entity->setName($data['name']);
         $entity->setBlockType($data['blockType']);
         $entity->setIgnoreDefaults($data['ignoreDefaults'] ? true : false);
+        $entity->setUseRawCss($data['useRawCss'] ? true : false);
         $entity->setClasses($data['classes']);
+        $entity->setRawCss($data['rawCss']);
         $entity->setNotes($data['notes']);
         $entity->setSlug($data['slug']);
     }
@@ -206,46 +208,55 @@ class DekorController extends AbstractRestController implements ClassResourceInt
 
     public function getClassesForDekor($dekor)
     {
-        $classString = $dekor->getClasses() ?? "";
 
-        $classString = $this->classesCoreService->removeComments($classString);
-        $classString = $this->classesCoreService->customizeBreakpointPrefixes($classString, $this->classesCoreService->getDefaultBreakpoints());
+        $useRawCss = $dekor->getUseRawCss();
 
-        $classes = $this->getClassesFromString($classString);
+        if ($useRawCss) {
+            $rawCss = $dekor->getRawCss();
 
+            $css = $this->classesCoreService->removeComments($rawCss);
+        } else {
+            $classString = $dekor->getClasses() ?? '';
 
-        $css = F\Stream::of($classes)
-            ->map(function ($class) {
-                return $this->splitClassIntoPrefix($class);
-            })
-            ->groupBy(function ($class_w_prefix) {
-                [$prefix, $_] = $class_w_prefix;
-                return $prefix;
-            })
-            ->toPairs()
-            ->map(function ($class_w_prefix) {
-                [$prefix, $vals] = $class_w_prefix;
+            $classString = $this->classesCoreService->removeComments($classString);
+            $classString = $this->classesCoreService->customizeBreakpointPrefixes($classString, $this->classesCoreService->getDefaultBreakpoints());
 
-                $twClassStr = F\Stream::of($vals)
-                    ->map(function ($val) {
-                        return $val[1];
-                    })
-                    ->join(" ")
-                    ->result();
+            $classes = $this->getClassesFromString($classString);
 
-                $twClassStr = trim($twClassStr);
-                if ($twClassStr) {
-                    if ($prefix) {
-                        return ".$prefix { @apply $twClassStr; }";
-                    } else {
-                        return "@apply $twClassStr;";
+            $css = F\Stream::of($classes)
+                ->map(function ($class) {
+                    return $this->splitClassIntoPrefix($class);
+                })
+                ->groupBy(function ($class_w_prefix) {
+                    [$prefix, $_] = $class_w_prefix;
+
+                    return $prefix;
+                })
+                ->toPairs()
+                ->map(function ($class_w_prefix) {
+                    [$prefix, $vals] = $class_w_prefix;
+
+                    $twClassStr = F\Stream::of($vals)
+                        ->map(function ($val) {
+                            return $val[1];
+                        })
+                        ->join(' ')
+                        ->result();
+
+                    $twClassStr = trim($twClassStr);
+                    if ($twClassStr) {
+                        if ($prefix) {
+                            return ".$prefix { @apply $twClassStr; }";
+                        } else {
+                            return "@apply $twClassStr;";
+                        }
                     }
-                }
-                return "";
-            })
-            ->join("\n")
-            ->result();
 
+                    return '';
+                })
+                ->join("\n")
+                ->result();
+        }
 
         if (trim($css)) {
             $selectorParts = [];

@@ -24,11 +24,30 @@
         </property>
 
 
-        <property name="classes" type="text_area"  colspan="12">
+        <property name="classes" type="text_area"  colspan="12" visibleCondition="__parent.useRawCss != true">
             <meta>
-                <title>Classes</title>
+                <title>TailwindCSS -  Classes</title>
             </meta>
         </property>
+
+        <property name="useRawCss" type="checkbox">
+            <params>
+                <param name="label">
+                    <meta>
+                        <title>use raw CSS</title>
+                    </meta>
+                </param>
+                <param name="type" value="toggler" />
+            </params>
+        </property>
+
+
+        <property name="rawCss" type="text_area"  colspan="12" visibleCondition="__parent.useRawCss == true">
+            <meta>
+                <title>raw CSS (PostCSS Format)</title>
+            </meta>
+        </property>
+
          
         <property name="notes" type="text_area"  colspan="12">
             <meta>
@@ -38,7 +57,7 @@
 
         <property name="slug" type="text_line"  colspan="6">
             <meta>
-                <title>unique classname (Admin Only, for twig-templates)</title>
+                <title>unique classname (used for twig-templates)</title>
             </meta>
         </property>
 

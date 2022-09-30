@@ -2,6 +2,7 @@
 
 namespace Mavu\GlobalBundle\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Mavu\GlobalBundle\Core\DekorCore;
 use JMS\Serializer\Annotation as Serializer;
@@ -64,6 +65,20 @@ class Dekor
      */
     #[ORM\Column]
     private ?bool $ignoreDefaults = null;
+
+    /**
+     *
+     * @Serializer\Expose()
+     */
+    #[ORM\Column(nullable: true)]
+    private ?bool $useRawCss = null;
+    /**
+     *
+     * @Serializer\Expose()
+     */
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $rawCss = null;
 
     // public static function loadValidatorMetadata(ClassMetadata $metadata)
     // {
@@ -156,5 +171,29 @@ class Dekor
     public function getIgnoreDefaults(): bool
     {
         return $this->ignoreDefaults ? true : false;
+    }
+
+    public function getUseRawCss(): ?bool
+    {
+        return $this->useRawCss;
+    }
+
+    public function setUseRawCss(?bool $useRawCss): self
+    {
+        $this->useRawCss = $useRawCss;
+
+        return $this;
+    }
+
+    public function getRawCss(): ?string
+    {
+        return $this->rawCss;
+    }
+
+    public function setRawCss(?string $rawCss): self
+    {
+        $this->rawCss = $rawCss;
+
+        return $this;
     }
 }
