@@ -22,6 +22,10 @@
         "docs": "http://docs.sulu.io/",
         "chat": "https://sulu.io/services-and-support#chat"
     },
+    "repositories": [{
+        "type": "git",
+        "url": "https://github.com/mavuio/sulu"
+    }],
     "require": {
         "php": "^8.1",
         "ext-ctype": "*",
@@ -35,7 +39,7 @@
         "scheb/2fa-bundle": "^6.1",
         "scheb/2fa-email": "^6.1",
         "scheb/2fa-trusted-device": "^6.1",
-        "sulu/sulu": "~2.5.1",
+        "sulu/sulu": "dev-2.5dev as 2.5.0",
         "symfony/config": "^6.0",
         "symfony/dotenv": "^6.0",
         "symfony/flex": "^1.17 || ^2.0",
@@ -58,7 +62,8 @@
         "tarsana/functional": "^2.2",
         "twig/extra-bundle": "^3.3",
         "twig/intl-extra": "^3.3",
-        "rector/rector": "^0.14.0"
+        "rector/rector": "^0.14.0",
+        "symfony/maker-bundle": "^1.38"
 
     },
     "require-dev": {
