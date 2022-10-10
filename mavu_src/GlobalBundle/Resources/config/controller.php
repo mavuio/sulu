@@ -8,7 +8,10 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
+    $services = $containerConfigurator->services()
+        ->defaults()
+        ->autoconfigure()
+        ->autowire();
 
     $services->set('mavu_global_dekor.rest.controller', DekorController::class)
         ->public()
@@ -18,5 +21,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(JsonImportController::class)
         ->public()
         ->tag('controller.service_arguments')
-        ->tag('sulu.context', ['context' => 'admin']);
+        ->tag('sulu.context', ['context' => 'admin'])
+        ->args([service('mavu.json_import_core')]);
 };

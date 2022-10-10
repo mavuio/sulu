@@ -12,6 +12,7 @@ use Mavu\GlobalBundle\Content\Types\MavuSvelteField;
 use Mavu\GlobalBundle\Content\Types\SingleDekorSelection;
 use Mavu\GlobalBundle\Core\DekorCore;
 use Mavu\GlobalBundle\Core\InformationProvider;
+use Mavu\GlobalBundle\Core\JsonImportCore;
 use Mavu\GlobalBundle\Core\TwClassesCore;
 use Mavu\GlobalBundle\Document\Subscriber\TwClassCollectorSubscriber;
 use Mavu\GlobalBundle\Form\Types\DateType;
@@ -49,8 +50,15 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->set('mavu.tw_classes_core', TwClassesCore::class)
         ->arg('$bundleConfig', '');
+    $services->alias(TwClassesCore::class, 'mavu.tw_classes_core');
 
     $services->set('mavu.dekor_core', DekorCore::class);
+    $services->alias(DekorCore::class, 'mavu.dekor_core');
+
+    $services->set('mavu.json_import_core', JsonImportCore::class)
+        ->args([service("sulu_media.collection_repository")]);
+
+    $services->alias(JsonImportCore::class, 'mavu.json_import_core');
 
     $services->set('mavu.document.subscriber.tw_class_collector', TwClassCollectorSubscriber::class)
         ->tag('sulu_document_manager.event_subscriber')
@@ -139,9 +147,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->alias(ContainerInterface::class, 'service_container');
 
-    $services->alias(TwClassesCore::class, 'mavu.tw_classes_core');
-
-    $services->alias(DekorCore::class, 'mavu.dekor_core');
 
     $services->alias(SlugifierInterface::class, 'sulu_document_manager.node_name_slugifier');
 };
