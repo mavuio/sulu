@@ -7,7 +7,7 @@ use Symfony\Component\Config\FileLocator;
 use Mavu\GlobalBundle\DependencyInjection\Configuration;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 
@@ -157,12 +157,12 @@ class MavuGlobalExtension extends Extension implements PrependExtensionInterface
     {
 
 
-        $loader = new XmlFileLoader(
+        $loader = new YamlFileLoader(
             $container,
             new FileLocator(__DIR__ . '/../Resources/config')
         );
-        $loader->load('services.xml');
-        $loader->load('controller.xml');
+        $loader->load('services.yaml');
+        $loader->load('controller.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);

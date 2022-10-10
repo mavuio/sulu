@@ -1,0 +1,11 @@
+admin_controllers:
+    resource: ../../mavu_src/GlobalBundle/Controller/Admin
+    type: attribute
+
+controllers:
+    resource: ../../mavu_src/GlobalBundle/Controller
+    type: attribute
+
+kernel:
+    resource: ../../src/Kernel.php
+    type: attribute
