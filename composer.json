@@ -87,6 +87,7 @@
         "symfony/phpunit-bridge": "^6.0",
         "symfony/thanks": "^1.2",
         "symfony/web-profiler-bundle": "^6.0",
+        "symplify/config-transformer": "^11.1",
         "thecodingmachine/phpstan-strict-rules": "^1.0"
     },
     "conflict": {
