@@ -23,13 +23,11 @@ class CustomizableException extends \Exception implements TranslationErrorMessag
      */
     private $customMessage;
 
-    /**
-     * @param string $name
-     */
-    public function __construct($customMessage, $additionalInfo = [])
+
+    public function __construct($customMessage, $additionalInfo = [], $previous = null)
     {
         $this->customMessage = $customMessage;
-        parent::__construct(json_encode($additionalInfo, 1), 9001);
+        parent::__construct(json_encode($additionalInfo, 1), 9001, $previous);
     }
 
     public function getMessageTranslationKey(): string

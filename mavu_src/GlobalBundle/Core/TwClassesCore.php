@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use Tarsana\Functional as F;
 use Mavu\GlobalBundle\Entity\Dekor;
 use Symfony\Component\Finder\Finder;
+use Mavu\GlobalBundle\Core\DekorCore;
 use Symfony\Component\Process\Process;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -26,6 +27,7 @@ class TwClassesCore
      */
     private $session;
 
+
     /**
      * @var SessionInterface
      */
@@ -34,15 +36,12 @@ class TwClassesCore
     /**
      * @var LoggerInterface
      */
-    private $mavuDebugLogger;
+    private $logger;
 
     private string $projectDir;
 
     private array $bundleConfig;
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+
 
     /**
      * @var CacheInterface
@@ -55,6 +54,7 @@ class TwClassesCore
     // private $registry;
 
 
+
     private $dekorRepository;
 
     /**
@@ -63,23 +63,19 @@ class TwClassesCore
     private $filesystem;
 
     public function __construct(
-        ContainerInterface $container,
         CacheInterface $cache,
         Filesystem $filesystem,
         LoggerInterface $mavuDebugLogger,
-        ManagerRegistry $registry,
         array $bundleConfig,
         string $projectDir,
-        \PHPCR\SessionInterface $session2
+        \PHPCR\SessionInterface $session2,
+        ManagerRegistry $registry,
     ) {
 
 
-
         $this->filesystem = $filesystem;
-        $this->container = $container;
         $this->cache = $cache;
         $this->logger = $mavuDebugLogger ?: new NullLogger();
-        // $this->registry = $registry;
         $this->projectDir = $projectDir;
         $this->bundleConfig = $bundleConfig;
         $this->session = $session2;
@@ -166,27 +162,41 @@ class TwClassesCore
 
 
 
+
     public function enrichWithStylePresetsForBlock($classString, array $settings): string
     {
         $blockType = $settings['type'];
         $useDefaultClass = true;
         if (array_key_exists('style_presets', $settings) && $settings["style_presets"]) {
-            [$ignoreDefaultStyles, $presetClassString] = $this->getClassesForDekor($settings['style_presets']);
+            [$ignoreDefaultStyles, $dekorClassString] = $this->getClassNamesForDekor($settings['style_presets']);
 
-            if ($useDefaultClass && $ignoreDefaultStyles) {
+            if ($ignoreDefaultStyles) {
                 $useDefaultClass = false;
             }
-            $classString .= ' ' . $presetClassString;
+            $classString .= ' ' . $dekorClassString;
         }
 
         if ($useDefaultClass) {
             $classString =  "preset_" . DekorCore::getSlugForContentTypeName($blockType) . ' ' . $classString;
+
+            $subType = $settings['subtype'] ?? null;
+
+            if ($subType) {
+                $classString =  " preset_" . DekorCore::getSlugForContentTypeName($blockType) . '-' . $this->slugify($subType) . ' ' . $classString;
+            }
         }
 
         return $classString;
     }
 
-    public function getClassesForDekor($style_presets)
+    public function slugify($str)
+    {
+
+        return preg_replace('/[^a-z0-9-]/', '-', trim($str));
+    }
+
+
+    public function getClassNamesForDekor($style_presets)
     {
 
         if (is_array($style_presets)) {
@@ -319,57 +329,8 @@ class TwClassesCore
         return $customCssFilename;
     }
 
-    public function writeDekorStylesheet($content)
-    {
-        $filename = $this->projectDir . '/public/fe_assets2/tw_dekors.css';
 
-        $manifestFilename = $this->projectDir . '/public/fe_assets2/manifest.json';
 
-        $hash = "not set";
-        $oldHash = $this->cache->get('md5_tw_dekors', function () use ($hash) {
-            return $hash;
-        });
-
-        $hash = md5($content);
-
-        $customCssFilename = dirname($manifestFilename) . "/presets.{$hash}.css";
-
-        if ($hash !== $oldHash) {
-            $this->filesystem->dumpFile($filename, $content);
-            $this->rebuildPresetsCssFile($customCssFilename);
-            $this->cache->delete('md5_tw_dekors');
-            $this->cache->get('md5_tw_dekors', function () use ($hash) {
-                return $hash;
-            });
-            $this->rebuildManifest();
-        } else {
-            $this->logger->info("hash did not change");
-        }
-    }
-
-    public function rebuildPresetsCssFile(string $targetFileName)
-    {
-        $basedir = $this->projectDir . '/fe_assets2';
-
-        $npmBinary = $this->bundleConfig["tw_classes"]['npm_binary'];
-
-        $cmd = [$npmBinary, "exec", "--", "postcss", "./presets.pcss", "-o", $targetFileName];
-
-        $process = new Process($cmd, $basedir, ['PATH' => '/Users/manfred/.asdf/shims:/opt/homebrew/opt/asdf/libexec/bin:/Users/manfred/bin:/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/plesk/node/17/bin', 'NODE_ENV' => 'production']);
-        $process->run();
-
-        // executes after the command finishes
-        if (!$process->isSuccessful()) {
-
-            throw new \Exception($this->generateFriendlyErrorMessage($process->getErrorOutput()));
-            // throw new ProcessFailedException($process);
-        }
-
-        $res = $process->getOutput();
-        $this->logger->info(implode(" ", $cmd), ["res" => print_r($res, 1)]);
-        $this->removeOtherCssFiles("presets", $targetFileName);
-        return ["ok"];
-    }
 
     public function generateFriendlyErrorMessage(string $output)
     {
@@ -427,6 +388,7 @@ class TwClassesCore
         $manifestDir = $this->projectDir . $subdir;
         $finder = new Finder();
 
+        $files = [];
         $finder->files()->in($manifestDir)->name('/^[^.]+\.[^.]+\.(css|js)$/')->sortByModifiedTime();
         if ($finder->hasResults()) {
             foreach ($finder as $file) {

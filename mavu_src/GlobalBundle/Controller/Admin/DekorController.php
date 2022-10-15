@@ -33,6 +33,7 @@ use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 
+
 /**
  * @RouteResource("dekor")
  */
@@ -189,111 +190,13 @@ class DekorController extends AbstractRestController implements ClassResourceInt
     function updateStylesheet()
     {
 
-
-        $dekors = $this->entityManager->getRepository(Dekor::class)->findAll();
-
-        $strings = array_map(function ($dekor) {
-            return $this->getClassesForDekor($dekor);
-        }, $dekors);
-
-
-        $content = implode("\n", $strings);
-        // echo $content;
-        try {
-            $this->classesCoreService->writeDekorStylesheet($content);
-        } catch (\Exception $e) {
-            throw new CustomizableException($e->getMessage());
-        }
-    }
-
-    public function getClassesForDekor($dekor)
-    {
-
-        $useRawCss = $dekor->getUseRawCss();
-
-        if ($useRawCss) {
-            $rawCss = $dekor->getRawCss();
-
-            $css = $this->classesCoreService->removeComments($rawCss);
-        } else {
-            $classString = $dekor->getClasses() ?? '';
-
-            $classString = $this->classesCoreService->removeComments($classString);
-            $classString = $this->classesCoreService->customizeBreakpointPrefixes($classString, $this->classesCoreService->getDefaultBreakpoints());
-
-            $classes = $this->getClassesFromString($classString);
-
-            $css = F\Stream::of($classes)
-                ->map(function ($class) {
-                    return $this->splitClassIntoPrefix($class);
-                })
-                ->groupBy(function ($class_w_prefix) {
-                    [$prefix, $_] = $class_w_prefix;
-
-                    return $prefix;
-                })
-                ->toPairs()
-                ->map(function ($class_w_prefix) {
-                    [$prefix, $vals] = $class_w_prefix;
-
-                    $twClassStr = F\Stream::of($vals)
-                        ->map(function ($val) {
-                            return $val[1];
-                        })
-                        ->join(' ')
-                        ->result();
-
-                    $twClassStr = trim($twClassStr);
-                    if ($twClassStr) {
-                        if ($prefix) {
-                            return ".$prefix { @apply $twClassStr; }";
-                        } else {
-                            return "@apply $twClassStr;";
-                        }
-                    }
-
-                    return '';
-                })
-                ->join("\n")
-                ->result();
-        }
-
-        if (trim($css)) {
-            $selectorParts = [];
-            if ($dekor->isDefaultStyle() == false) {
-                $selectorParts[] = ".preset_{$dekor->getId()}";
-            }
-            $slug = $dekor->getSlug();
-            if ($slug) {
-                $selectorParts[] = ".preset_{$slug}";
-            }
-            $selectorString = implode(', ', $selectorParts);
-            return "
-            /*{$dekor->getName()}: */ 
-            {$selectorString} {
-                {$css}
-            }
-            ";
-        } else {
-            return "";
-        }
+        $this->dekorCoreService->updateStylesheet();
     }
 
 
-    public function splitClassIntoPrefix($str)
-    {
-        if (preg_match("/^(c.)\:(.*)$/", $str, $m)) {
-            return [$m[1], $m[2]];
-        } else {
-            return ["", $str];
-        }
-    }
 
 
-    public function getClassesFromString(string $str)
-    {
-        return preg_split("/[\s]+/", $str);
-    }
+
 
 
     public function getSecurityContext(): string

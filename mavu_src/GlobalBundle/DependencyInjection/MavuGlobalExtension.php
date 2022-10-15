@@ -168,5 +168,7 @@ class MavuGlobalExtension extends Extension implements PrependExtensionInterface
         $config = $this->processConfiguration($configuration, $configs);
         $definition = $container->getDefinition("mavu.tw_classes_core");
         $definition->setArgument('$bundleConfig', $config);
+        $definition = $container->getDefinition("mavu.dekor_core");
+        $definition->setArgument('$bundleConfig', $config);
     }
 }

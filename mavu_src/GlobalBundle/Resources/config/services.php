@@ -52,7 +52,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->arg('$bundleConfig', '');
     $services->alias(TwClassesCore::class, 'mavu.tw_classes_core');
 
-    $services->set('mavu.dekor_core', DekorCore::class);
+    $services->set('mavu.dekor_core', DekorCore::class)->arg('$bundleConfig', '');
     $services->alias(DekorCore::class, 'mavu.dekor_core');
 
     $services->set('mavu.json_import_core', JsonImportCore::class)
