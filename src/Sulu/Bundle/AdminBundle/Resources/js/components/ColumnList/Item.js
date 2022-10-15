@@ -51,7 +51,10 @@ class Item extends React.Component<Props> {
         }
     }
 
-    handleClick = () => {
+
+    handleClick = (event: SyntheticEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+
         const {onClick, id} = this.props;
 
         if (onClick) {
@@ -119,7 +122,7 @@ class Item extends React.Component<Props> {
     };
 
     render() {
-        const {active, children, disabled, hasChildren, indicators, showOrderField, selected} = this.props;
+        const {active, children, disabled, hasChildren, indicators, showOrderField, selected, id} = this.props;
 
         const itemClass = classNames(
             itemStyles.item,
@@ -132,9 +135,10 @@ class Item extends React.Component<Props> {
         );
 
         return (
-            <div
+            <a
                 className={itemClass}
                 onClick={this.handleClick}
+                href={`/admin/#/webspaces/mainsite/pages/de/${id}/details`}
                 onDoubleClick={this.handleDoubleClick}
                 role="button"
             >
@@ -167,7 +171,7 @@ class Item extends React.Component<Props> {
                         <Icon name="su-angle-right" />
                     }
                 </span>
-            </div>
+            </a>
         );
     }
 }
