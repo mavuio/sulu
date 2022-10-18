@@ -212,11 +212,8 @@ class DekorCore
 
         $content = implode("\n", $strings);
         // echo $content;
-        try {
-            $this->writeDekorStylesheet($content);
-        } catch (\Exception $e) {
-            throw new CustomizableException($e->getMessage(), null, $e);
-        }
+
+        $this->writeDekorStylesheet($content);
     }
 
     public function writeDekorStylesheet($content)
@@ -262,7 +259,7 @@ class DekorCore
         // executes after the command finishes
         if (!$process->isSuccessful()) {
 
-            throw new CustomizableException($this->classesCoreService->generateFriendlyErrorMessage($process->getErrorOutput()));
+            throw new \Exception($this->generateFriendlyErrorMessage($process->getErrorOutput()));
             // throw new ProcessFailedException($process);
         }
 
@@ -270,6 +267,14 @@ class DekorCore
         $this->logger->info(implode(" ", $cmd), ["res" => print_r($res, 1)]);
         $this->classesCoreService->removeOtherCssFiles("presets", $targetFileName);
         return ["ok"];
+    }
+
+
+
+    public function generateFriendlyErrorMessage(string $output)
+    {
+        $cleanedOutput = str_replace($this->projectDir, '', $output);
+        return "presets.css was not generated: ➜ {$cleanedOutput}";
     }
 
 

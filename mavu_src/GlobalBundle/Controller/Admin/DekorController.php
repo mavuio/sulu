@@ -190,7 +190,11 @@ class DekorController extends AbstractRestController implements ClassResourceInt
     function updateStylesheet()
     {
 
-        $this->dekorCoreService->updateStylesheet();
+        try {
+            $this->dekorCoreService->updateStylesheet();
+        } catch (\Exception $e) {
+            throw new CustomizableException($e->getMessage(), null, $e);
+        }
     }
 
 

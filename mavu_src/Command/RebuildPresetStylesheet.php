@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Mavu\GlobalBundle\Core\DekorCore;
+use Mavu\GlobalBundle\Core\TwClassesCore;
 use Sulu\Component\DocumentManager\DocumentManager;
 use PHPCR\SessionInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -24,10 +25,17 @@ class RebuildPresetStylesheet extends Command
     private $dekorCore;
 
 
+    /**
+     * @var TwClassesCore
+     */
+    private $twClassesCore;
 
 
-    public function __construct(DekorCore $dekorCore)
+
+
+    public function __construct(DekorCore $dekorCore, TwClassesCore $twClassesCore)
     {
+        $this->twClassesCore = $twClassesCore;
         $this->dekorCore = $dekorCore;
 
         parent::__construct();
@@ -44,6 +52,7 @@ class RebuildPresetStylesheet extends Command
     {
 
         $this->dekorCore->updateStylesheet();
+        $this->twClassesCore->writeClassFiles("");
 
         return Command::SUCCESS;
     }

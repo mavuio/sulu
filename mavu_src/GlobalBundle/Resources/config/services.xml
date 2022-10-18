@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="env(NPM_BINARY)">npm</parameter>
+    </parameters>
+    <services>
+
+        <defaults autowire="true" autoconfigure="true" public="false">
+            <bind key="$projectDir">%kernel.project_dir%</bind>
+        </defaults>
+
+        <service
+            id="Symfony\Component\DependencyInjection\ContainerInterface"
+            alias="service_container"
+        />
+
+        <service id="mavu.tw_classes_core" class="Mavu\GlobalBundle\Core\TwClassesCore" public="false">
+            <argument key="$bundleConfig" />
+        </service>
+
+        <service id="Mavu\GlobalBundle\Core\TwClassesCore" alias="mavu.tw_classes_core" public="false" />
+
+        <service id="mavu.dekor_core" class="Mavu\GlobalBundle\Core\DekorCore" public="false">
+        </service>
+        <service id="Mavu\GlobalBundle\Core\DekorCore" alias="mavu.dekor_core" public="false" />
+
+
+
+        <service id="mavu.document.subscriber.tw_class_collector"
+            class="Mavu\GlobalBundle\Document\Subscriber\TwClassCollectorSubscriber">
+            <argument type="service" id="sulu_document_manager.property_encoder" />
+            <argument type="service" id="Psr\Log\LoggerInterface" />
+            <argument type="service" id="Mavu\GlobalBundle\Core\TwClassesCore" />
+            <tag name="sulu_document_manager.event_subscriber" />
+        </service>
+
+
+ 
+
+
+
+        <!-- twig extension: extract_classes -->
+        <service id="Mavu\GlobalBundle\Twig\TwClassExtractorExtension">
+            <tag name="twig.extension" />
+        </service>
+
+        <!-- twig extension: merge_meta -->
+        <service id="Mavu\GlobalBundle\Twig\MergedMediaMetaExtension">
+            <tag name="twig.extension" />
+        </service>
+
+        <!-- twig extension: block_paths -->
+        <service id="Mavu\GlobalBundle\Twig\BlockPathsExtension">
+            <tag name="twig.extension" />
+        </service>
+
+        <!-- twig extension: decode_json -->
+        <service id="Mavu\GlobalBundle\Twig\DecodeJsonExtension">
+            <tag name="twig.extension" />
+        </service>
+
+        <!-- twig extension: find_page -->
+        <service id="Mavu\GlobalBundle\Twig\FindPageExtension">
+            <tag name="twig.extension" />
+        </service>
+
+        <!-- twig extension: find_icon -->
+        <service id="Mavu\GlobalBundle\Twig\FindIconExtension">
+            <tag name="twig.extension" />
+        </service>
+
+        <!-- twig extension: trans -->
+        <service id="Mavu\GlobalBundle\Twig\TransExtension">
+            <tag name="twig.extension" />
+        </service>
+
+        <!-- mavu_seo page tab -->
+        <service id="mavu.global.mavu_seo.admin" class="Mavu\GlobalBundle\Admin\MavuSeoAdmin">
+            <argument type="service" id="sulu_admin.view_builder_factory" />
+            <argument type="service" id="sulu_core.webspace.webspace_manager" />
+            <argument type="service" id="sulu_security.security_checker" />
+
+            <tag name="sulu.admin" />
+            <tag name="sulu.context" context="admin" />
+        </service>
+
+
+
+        <!-- service -->
+        <service id="Mavu\GlobalBundle\Core\InformationProvider" public="true" >
+        </service>
+
+
+        <!-- structure extension -->
+        <service id="app.tw_classes_structure_extension"
+            class="Mavu\GlobalBundle\Structure\TwClassesStructureExtension">
+            <tag name="sulu.structure.extension" />
+        </service>
+
+        <!-- structure extension -->
+        <service id="app.mavu_seo_structure_extension" class="Mavu\GlobalBundle\Structure\MavuSeoStructureExtension">
+            <tag name="sulu.structure.extension" />
+        </service>
+
+        <!-- admin class -->
+        <service id="mavu.global.dekor.admin" class="Mavu\GlobalBundle\Admin\DekorAdmin">
+            <argument type="service" id="sulu_admin.view_builder_factory" />
+            <argument type="service" id="sulu_security.security_checker" />
+
+            <tag name="sulu.admin" />
+            <tag name="sulu.context" context="admin" />
+        </service>
+
+
+        <service id="Mavu\GlobalBundle\Preview\Preview">
+            <argument type="service" id="sulu_preview.preview_object_provider_registry" />
+            <argument type="service" id="sulu_preview.preview.cache" />
+            <argument type="service" id="sulu_preview.preview.renderer" />
+            <argument type="service" id="Mavu\GlobalBundle\Core\TwClassesCore" />
+        </service>
+
+        <service id="Mavu\GlobalBundle\Content\Select\BlockTypeSelect" public="true" />
+
+        <service id="mavu_global_dekor.list.praesentation" public="true"
+            class="Mavu\GlobalBundle\Admin\DoctrineListRepresentationFactory">
+
+            <!-- 
+        DoctrineListBuilderFactoryInterface $listBuilderFactory,
+        FieldDescriptorFactoryInterface $fieldDescriptorFactory -->
+            <argument type="service" id="sulu_core.rest_helper" />
+            <argument type="service" id="sulu_core.list_rest_helper" />
+            <argument type="service" id="sulu_core.doctrine_list_builder_factory" />
+            <argument type="service" id="sulu_core.list_builder.field_descriptor_factory" />
+
+            <tag name="sulu.context" context="admin" />
+        </service>
+
+
+        <service id="Mavu\GlobalBundle\Content\Types\DekorSelection">
+            <tag name="sulu.content.type" alias="dekor_selection" />
+        </service>
+
+        <service id="Mavu\GlobalBundle\Content\Types\SingleDekorSelection">
+            <tag name="sulu.content.type" alias="single_dekor_selection" />
+        </service>
+
+        <service id="Mavu\GlobalBundle\Content\Types\MavuSvelteField">
+            <tag name="sulu.content.type" alias="mavu_svelte_field" />
+        </service>
+
+        <!-- Behavior Subscribers !-->
+        <service id="sulu_document_manager.subscriber.behavior.auto_name"
+            class="Mavu\GlobalBundle\Behavior\UrlBasedAutoNameSubscriber">
+            <argument type="service" id="sulu_document_manager.document_registry" />
+            <argument type="service" id="sulu_document_manager.node_name_slugifier" />
+            <argument type="service" id="sulu_document_manager.name_resolver" />
+            <argument type="service" id="sulu_document_manager.node_manager" />
+            <argument type="service" id="sulu_document_manager.live_session" />
+            <argument type="service" id="sulu_document_manager.default_session" />
+            <tag name="sulu_document_manager.event_subscriber" />
+        </service>
+
+        <service id="sulu_form.dynamic.type_date" />
+
+        <!-- overrides the Sulu\Bundle\FormBundle\Dynamic\Types\DateType service
+             but that service is still available as ".inner" -->
+        <service id="Mavu\GlobalBundle\Form\Types\DateType" decorates="sulu_form.dynamic.type_date" />
+
+        <service id="Mavu\GlobalBundle\Core\TwClassesCore" alias="mavu.tw_classes_core" public="false" />
+
+        <service id="Symfony\Cmf\Api\Slugifier\SlugifierInterface" alias="sulu_document_manager.node_name_slugifier" />
+
+        <!-- mavu-link tag -->
+        <service id="app.html_extractor" class="Sulu\Bundle\MarkupBundle\Markup\HtmlTagExtractor">
+            <argument type="string">mavu</argument>
+            <tag name="sulu_markup.parser.html_extractor" />
+        </service>
+
+        <service id="mavu_markup.link_tag" class="Mavu\GlobalBundle\Tags\LinkTag">
+            <argument type="service" id="sulu_markup.link_tag.provider_pool"/>
+            <argument type="expression">container.hasParameter('sulu.preview') ? parameter('sulu.preview') : false</argument>
+            <argument type="service" id="url_helper"/>
+            <tag name="sulu_markup.tag" namespace="sulu" tag="link" type="html" />
+        </service>
+
+
+        
+    </services>
+</container>

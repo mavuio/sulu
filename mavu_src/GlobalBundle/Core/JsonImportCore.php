@@ -171,12 +171,69 @@ class JsonImportCore
         //     ->getPropertyAccessor();
     }
 
+
+    function preParseJsonSource($str)
+    {
+
+        $this->logger->info('parse SOURCE called', []);
+
+        $str = preg_replace_callback('/\"page_id_for:([^"]+)\"/', [$this, "replace_link"], $str);
+
+
+
+        return $str;
+    }
+
+    public function replace_link($args)
+    {
+        [$str, $url] = $args;
+
+
+        $page_id = $this->getPageIdForUrl($url);
+        $this->logger->info('getPageIdForUrl', [$url, $page_id]);
+        return "\"{$page_id}\"";
+    }
+
+    public function getPageIdForUrl($url)
+    {
+
+
+        try {
+            $page = $this->documentManager->find('/cmf/mainsite/contents' . $url);
+        } catch (\Exception $e) {
+            return '';
+        }
+        if ($page) {
+            return $page->getUuId();
+        }
+
+
+        return strlen($url);
+    }
+
     public function importPage($data)
     {
         return $this->createPage($data["url"], $data);
     }
 
-    private function createPage($relPath, $data): PageDocument
+
+    public function exportPage($url, $withExtensions = false)
+    {
+
+        try {
+            $page = $this->documentManager->find('/cmf/mainsite/contents' . $url);
+            $data = $page->getStructure()->toArray();
+            if ($withExtensions) {
+                $data['extensions'] = $page->getExtensionsData()->toArray();
+            }
+            return $data;
+        } catch (\Exception $e) {
+
+            return ["error", $e->getMessage()];
+        }
+    }
+
+    private function createPage($relPath, $data)
     {
         $locale = 'de';
 
@@ -187,14 +244,8 @@ class JsonImportCore
         $path = rtrim("/cmf/mainsite/contents{$relPath}", '/');
         $data['url'] = str_replace('/cmf/mainsite/contents', '', $path);
 
-        // dump("create page {$path}");
-        $extensionData = [
-            'seo' => $data['seo'] ?? [],
-            'excerpt' => $data['excerpt'] ?? [],
-        ];
 
-        unset($data['excerpt']);
-        unset($data['seo']);
+
 
         /** @var PageDocument $pageDocument */
         $pageDocument = null;
@@ -208,13 +259,25 @@ class JsonImportCore
 
         $pageDocument->setNavigationContexts($data['navigationContexts'] ?? ["main"]);
         $pageDocument->setLocale($locale);
-        $pageDocument->setTitle($data['title']);
+        if (array_key_exists('title', $data)) {
+            $pageDocument->setTitle($data['title']);
+        }
         $pageDocument->setResourceSegment($data['url']);
         $pageDocument->setStructureType('default');
         $pageDocument->setWorkflowStage(WorkflowStage::PUBLISHED);
-        $pageDocument->getStructure()->bind($data);
+        if (array_key_exists('blocks', $data)) {
+            $pageDocument->getStructure()->bind($data);
+        }
         $pageDocument->setAuthor(1);
-        $pageDocument->setExtensionsData($extensionData);
+        if (array_key_exists('extensions', $data)) {
+            $pageDocument->setExtensionsData($data['extensions']);
+        }
+
+        if (array_key_exists('type', $data)) {
+            $pageDocument->setStructureType($data['type']);
+        }
+
+
 
         $this->documentManager->persist(
             $pageDocument,

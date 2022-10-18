@@ -332,13 +332,6 @@ class TwClassesCore
 
 
 
-    public function generateFriendlyErrorMessage(string $output)
-    {
-        $cleanedOutput = str_replace($this->projectDir, '', $output);
-        return "presets.css was not generated: ➜ {$cleanedOutput}";
-    }
-
-
     public function rebuildCustomTailwindCssFile(string $htmlFilename, string $targetFileName)
     {
         $basedir = $this->projectDir . '/fe_assets2';

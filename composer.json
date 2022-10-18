@@ -23,9 +23,20 @@
         "chat": "https://sulu.io/services-and-support#chat"
     },
     "repositories": [{
-        "type": "git",
-        "url": "https://github.com/mavuio/sulu"
-    }],
+            "type": "path",
+            "url": "/www/sulu",
+            "options": {
+                "versions": {
+                    "sulu/sulu": "dev-2.5local"
+                }
+            },
+            "canonical": false
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/mavuio/sulu"
+        }
+    ],
     "require": {
         "php": "^8.1",
         "ext-ctype": "*",

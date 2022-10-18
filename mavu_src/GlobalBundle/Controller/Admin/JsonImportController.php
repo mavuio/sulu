@@ -17,11 +17,25 @@ class JsonImportController extends AbstractController
     public function page_import(Request $request, JsonImportCore $jsonImportCore): JsonResponse
     {
 
-        $data = json_decode($request->getContent(), 1);
+        $content = $jsonImportCore->preParseJsonSource($request->getContent());
+        $data = json_decode($content, 1);
 
         $page = $jsonImportCore->importPage($data);
 
-        $res = ["status" => 'ok'];
+        $res = ["status" => 'ok', 'page' => $page->getUuId(), "data" => $data];
+        return $this->json($res);
+    }
+
+    #[Route('/admin/export/page', name: 'page_export')]
+    public function page_export(Request $request, JsonImportCore $jsonImportCore): JsonResponse
+    {
+
+        $page = $jsonImportCore->exportPage($request->query->get('url'), ($request->query->get('with_extensions') == "1"));
+        if (array_key_exists("url", $page)) {
+            $res = ["status" => 'ok', "page" => $page];
+        } else {
+            $res = ['status' => 'error', "page" => null];
+        }
         return $this->json($res);
     }
 }
