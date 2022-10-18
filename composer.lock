@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "49adf034d91d7641315a05c66adc6f6f",
+    "content-hash": "8494dc6634c8271c15bb94f70404bdce",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2393,16 +2393,16 @@
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
-            "version": "v1.0.12",
+            "version": "v1.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/proxy-manager-lts.git",
-                "reference": "8419f0158715b30d4b99a5bd37c6a39671994ad7"
+                "reference": "88354616f4cf4f6620910fd035e282173ba453e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/proxy-manager-lts/zipball/8419f0158715b30d4b99a5bd37c6a39671994ad7",
-                "reference": "8419f0158715b30d4b99a5bd37c6a39671994ad7",
+                "url": "https://api.github.com/repos/FriendsOfPHP/proxy-manager-lts/zipball/88354616f4cf4f6620910fd035e282173ba453e8",
+                "reference": "88354616f4cf4f6620910fd035e282173ba453e8",
                 "shasum": ""
             },
             "require": {
@@ -2459,7 +2459,7 @@
             ],
             "support": {
                 "issues": "https://github.com/FriendsOfPHP/proxy-manager-lts/issues",
-                "source": "https://github.com/FriendsOfPHP/proxy-manager-lts/tree/v1.0.12"
+                "source": "https://github.com/FriendsOfPHP/proxy-manager-lts/tree/v1.0.13"
             },
             "funding": [
                 {
@@ -2471,7 +2471,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-05T09:31:05+00:00"
+            "time": "2022-10-17T19:48:16+00:00"
         },
         {
             "name": "friendsofsymfony/http-cache",
@@ -5442,16 +5442,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.8.9",
+            "version": "1.8.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "3a72d9d9f2528fbd50c2d8fcf155fd9f74ade3f2"
+                "reference": "0c4459dc42c568b818b3f25186589f3acddc1823"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3a72d9d9f2528fbd50c2d8fcf155fd9f74ade3f2",
-                "reference": "3a72d9d9f2528fbd50c2d8fcf155fd9f74ade3f2",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/0c4459dc42c568b818b3f25186589f3acddc1823",
+                "reference": "0c4459dc42c568b818b3f25186589f3acddc1823",
                 "shasum": ""
             },
             "require": {
@@ -5481,7 +5481,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.8.9"
+                "source": "https://github.com/phpstan/phpstan/tree/1.8.10"
             },
             "funding": [
                 {
@@ -5497,7 +5497,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-13T13:40:18+00:00"
+            "time": "2022-10-17T14:23:35+00:00"
         },
         {
             "name": "psr/cache",
@@ -6080,25 +6080,25 @@
         },
         {
             "name": "rector/rector",
-            "version": "0.14.5",
+            "version": "0.14.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "f7fd87b2435835f481e6a94ee28e09af412bd3cc"
+                "reference": "e61574288661334155de6e5f0f45497285abad5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/f7fd87b2435835f481e6a94ee28e09af412bd3cc",
-                "reference": "f7fd87b2435835f481e6a94ee28e09af412bd3cc",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/e61574288661334155de6e5f0f45497285abad5d",
+                "reference": "e61574288661334155de6e5f0f45497285abad5d",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2|^8.0",
-                "phpstan/phpstan": "^1.8.6"
+                "phpstan/phpstan": "^1.8.7"
             },
             "conflict": {
-                "rector/rector-cakephp": "*",
                 "rector/rector-doctrine": "*",
+                "rector/rector-downgrade-php": "*",
                 "rector/rector-laravel": "*",
                 "rector/rector-php-parser": "*",
                 "rector/rector-phpoffice": "*",
@@ -6126,7 +6126,7 @@
             "description": "Instant Upgrade and Automated Refactoring of any PHP code",
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/0.14.5"
+                "source": "https://github.com/rectorphp/rector/tree/0.14.6"
             },
             "funding": [
                 {
@@ -6134,7 +6134,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-09-29T11:05:42+00:00"
+            "time": "2022-10-15T22:58:22+00:00"
         },
         {
             "name": "scheb/2fa-bundle",
@@ -6590,10 +6590,10 @@
         },
         {
             "name": "sulu/sulu",
-            "version": "dev-2.5dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mavuio/sulu",
+            "version": "dev-2.5local",
+            "dist": {
+                "type": "path",
+                "url": "/www/sulu",
                 "reference": "d1247496978feba57a99038fdcc32090052e188a"
             },
             "require": {
@@ -6866,7 +6866,9 @@
                 "source": "https://github.com/sulu/skeleton",
                 "docs": "https://docs.sulu.io/"
             },
-            "time": "2022-10-15T15:00:52+00:00"
+            "transport-options": {
+                "relative": false
+            }
         },
         {
             "name": "sulu/sulu-rector",
@@ -13672,28 +13674,27 @@
         },
         {
             "name": "phpstan/extension-installer",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/extension-installer.git",
-                "reference": "66c7adc9dfa38b6b5838a9fb728b68a7d8348051"
+                "reference": "f06dbb052ddc394e7896fcd1cfcd533f9f6ace40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/extension-installer/zipball/66c7adc9dfa38b6b5838a9fb728b68a7d8348051",
-                "reference": "66c7adc9dfa38b6b5838a9fb728b68a7d8348051",
+                "url": "https://api.github.com/repos/phpstan/extension-installer/zipball/f06dbb052ddc394e7896fcd1cfcd533f9f6ace40",
+                "reference": "f06dbb052ddc394e7896fcd1cfcd533f9f6ace40",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.1 || ^2.0",
-                "php": "^7.1 || ^8.0",
-                "phpstan/phpstan": ">=0.11.6"
+                "composer-plugin-api": "^2.0",
+                "php": "^7.2 || ^8.0",
+                "phpstan/phpstan": "^1.8.0"
             },
             "require-dev": {
-                "composer/composer": "^1.8",
-                "phing/phing": "^2.16.3",
+                "composer/composer": "^2.0",
                 "php-parallel-lint/php-parallel-lint": "^1.2.0",
-                "phpstan/phpstan-strict-rules": "^0.11 || ^0.12"
+                "phpstan/phpstan-strict-rules": "^0.11 || ^0.12 || ^1.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -13711,22 +13712,22 @@
             "description": "Composer plugin for automatic installation of PHPStan extensions",
             "support": {
                 "issues": "https://github.com/phpstan/extension-installer/issues",
-                "source": "https://github.com/phpstan/extension-installer/tree/1.1.0"
+                "source": "https://github.com/phpstan/extension-installer/tree/1.2.0"
             },
-            "time": "2020-12-13T13:06:13+00:00"
+            "time": "2022-10-17T12:59:16+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "1.3.16",
+            "version": "1.3.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "2d1ddae7ef9a6263ba708538ef7d0fbe362e6e25"
+                "reference": "b30c243c786428b4b72a8ef48e465e2ae20a6061"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/2d1ddae7ef9a6263ba708538ef7d0fbe362e6e25",
-                "reference": "2d1ddae7ef9a6263ba708538ef7d0fbe362e6e25",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/b30c243c786428b4b72a8ef48e465e2ae20a6061",
+                "reference": "b30c243c786428b4b72a8ef48e465e2ae20a6061",
                 "shasum": ""
             },
             "require": {
@@ -13780,9 +13781,9 @@
             "description": "Doctrine extensions for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-doctrine/issues",
-                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.3.16"
+                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.3.18"
             },
-            "time": "2022-10-05T08:47:34+00:00"
+            "time": "2022-10-17T14:03:44+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -15862,7 +15863,7 @@
     "aliases": [
         {
             "package": "sulu/sulu",
-            "version": "dev-2.5dev",
+            "version": "dev-2.5local",
             "alias": "2.5.0",
             "alias_normalized": "2.5.0.0"
         }
