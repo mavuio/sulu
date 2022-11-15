@@ -16,8 +16,10 @@ export default class ItemButton extends React.Component<Props> {
         visible: true,
     };
 
-    handleClick = () => {
+    handleClick = (event: SyntheticEvent<>) => {
         const {id, onClick} = this.props;
+        // mavu prevent default (= don't go to a-href destination)
+        event.preventDefault();
 
         if (!onClick) {
             return;

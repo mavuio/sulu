@@ -134,6 +134,7 @@ class Item extends React.Component<Props> {
             }
         );
 
+        // mavu added real <a>-tags here:
         return (
             <a
                 className={itemClass}

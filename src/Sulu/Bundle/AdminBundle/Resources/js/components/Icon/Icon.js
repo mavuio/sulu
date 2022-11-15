@@ -29,7 +29,8 @@ export default class Icon extends React.PureComponent<Props> {
         }
 
         event.stopPropagation();
-        onClick();
+        // mavu: pass on the click event
+        onClick(event);
     };
 
     handleKeypress = (event: SyntheticKeyboardEvent<HTMLElement>) => {
