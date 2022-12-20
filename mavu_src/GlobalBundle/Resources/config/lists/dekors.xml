@@ -19,18 +19,18 @@
             <entity-name>Mavu\GlobalBundle\Entity\Dekor</entity-name>
         </property>
 
-        <property name="TailwindCSS classes"  searchability="yes" translation="classes">
+        <property name="classes"  searchability="yes" translation="TailwindCSS classes">
             <field-name>classes</field-name>
             <entity-name>Mavu\GlobalBundle\Entity\Dekor</entity-name>
         </property>
 
-        <property name="useRawCss"  searchability="yes" translation="useRawCss" type="bool">
+        <property name="useRawCss"  searchability="yes" translation="use raw CSS" type="bool">
             <field-name>useRawCss</field-name>
             <entity-name>Mavu\GlobalBundle\Entity\Dekor</entity-name>
         </property>
 
 
-        <property name="raw CSS"  searchability="yes" translation="rawCss">
+        <property name="rawCSS"  searchability="yes" translation="raw CSS">
             <field-name>rawCss</field-name>
             <entity-name>Mavu\GlobalBundle\Entity\Dekor</entity-name>
         </property>
