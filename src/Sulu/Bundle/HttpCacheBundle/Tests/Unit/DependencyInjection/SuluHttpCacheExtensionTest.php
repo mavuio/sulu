@@ -15,6 +15,7 @@ use FOS\HttpCacheBundle\CacheManager;
 use FOS\HttpCacheBundle\Http\SymfonyResponseTagger;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Log\LoggerInterface;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\DocumentInspector;
 use Sulu\Bundle\HttpCacheBundle\DependencyInjection\SuluHttpCacheExtension;
@@ -32,31 +33,30 @@ class SuluHttpCacheExtensionTest extends AbstractExtensionTestCase
     use ProphecyTrait;
 
     /**
-     * @var WebspaceManagerInterface
+     * @var ObjectProphecy<WebspaceManagerInterface>
      */
     private $webspaceManager;
 
     /**
-     * @var ContentTypeManagerInterface
+     * @var ObjectProphecy<ContentTypeManagerInterface>
      */
     private $contentTypeManager;
 
     /**
-     * @var RequestStack
+     * @var ObjectProphecy<RequestStack>
      */
     private $requestStack;
 
     /**
      * @var ReplacerInterface
      */
-
     /**
-     * @var LoggerInterface
+     * @var ObjectProphecy<LoggerInterface>
      */
     private $logger;
 
     /**
-     * @var LoggerInterface
+     * @var ObjectProphecy<ReferenceStorePoolInterface>
      */
     private $referenceStore;
 
@@ -95,7 +95,7 @@ class SuluHttpCacheExtensionTest extends AbstractExtensionTestCase
         ];
     }
 
-    public function testDefaultConfig()
+    public function testDefaultConfig(): void
     {
         $this->load();
         $this->compile();
@@ -107,7 +107,7 @@ class SuluHttpCacheExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('sulu_http_cache.cache.max_age', 240);
     }
 
-    public function testConfig()
+    public function testConfig(): void
     {
         $config = [
             'cache' => [

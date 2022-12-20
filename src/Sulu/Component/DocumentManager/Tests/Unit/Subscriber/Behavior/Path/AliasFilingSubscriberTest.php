@@ -15,6 +15,7 @@ use PHPCR\NodeInterface;
 use PHPCR\SessionInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\DocumentManager\Behavior\Path\AliasFilingBehavior;
 use Sulu\Component\DocumentManager\DocumentManager;
 use Sulu\Component\DocumentManager\Event\PersistEvent;
@@ -27,12 +28,12 @@ class AliasFilingSubscriberTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var PersistEvent
+     * @var ObjectProphecy<PersistEvent>
      */
     private $persistEvent;
 
     /**
-     * @var AliasFilingBehavior
+     * @var ObjectProphecy<AliasFilingBehavior>
      */
     private $document;
 
@@ -42,42 +43,42 @@ class AliasFilingSubscriberTest extends TestCase
     private $parentDocument;
 
     /**
-     * @var DocumentManager
+     * @var ObjectProphecy<DocumentManager>
      */
     private $documentManager;
 
     /**
-     * @var MetadataFactoryInterface
+     * @var ObjectProphecy<MetadataFactoryInterface>
      */
     private $metadataFactory;
 
     /**
-     * @var MetaData
+     * @var ObjectProphecy<Metadata>
      */
     private $metadata;
 
     /**
-     * @var NodeInterface
+     * @var ObjectProphecy<NodeInterface>
      */
     private $parentNode;
 
     /**
-     * @var SessionInterface
+     * @var ObjectProphecy<SessionInterface>
      */
     private $defaultSession;
 
     /**
-     * @var NodeInterface
+     * @var ObjectProphecy<NodeInterface>
      */
     private $defaultNode;
 
     /**
-     * @var SessionInterface
+     * @var ObjectProphecy<SessionInterface>
      */
     private $liveSession;
 
     /**
-     * @var NodeInterface
+     * @var ObjectProphecy<NodeInterface>
      */
     private $liveNode;
 
@@ -115,7 +116,7 @@ class AliasFilingSubscriberTest extends TestCase
     /**
      * It should return early if the document is not implementing the behavior.
      */
-    public function testPersistNotImplementing()
+    public function testPersistNotImplementing(): void
     {
         $this->persistEvent->getDocument()->willReturn(new \stdClass())->shouldBeCalled();
         $this->subscriber->handlePersist($this->persistEvent->reveal());
@@ -124,7 +125,7 @@ class AliasFilingSubscriberTest extends TestCase
     /**
      * It should set the parent document.
      */
-    public function testSetParentDocument()
+    public function testSetParentDocument(): void
     {
         $this->persistEvent->getDocument()->willReturn($this->document->reveal());
         $this->persistEvent->hasParentNode()->willReturn(true);

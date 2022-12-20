@@ -60,7 +60,7 @@ class WebspaceExportTest extends SuluTestCase
         $this->webspaceExporter = $this->getContainer()->get('sulu_page.export.webspace');
     }
 
-    public function test12Xliff()
+    public function test12Xliff(): void
     {
         $documents = $this->prepareData();
         $exportData = $this->webspaceExporter->getExportData('sulu_io');
@@ -334,7 +334,6 @@ class WebspaceExportTest extends SuluTestCase
     }
 
     /**
-     * @param $name
      * @param string $prefix
      *
      * @return array
@@ -553,13 +552,6 @@ class WebspaceExportTest extends SuluTestCase
     }
 
     /**
-     * @param $name
-     * @param $type
-     * @param $options
-     * @param $value
-     * @param $children
-     * @param $forceValue
-     *
      * @return array
      */
     private function createItemArray(

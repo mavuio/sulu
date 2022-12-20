@@ -22,9 +22,11 @@ use Sulu\Bundle\AudienceTargetingBundle\EventListener\TargetGroupSubscriber;
 use Sulu\Bundle\AudienceTargetingBundle\TargetGroup\TargetGroupEvaluatorInterface;
 use Sulu\Bundle\AudienceTargetingBundle\TargetGroup\TargetGroupStoreInterface;
 use Sulu\Component\Content\Compat\Structure\StructureBridge;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -35,27 +37,27 @@ class TargetGroupSubscriberTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var Environment|ObjectProphecy
+     * @var ObjectProphecy<Environment>
      */
     private $twig;
 
     /**
-     * @var TargetGroupStoreInterface|ObjectProphecy
+     * @var ObjectProphecy<TargetGroupStoreInterface>
      */
     private $targetGroupStore;
 
     /**
-     * @var TargetGroupEvaluatorInterface|ObjectProphecy
+     * @var ObjectProphecy<TargetGroupEvaluatorInterface>
      */
     private $targetGroupEvaluator;
 
     /**
-     * @var TargetGroupRepositoryInterface|ObjectProphecy
+     * @var ObjectProphecy<TargetGroupRepositoryInterface>
      */
     private $targetGroupRepository;
 
     /**
-     * @var HttpKernelInterface|ObjectProphecy
+     * @var ObjectProphecy<HttpKernelInterface>
      */
     private $kernel;
 
@@ -68,7 +70,7 @@ class TargetGroupSubscriberTest extends TestCase
         $this->targetGroupRepository = $this->prophesize(TargetGroupRepositoryInterface::class);
     }
 
-    public function testSetTargetGroupWithHeaderAndCookie()
+    public function testSetTargetGroupWithHeaderAndCookie(): void
     {
         $targetGroupSubscriber = new TargetGroupSubscriber(
             $this->twig->reveal(),
@@ -105,7 +107,7 @@ class TargetGroupSubscriberTest extends TestCase
         $targetGroupHeader,
         $headerTargetGroup,
         $result
-    ) {
+    ): void {
         $targetGroupSubscriber = new TargetGroupSubscriber(
             $this->twig->reveal(),
             false,
@@ -156,7 +158,7 @@ class TargetGroupSubscriberTest extends TestCase
         $evaluationResult,
         $result,
         $resultUpdate
-    ) {
+    ): void {
         $targetGroupSubscriber = new TargetGroupSubscriber(
             $this->twig->reveal(),
             false,
@@ -217,7 +219,7 @@ class TargetGroupSubscriberTest extends TestCase
     /**
      * @dataProvider provideSetTargetGroupFromEvaluation
      */
-    public function testSetTargetGroupFromEvaluation($evaluatedTargetGroup, $result)
+    public function testSetTargetGroupFromEvaluation($evaluatedTargetGroup, $result): void
     {
         $targetGroupSubscriber = new TargetGroupSubscriber(
             $this->twig->reveal(),
@@ -263,7 +265,7 @@ class TargetGroupSubscriberTest extends TestCase
         ];
     }
 
-    public function testSetTargetGroupFromEvaluationOnTargetHitUrl()
+    public function testSetTargetGroupFromEvaluationOnTargetHitUrl(): void
     {
         $targetGroupSubscriber = new TargetGroupSubscriber(
             $this->twig->reveal(),
@@ -295,7 +297,7 @@ class TargetGroupSubscriberTest extends TestCase
     /**
      * @dataProvider provideAddVaryHeader
      */
-    public function testAddVaryHeader($targetGroupUrl, $requestUrl, $hasInfluencedContent, $header, $varyHeaders)
+    public function testAddVaryHeader($targetGroupUrl, $requestUrl, $hasInfluencedContent, $header, $varyHeaders): void
     {
         $targetGroupSubscriber = new TargetGroupSubscriber(
             $this->twig->reveal(),
@@ -337,7 +339,7 @@ class TargetGroupSubscriberTest extends TestCase
     /**
      * @dataProvider provideAddSetCookieHeader
      */
-    public function testAddSetCookieHeader($targetGroupCookie, $visitorSession, $hasChanged, $url, $cookieValue)
+    public function testAddSetCookieHeader($targetGroupCookie, $visitorSession, $hasChanged, $url, $cookieValue): void
     {
         $targetGroupSubscriber = new TargetGroupSubscriber(
             $this->twig->reveal(),
@@ -395,7 +397,7 @@ class TargetGroupSubscriberTest extends TestCase
         $forwardedRefererHeader,
         $forwardedUuidHeader,
         $uuid
-    ) {
+    ): void {
         $targetGroupSubscriber = new TargetGroupSubscriber(
             $this->twig->reveal(),
             false,
@@ -445,7 +447,7 @@ class TargetGroupSubscriberTest extends TestCase
         ];
     }
 
-    public function testAddTargetGroupHitScriptInPreview()
+    public function testAddTargetGroupHitScriptInPreview(): void
     {
         $targetGroupSubscriber = new TargetGroupSubscriber(
             $this->twig->reveal(),
@@ -476,7 +478,69 @@ class TargetGroupSubscriberTest extends TestCase
         $this->assertEquals('', $response->getContent());
     }
 
-    public function testAddTargetGroupHitScriptNonHtml()
+    public function testAddTargetGroupHitScriptOnBinaryFileResponse(): void
+    {
+        $targetGroupSubscriber = new TargetGroupSubscriber(
+            $this->twig->reveal(),
+            false,
+            $this->targetGroupStore->reveal(),
+            $this->targetGroupEvaluator->reveal(),
+            $this->targetGroupRepository->reveal(),
+            '/_target_group',
+            '/_target_group_hit',
+            'X-Forwarded-Url',
+            'X-Forwarded-Referer',
+            'X-Forwarded-UUID',
+            'X-Sulu-Target-Group',
+            'sulu-visitor-target-group',
+            'visitor-session'
+        );
+
+        $request = new Request();
+        $request->setMethod(Request::METHOD_GET);
+        $response = new BinaryFileResponse(__FILE__);
+        $response->headers->set('Content-Type', 'text/html');
+        $event = $this->createResponseEvent($request, $response);
+
+        $this->twig->render(Argument::cetera())->shouldNotBeCalled();
+
+        $targetGroupSubscriber->addTargetGroupHitScript($event);
+
+        $this->assertEquals('', $response->getContent());
+    }
+
+    public function testAddTargetGroupHitScriptOnStreamedResponse(): void
+    {
+        $targetGroupSubscriber = new TargetGroupSubscriber(
+            $this->twig->reveal(),
+            false,
+            $this->targetGroupStore->reveal(),
+            $this->targetGroupEvaluator->reveal(),
+            $this->targetGroupRepository->reveal(),
+            '/_target_group',
+            '/_target_group_hit',
+            'X-Forwarded-Url',
+            'X-Forwarded-Referer',
+            'X-Forwarded-UUID',
+            'X-Sulu-Target-Group',
+            'sulu-visitor-target-group',
+            'visitor-session'
+        );
+
+        $request = new Request();
+        $request->setMethod(Request::METHOD_GET);
+        $response = new StreamedResponse(function() {});
+        $response->headers->set('Content-Type', 'text/html');
+        $event = $this->createResponseEvent($request, $response);
+
+        $this->twig->render(Argument::cetera())->shouldNotBeCalled();
+
+        $targetGroupSubscriber->addTargetGroupHitScript($event);
+
+        $this->assertEquals('', $response->getContent());
+    }
+
+    public function testAddTargetGroupHitScriptNonHtml(): void
     {
         $targetGroupSubscriber = new TargetGroupSubscriber(
             $this->twig->reveal(),
@@ -506,7 +570,7 @@ class TargetGroupSubscriberTest extends TestCase
         $this->assertEquals('{}', $response->getContent());
     }
 
-    public function testAddTargetGroupHitScriptHtmlUtf8()
+    public function testAddTargetGroupHitScriptHtmlUtf8(): void
     {
         $targetGroupSubscriber = new TargetGroupSubscriber(
             $this->twig->reveal(),
@@ -537,7 +601,7 @@ class TargetGroupSubscriberTest extends TestCase
         $this->assertEquals('<body><script></script></body>', $response->getContent());
     }
 
-    public function testAddTargetGroupHitScriptNonGet()
+    public function testAddTargetGroupHitScriptNonGet(): void
     {
         $targetGroupSubscriber = new TargetGroupSubscriber(
             $this->twig->reveal(),

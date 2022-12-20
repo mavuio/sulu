@@ -13,6 +13,7 @@ namespace Sulu\Bundle\PageBundle\Tests\Unit\Sulu\Bundle\WebsiteBundle\Sitemap;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\PageBundle\Sitemap\PagesSitemapProvider;
 use Sulu\Component\Content\Document\RedirectType;
 use Sulu\Component\Content\Document\WorkflowStage;
@@ -30,17 +31,17 @@ class PagesSitemapProviderTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ContentRepositoryInterface
+     * @var ObjectProphecy<ContentRepositoryInterface>
      */
     private $contentRepository;
 
     /**
-     * @var WebspaceManagerInterface
+     * @var ObjectProphecy<WebspaceManagerInterface>
      */
     private $webspaceManager;
 
     /**
-     * @var AccessControlManagerInterface
+     * @var ObjectProphecy<AccessControlManagerInterface>
      */
     private $accessControlManager;
 
@@ -50,17 +51,17 @@ class PagesSitemapProviderTest extends TestCase
     private $sitemapProvider;
 
     /**
-     * @var PortalInformation
+     * @var ObjectProphecy<PortalInformation>
      */
     private $portalInformation;
 
     /**
-     * @var PortalInformation
+     * @var ObjectProphecy<PortalInformation>
      */
     private $portalInformationEn;
 
     /**
-     * @var Webspace
+     * @var ObjectProphecy<Webspace>
      */
     private $webspace;
 
@@ -99,7 +100,7 @@ class PagesSitemapProviderTest extends TestCase
         );
     }
 
-    public function testBuild()
+    public function testBuild(): void
     {
         $localization = new Localization('de');
         $this->webspace->getDefaultLocalization()->willReturn($localization);
@@ -137,7 +138,7 @@ class PagesSitemapProviderTest extends TestCase
         }
     }
 
-    public function testBuildWithPermissions()
+    public function testBuildWithPermissions(): void
     {
         $localization = new Localization('de');
         $this->webspace->getDefaultLocalization()->willReturn($localization);
@@ -177,7 +178,7 @@ class PagesSitemapProviderTest extends TestCase
         $this->assertEquals('http://localhost/test-3', $result[1]->getLoc());
     }
 
-    public function testBuildMultipleLocales()
+    public function testBuildMultipleLocales(): void
     {
         $localization = new Localization('de');
         $localizationEn = new Localization('en');
@@ -242,7 +243,7 @@ class PagesSitemapProviderTest extends TestCase
         $this->assertEquals('http://localhost/en-test-1', $alternateLinks2['en']->getHref());
     }
 
-    public function testBuildHideInSitemap()
+    public function testBuildHideInSitemap(): void
     {
         $localization = new Localization('de');
         $this->webspace->getDefaultLocalization()->willReturn($localization);
@@ -275,7 +276,7 @@ class PagesSitemapProviderTest extends TestCase
         $this->assertEquals(new \DateTime($pages[0]->getData()['changed']), $result[0]->getLastMod());
     }
 
-    public function testBuildInternalExternalLink()
+    public function testBuildInternalExternalLink(): void
     {
         $localization = new Localization('de');
         $this->webspace->getDefaultLocalization()->willReturn($localization);

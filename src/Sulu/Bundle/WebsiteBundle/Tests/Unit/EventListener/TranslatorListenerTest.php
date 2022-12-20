@@ -13,6 +13,7 @@ namespace Sulu\Bundle\WebsiteBundle\Tests\Unit\EventListener;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\WebsiteBundle\EventListener\TranslatorListener;
 use Sulu\Component\Localization\Localization;
 use Sulu\Component\Webspace\Analyzer\Attributes\RequestAttributes;
@@ -26,7 +27,7 @@ class TranslatorListenerTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var HttpKernelInterface
+     * @var ObjectProphecy<HttpKernelInterface>
      */
     private $kernel;
 
@@ -35,7 +36,7 @@ class TranslatorListenerTest extends TestCase
         $this->kernel = $this->prophesize(HttpKernelInterface::class);
     }
 
-    public function testOnKernelRequest()
+    public function testOnKernelRequest(): void
     {
         $translator = $this->prophesize(Translator::class);
         $request = new Request();

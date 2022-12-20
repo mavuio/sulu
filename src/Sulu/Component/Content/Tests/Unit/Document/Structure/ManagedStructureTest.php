@@ -15,6 +15,7 @@ use PHPCR\NodeInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\DocumentInspector;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\PropertyEncoder;
 use Sulu\Component\Content\Compat\PropertyInterface;
@@ -33,52 +34,52 @@ class ManagedStructureTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ContentTypeManagerInterface
+     * @var ObjectProphecy<ContentTypeManagerInterface>
      */
     private $contentTypeManager;
 
     /**
-     * @var NodeInterface
+     * @var ObjectProphecy<NodeInterface>
      */
     private $node;
 
     /**
-     * @var StructureMetadata
+     * @var ObjectProphecy<StructureMetadata>
      */
     private $structureMetadata;
 
     /**
-     * @var StructureBehavior
+     * @var ObjectProphecy<StructureBehavior>
      */
     private $document;
 
     /**
-     * @var ContentTypeInterface
+     * @var ObjectProphecy<ContentTypeInterface>
      */
     private $contentType;
 
     /**
-     * @var PropertyEncoder
+     * @var ObjectProphecy<PropertyEncoder>
      */
     private $encoder;
 
     /**
-     * @var PropertyMetadata
+     * @var ObjectProphecy<PropertyMetadata>
      */
     private $propertyMetadata;
 
     /**
-     * @var LegacyPropertyFactory
+     * @var ObjectProphecy<LegacyPropertyFactory>
      */
     private $propertyFactory;
 
     /**
-     * @var DocumentInspector
+     * @var ObjectProphecy<DocumentInspector>
      */
     private $inspector;
 
     /**
-     * @var PropertyInterface
+     * @var ObjectProphecy<PropertyInterface>
      */
     private $legacyProperty;
 
@@ -116,7 +117,7 @@ class ManagedStructureTest extends TestCase
     /**
      * It should lazily initialize a localized property.
      */
-    public function testGetLocalizedProperty()
+    public function testGetLocalizedProperty(): void
     {
         $name = 'test';
         $contentTypeName = 'hello';
@@ -132,7 +133,7 @@ class ManagedStructureTest extends TestCase
     /**
      * It should bind values.
      */
-    public function testBind()
+    public function testBind(): void
     {
         $name = 'test';
         $contentTypeName = 'hello';
@@ -172,7 +173,7 @@ class ManagedStructureTest extends TestCase
     /**
      * It should bind also null values.
      */
-    public function testBindNullValue()
+    public function testBindNullValue(): void
     {
         $name = 'test';
         $contentTypeName = 'hello';
@@ -212,7 +213,7 @@ class ManagedStructureTest extends TestCase
     /**
      * It should lazily initialize a non-localized property.
      */
-    public function testGetNonLocalizedProperty()
+    public function testGetNonLocalizedProperty(): void
     {
         $name = 'test';
         $contentTypeName = 'hello';
@@ -228,7 +229,7 @@ class ManagedStructureTest extends TestCase
     /**
      * It should act as an array.
      */
-    public function testArrayAccess()
+    public function testArrayAccess(): void
     {
         $name = 'test';
         $contentTypeName = 'hello';

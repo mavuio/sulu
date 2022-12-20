@@ -13,6 +13,7 @@ namespace Sulu\Component\Security\Tests\Unit\Authorization;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\SecurityBundle\Entity\Group;
 use Sulu\Bundle\SecurityBundle\Entity\Permission;
 use Sulu\Bundle\SecurityBundle\Entity\Role;
@@ -75,7 +76,7 @@ class SecurityContextVoterTest extends TestCase
     protected $nestedGroup;
 
     /**
-     * @var TokenInterface
+     * @var ObjectProphecy<TokenInterface>
      */
     protected $token;
 
@@ -85,7 +86,7 @@ class SecurityContextVoterTest extends TestCase
     protected $voter;
 
     /**
-     * @var AccessControlManagerInterface
+     * @var ObjectProphecy<AccessControlManagerInterface>
      */
     protected $accessControlManager;
 
@@ -114,7 +115,7 @@ class SecurityContextVoterTest extends TestCase
         $this->voter = new SecurityContextVoter($this->accessControlManager->reveal(), $this->permissions);
     }
 
-    public function testPositiveVote()
+    public function testPositiveVote(): void
     {
         $securityCondition = new SecurityCondition('sulu.security.roles');
 
@@ -132,7 +133,7 @@ class SecurityContextVoterTest extends TestCase
         $this->assertSame(VoterInterface::ACCESS_GRANTED, $access);
     }
 
-    public function testNoUserPermissions()
+    public function testNoUserPermissions(): void
     {
         $securityCondition = new SecurityCondition('sulu.security.roles');
 
@@ -147,7 +148,7 @@ class SecurityContextVoterTest extends TestCase
         $this->assertSame(VoterInterface::ACCESS_DENIED, $access);
     }
 
-    public function testNegativeVote()
+    public function testNegativeVote(): void
     {
         $securityCondition = new SecurityCondition('sulu.security.roles');
 
@@ -166,7 +167,7 @@ class SecurityContextVoterTest extends TestCase
         $this->assertSame(VoterInterface::ACCESS_DENIED, $access);
     }
 
-    public function testPositiveVoteWithMultipleAttributes()
+    public function testPositiveVoteWithMultipleAttributes(): void
     {
         $securityCondition = new SecurityCondition('sulu.security.roles', null);
 
@@ -184,7 +185,7 @@ class SecurityContextVoterTest extends TestCase
         $this->assertSame(VoterInterface::ACCESS_GRANTED, $access);
     }
 
-    public function testNegativeVoteWithMultipleAttributes()
+    public function testNegativeVoteWithMultipleAttributes(): void
     {
         $securityCondition = new SecurityCondition('sulu.security.roles', null);
 

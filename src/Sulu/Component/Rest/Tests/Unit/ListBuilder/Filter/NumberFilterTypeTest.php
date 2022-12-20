@@ -13,6 +13,7 @@ namespace Sulu\Component\Rest\Tests\Unit\ListBuilder\Filter;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\Rest\ListBuilder\FieldDescriptor;
 use Sulu\Component\Rest\ListBuilder\Filter\InvalidFilterTypeOptionsException;
 use Sulu\Component\Rest\ListBuilder\Filter\NumberFilterType;
@@ -28,7 +29,7 @@ class NumberFilterTypeTest extends TestCase
     private $numberFilterType;
 
     /**
-     * @var ListBuilderInterface
+     * @var ObjectProphecy<ListBuilderInterface>
      */
     private $listBuilder;
 
@@ -50,7 +51,7 @@ class NumberFilterTypeTest extends TestCase
     /**
      * @dataProvider provideFilter
      */
-    public function testFilter($fieldName, $value, $expectedOperator, $expectedValue)
+    public function testFilter($fieldName, $value, $expectedOperator, $expectedValue): void
     {
         $fieldDescriptor = $this->prophesize(FieldDescriptor::class);
         $this->numberFilterType->filter($this->listBuilder->reveal(), $fieldDescriptor->reveal(), $value);
@@ -70,7 +71,7 @@ class NumberFilterTypeTest extends TestCase
     /**
      * @dataProvider provideFilterWithInvalidOptions
      */
-    public function testFilterWithInvalidOptions($options)
+    public function testFilterWithInvalidOptions($options): void
     {
         $this->expectException(InvalidFilterTypeOptionsException::class);
 

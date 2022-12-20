@@ -17,6 +17,7 @@ use Imagine\Image\ImageInterface;
 use Imagine\Imagick\Imagine as ImagickImagine;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\MediaBundle\Media\ImageConverter\Transformation\PasteTransformation;
 use Sulu\Bundle\TestBundle\Testing\SuluTestCase;
 use Symfony\Component\Config\FileLocator;
@@ -35,7 +36,7 @@ class PasteTransformationTest extends SuluTestCase
     protected $pasteTransformation;
 
     /**
-     * @var FileLocator
+     * @var ObjectProphecy<FileLocator>
      */
     protected $fileLocator;
 
@@ -56,7 +57,7 @@ class PasteTransformationTest extends SuluTestCase
         parent::setUp();
     }
 
-    public function testPaste()
+    public function testPaste(): void
     {
         $image = $this->prophesize(ImageInterface::class);
         $image->getSize()->willReturn(new Box(700, 500));
@@ -72,7 +73,7 @@ class PasteTransformationTest extends SuluTestCase
         $this->assertInstanceOf(ImageInterface::class, $returnImage);
     }
 
-    public function testNoPaste()
+    public function testNoPaste(): void
     {
         $image = $this->prophesize(ImageInterface::class);
 

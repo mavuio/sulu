@@ -13,6 +13,7 @@ namespace Sulu\Component\Content\Tests\Unit\Document\Subscriber;
 
 use PHPCR\NodeInterface;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\DocumentInspector;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\PropertyEncoder;
 use Sulu\Component\Content\Document\Behavior\ExtensionBehavior;
@@ -29,27 +30,27 @@ class ExtensionSubscriberTest extends SubscriberTestCase
     use ProphecyTrait;
 
     /**
-     * @var DocumentInspector
+     * @var ObjectProphecy<DocumentInspector>
      */
     private $inspector;
 
     /**
-     * @var NamespaceRegistry
+     * @var ObjectProphecy<NamespaceRegistry>
      */
     private $namespaceRegistry;
 
     /**
-     * @var ExtensionManagerInterface
+     * @var ObjectProphecy<ExtensionManagerInterface>
      */
     private $extensionManager;
 
     /**
-     * @var ExtensionInterface
+     * @var ObjectProphecy<ExtensionInterface>
      */
     private $extension;
 
     /**
-     * @var DocumentAccessor
+     * @var ObjectProphecy<DocumentAccessor>
      */
     private $documentAccessor;
 
@@ -87,7 +88,7 @@ class ExtensionSubscriberTest extends SubscriberTestCase
     /**
      * It should hydrate data from extensions.
      */
-    public function testHydrateExtensionsData()
+    public function testHydrateExtensionsData(): void
     {
         $expectedData = [
             'foo' => 'bar',
@@ -123,7 +124,7 @@ class ExtensionSubscriberTest extends SubscriberTestCase
     /**
      * It should return early if the locale is null.
      */
-    public function testPersistLocaleIsNull()
+    public function testPersistLocaleIsNull(): void
     {
         $document = new TestExtensionDocument();
         $this->persistEvent->getLocale()->willReturn(null);
@@ -136,7 +137,7 @@ class ExtensionSubscriberTest extends SubscriberTestCase
     /**
      * It should persist data from extensions.
      */
-    public function testPersistExtensionsData()
+    public function testPersistExtensionsData(): void
     {
         $document = new TestExtensionDocument(
             [

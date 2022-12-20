@@ -13,6 +13,7 @@ namespace Sulu\Component\CustomUrl\Tests\Unit\Document\Subscriber;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\DocumentInspector;
 use Sulu\Component\Content\Document\Behavior\RouteBehavior;
 use Sulu\Component\CustomUrl\Document\CustomUrlDocument;
@@ -38,27 +39,27 @@ class CustomUrlSubscriberTest extends TestCase
     private $customUrlSubscriber;
 
     /**
-     * @var GeneratorInterface
+     * @var ObjectProphecy<GeneratorInterface>
      */
     private $generator;
 
     /**
-     * @var DocumentManagerInterface
+     * @var ObjectProphecy<DocumentManagerInterface>
      */
     private $documentManager;
 
     /**
-     * @var PathBuilder
+     * @var ObjectProphecy<PathBuilder>
      */
     private $pathBuilder;
 
     /**
-     * @var DocumentInspector
+     * @var ObjectProphecy<DocumentInspector>
      */
     private $inspector;
 
     /**
-     * @var WebspaceManagerInterface
+     * @var ObjectProphecy<WebspaceManagerInterface>
      */
     private $webspaceManager;
 
@@ -79,7 +80,7 @@ class CustomUrlSubscriberTest extends TestCase
         );
     }
 
-    public function testHandleRemove()
+    public function testHandleRemove(): void
     {
         $removeEvent = $this->prophesize(RemoveEvent::class);
         $document = $this->prophesize(CustomUrlDocument::class);
@@ -94,7 +95,7 @@ class CustomUrlSubscriberTest extends TestCase
         $this->documentManager->remove($routeDocument->reveal())->shouldBeCalled();
     }
 
-    public function testHandlePersist()
+    public function testHandlePersist(): void
     {
         $persistEvent = $this->prophesize(PersistEvent::class);
         $document = $this->prophesize(CustomUrlDocument::class);

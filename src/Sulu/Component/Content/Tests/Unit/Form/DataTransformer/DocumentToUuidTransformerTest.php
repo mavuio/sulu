@@ -13,6 +13,7 @@ namespace Sulu\Component\Content\Tests\Unit\Form\DataTransformer;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\Content\Form\DataTransformer\DocumentToUuidTransformer;
 use Sulu\Component\DocumentManager\Behavior\Mapping\UuidBehavior;
 use Sulu\Component\DocumentManager\DocumentManagerInterface;
@@ -23,8 +24,14 @@ class DocumentToUuidTransformerTest extends TestCase
 {
     use ProphecyTrait;
 
+    /**
+     * @var ObjectProphecy<DocumentManagerInterface>
+     */
     private $documentManager;
 
+    /**
+     * @var ObjectProphecy<UuidBehavior>
+     */
     private $document;
 
     private $transformer;
@@ -39,10 +46,8 @@ class DocumentToUuidTransformerTest extends TestCase
 
     /**
      * It should transform a document to a UUID.
-     *
-     * @return void
      */
-    public function testTransform()
+    public function testTransform(): void
     {
         $this->document->getUuid()->willReturn('1234');
 
@@ -52,10 +57,8 @@ class DocumentToUuidTransformerTest extends TestCase
     /**
      * It should throw an exception if reverse transform is attempted with something
      * that is not a UUID.
-     *
-     * @return void
      */
-    public function testReverseTransformNotUuid()
+    public function testReverseTransformNotUuid(): void
     {
         $this->expectExceptionMessage('Given UUID is not a UUID');
         $this->expectException(TransformationFailedException::class);
@@ -64,10 +67,8 @@ class DocumentToUuidTransformerTest extends TestCase
 
     /**
      * It should throw an exception if the document was not found.
-     *
-     * @return void
      */
-    public function testReverseTransformNotFound()
+    public function testReverseTransformNotFound(): void
     {
         $uuid = '9fce0181-fabf-43d5-9b73-79f100ce2a9b';
         $exceptionMessage = \sprintf('No document has been set for the findEvent for "%s".', $uuid);

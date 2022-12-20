@@ -16,6 +16,7 @@ use PHPCR\Util\PathHelper;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\DocumentInspector;
 use Sulu\Bundle\PageBundle\Document\HomeDocument;
 use Sulu\Component\Content\Document\Behavior\ResourceSegmentBehavior;
@@ -34,22 +35,22 @@ class RouteSubscriberTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var DocumentManagerInterface
+     * @var ObjectProphecy<DocumentManagerInterface>
      */
     private $documentManager;
 
     /**
-     * @var DocumentInspector
+     * @var ObjectProphecy<DocumentInspector>
      */
     private $documentInspector;
 
     /**
-     * @var SessionManagerInterface
+     * @var ObjectProphecy<SessionManagerInterface>
      */
     private $sessionManager;
 
     /**
-     * @var NodeManager
+     * @var ObjectProphecy<NodeManager>
      */
     private $nodeManager;
 
@@ -73,7 +74,7 @@ class RouteSubscriberTest extends TestCase
         );
     }
 
-    public function testHydrate()
+    public function testHydrate(): void
     {
         $hydrateEvent = $this->prophesize(HydrateEvent::class);
         $routeDocument = $this->prophesize(RouteBehavior::class);
@@ -89,7 +90,7 @@ class RouteSubscriberTest extends TestCase
         $this->routeSubscriber->handleHydrate($hydrateEvent->reveal());
     }
 
-    public function testHydrateWithWrongDocument()
+    public function testHydrateWithWrongDocument(): void
     {
         $hydrateEvent = $this->prophesize(HydrateEvent::class);
 
@@ -99,7 +100,7 @@ class RouteSubscriberTest extends TestCase
         $this->routeSubscriber->handleHydrate($hydrateEvent->reveal());
     }
 
-    public function testHandlePersist()
+    public function testHandlePersist(): void
     {
         $persistEvent = $this->prophesize(PersistEvent::class);
         $routeDocument = $this->prophesize(RouteBehavior::class);
@@ -125,7 +126,7 @@ class RouteSubscriberTest extends TestCase
         $this->routeSubscriber->handlePersist($persistEvent->reveal());
     }
 
-    public function testHandlePersistWithChange()
+    public function testHandlePersistWithChange(): void
     {
         $persistEvent = $this->prophesize(PersistEvent::class);
         $routeDocument = $this->prophesize(RouteBehavior::class);
@@ -186,7 +187,7 @@ class RouteSubscriberTest extends TestCase
         $this->routeSubscriber->handlePersist($persistEvent->reveal());
     }
 
-    public function testHandlePersistWithWrongDocument()
+    public function testHandlePersistWithWrongDocument(): void
     {
         $persistEvent = $this->prophesize(PersistEvent::class);
         $document = new \stdClass();
@@ -197,7 +198,7 @@ class RouteSubscriberTest extends TestCase
         $this->routeSubscriber->handlePersist($persistEvent->reveal());
     }
 
-    public function testHandlePersistWithWrongTargetDocument()
+    public function testHandlePersistWithWrongTargetDocument(): void
     {
         $persistEvent = $this->prophesize(PersistEvent::class);
         $document = $this->prophesize(RouteBehavior::class);
@@ -215,7 +216,7 @@ class RouteSubscriberTest extends TestCase
         $this->routeSubscriber->handlePersist($persistEvent->reveal());
     }
 
-    public function testHandlePersistWithHomeDocument()
+    public function testHandlePersistWithHomeDocument(): void
     {
         $persistEvent = $this->prophesize(PersistEvent::class);
         $document = $this->prophesize(RouteBehavior::class);
@@ -233,7 +234,7 @@ class RouteSubscriberTest extends TestCase
         $this->routeSubscriber->handlePersist($persistEvent->reveal());
     }
 
-    public function testRemoveNoReferrer()
+    public function testRemoveNoReferrer(): void
     {
         $removeEvent = $this->prophesize(RemoveEvent::class);
         $document = $this->prophesize(RouteBehavior::class);
@@ -246,7 +247,7 @@ class RouteSubscriberTest extends TestCase
         $this->documentManager->remove(Argument::any())->shouldNotBeCalled();
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         $removeEvent = $this->prophesize(RemoveEvent::class);
         $routeDocument1 = $this->prophesize(RouteBehavior::class);
@@ -262,7 +263,7 @@ class RouteSubscriberTest extends TestCase
         $this->documentManager->remove($routeDocument2->reveal())->shouldBeCalled();
     }
 
-    public function testHandleSetNodeOnPersist()
+    public function testHandleSetNodeOnPersist(): void
     {
         $options = ['path' => '/cmf/sulu_io/routes/de/products/machines'];
 
@@ -286,7 +287,7 @@ class RouteSubscriberTest extends TestCase
         $this->routeSubscriber->handleSetNodeOnPersist($event->reveal());
     }
 
-    public function testHandleSetNodeOnPersistAlreadyUsed()
+    public function testHandleSetNodeOnPersistAlreadyUsed(): void
     {
         $options = ['path' => '/cmf/sulu_io/routes/de/products/machines'];
 

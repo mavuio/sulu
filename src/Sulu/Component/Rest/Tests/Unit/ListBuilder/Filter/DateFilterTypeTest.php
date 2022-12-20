@@ -13,6 +13,7 @@ namespace Sulu\Component\Rest\Tests\Unit\ListBuilder\Filter;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\Rest\ListBuilder\FieldDescriptor;
 use Sulu\Component\Rest\ListBuilder\Filter\DateFilterType;
 use Sulu\Component\Rest\ListBuilder\Filter\InvalidFilterTypeOptionsException;
@@ -28,7 +29,7 @@ class DateFilterTypeTest extends TestCase
     private $dateTimeFilterType;
 
     /**
-     * @var ListBuilderInterface
+     * @var ObjectProphecy<ListBuilderInterface>
      */
     private $listBuilder;
 
@@ -49,7 +50,7 @@ class DateFilterTypeTest extends TestCase
     /**
      * @dataProvider provideFilter
      */
-    public function testFilter($fieldName, $value, $expected)
+    public function testFilter($fieldName, $value, $expected): void
     {
         $fieldDescriptor = $this->prophesize(FieldDescriptor::class);
 
@@ -75,7 +76,7 @@ class DateFilterTypeTest extends TestCase
     /**
      * @dataProvider provideFilterFromOnly
      */
-    public function testFilterFromOnly($fieldName, $value, $expected)
+    public function testFilterFromOnly($fieldName, $value, $expected): void
     {
         $fieldDescriptor = $this->prophesize(FieldDescriptor::class);
 
@@ -96,7 +97,7 @@ class DateFilterTypeTest extends TestCase
     /**
      * @dataProvider provideFilterToOnly
      */
-    public function testFilterToOnly($fieldName, $value, $expected)
+    public function testFilterToOnly($fieldName, $value, $expected): void
     {
         $fieldDescriptor = $this->prophesize(FieldDescriptor::class);
 
@@ -118,7 +119,7 @@ class DateFilterTypeTest extends TestCase
     /**
      * @dataProvider provideFilterWithInvalidOptions
      */
-    public function testFilterWithInvalidOptions($value)
+    public function testFilterWithInvalidOptions($value): void
     {
         $this->expectException(InvalidFilterTypeOptionsException::class);
 

@@ -15,6 +15,7 @@ use Massive\Bundle\SearchBundle\Search\SearchManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\Content\Document\Behavior\SecurityBehavior;
 use Sulu\Component\DocumentManager\DocumentManagerInterface;
 use Sulu\Component\Security\Event\PermissionUpdateEvent;
@@ -29,12 +30,12 @@ class PermissionListenerTest extends TestCase
     private $permissionListener;
 
     /**
-     * @var DocumentManagerInterface
+     * @var ObjectProphecy<DocumentManagerInterface>
      */
     private $documentManager;
 
     /**
-     * @var SearchManagerInterface
+     * @var ObjectProphecy<SearchManagerInterface>
      */
     private $searchManager;
 
@@ -49,7 +50,7 @@ class PermissionListenerTest extends TestCase
         );
     }
 
-    public function testOnPermissionUpdate()
+    public function testOnPermissionUpdate(): void
     {
         $document = new \stdClass();
         $event = new PermissionUpdateEvent(SecurityBehavior::class, '1', null);
@@ -60,7 +61,7 @@ class PermissionListenerTest extends TestCase
         $this->permissionListener->onPermissionUpdate($event);
     }
 
-    public function testOnPermissionUpdateNotSecured()
+    public function testOnPermissionUpdateNotSecured(): void
     {
         $event = new PermissionUpdateEvent(\stdClass::class, '1', null);
 

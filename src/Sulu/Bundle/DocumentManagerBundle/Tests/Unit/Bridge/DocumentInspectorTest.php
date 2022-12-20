@@ -15,6 +15,7 @@ use PHPCR\NodeInterface;
 use PHPCR\PropertyInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\DocumentInspector;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\PropertyEncoder;
 use Sulu\Component\Content\Document\Behavior\ShadowLocaleBehavior;
@@ -35,17 +36,17 @@ class DocumentInspectorTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var DocumentRegistry
+     * @var ObjectProphecy<DocumentRegistry>
      */
     private $documentRegistry;
 
     /**
-     * @var PathSegmentRegistry
+     * @var ObjectProphecy<PathSegmentRegistry>
      */
     private $pathSegmentRegistry;
 
     /**
-     * @var NamespaceRegistry
+     * @var ObjectProphecy<NamespaceRegistry>
      */
     private $namespaceRegistry;
 
@@ -55,37 +56,37 @@ class DocumentInspectorTest extends TestCase
     private $document;
 
     /**
-     * @var NodeInterface
+     * @var ObjectProphecy<NodeInterface>
      */
     private $node;
 
     /**
-     * @var MetadataFactoryInterface
+     * @var ObjectProphecy<MetadataFactoryInterface>
      */
     private $metadataFactory;
 
     /**
-     * @var StructureMetadataFactoryInterface
+     * @var ObjectProphecy<StructureMetadataFactoryInterface>
      */
     private $structureMetadataFactory;
 
     /**
-     * @var Metadata\
+     * @var ObjectProphecy<Metadata>
      */
     private $metadata;
 
     /**
-     * @var ProxyFactory
+     * @var ObjectProphecy<ProxyFactory>
      */
     private $proxyFactory;
 
     /**
-     * @var PropertyEncoder
+     * @var ObjectProphecy<PropertyEncoder>
      */
     private $propertyEncoder;
 
     /**
-     * @var WebspaceManagerInterface
+     * @var ObjectProphecy<WebspaceManagerInterface>
      */
     private $webspaceManager;
 
@@ -124,7 +125,7 @@ class DocumentInspectorTest extends TestCase
      *
      * @dataProvider provideGetWebspace
      */
-    public function testGetWebspace($path, $expectedWebspace)
+    public function testGetWebspace($path, $expectedWebspace): void
     {
         $this->documentRegistry->getNodeForDocument($this->document)->willReturn($this->node->reveal());
         $this->pathSegmentRegistry->getPathSegment('base')->willReturn('cmf');
@@ -149,7 +150,7 @@ class DocumentInspectorTest extends TestCase
     /**
      * It should return the Structure for a document implementing StructureBehavior.
      */
-    public function testGetStructure()
+    public function testGetStructure(): void
     {
         $structure = new \stdClass();
         $document = $this->prophesize(StructureBehavior::class);
@@ -165,7 +166,7 @@ class DocumentInspectorTest extends TestCase
     /**
      * It should return null for a document with a not existing structure.
      */
-    public function testGetStructureNotExisting()
+    public function testGetStructureNotExisting(): void
     {
         $document = $this->prophesize(StructureBehavior::class);
         $document->getStructureType()->willReturn('foo');
@@ -182,7 +183,7 @@ class DocumentInspectorTest extends TestCase
     /**
      * It should return the available localizations for the document.
      */
-    public function testGetLocales()
+    public function testGetLocales(): void
     {
         $propertyNames = [
             'foo:aa-template',
@@ -217,7 +218,7 @@ class DocumentInspectorTest extends TestCase
     /**
      * It should return the locale for a document.
      */
-    public function testGetLocale()
+    public function testGetLocale(): void
     {
         $document = new \stdClass();
         $this->documentRegistry->hasDocument($document)->willReturn(true);
@@ -230,7 +231,7 @@ class DocumentInspectorTest extends TestCase
     /**
      * It should return the locale for a document.
      */
-    public function testGetLocaleNotRegistered()
+    public function testGetLocaleNotRegistered(): void
     {
         $document = new \stdClass();
         $this->documentRegistry->hasDocument($document)->willReturn(false);
@@ -239,7 +240,7 @@ class DocumentInspectorTest extends TestCase
         $this->assertNull($locale);
     }
 
-    public function testGetConcreteLocales()
+    public function testGetConcreteLocales(): void
     {
         $document = $this->prophesize(ShadowLocaleBehavior::class);
         $this->namespaceRegistry->getPrefix('system_localized')->willReturn('i18n');
@@ -273,7 +274,7 @@ class DocumentInspectorTest extends TestCase
      *
      * @dataProvider provideWebspace
      */
-    public function testWebspace($path, $expectedWebspace)
+    public function testWebspace($path, $expectedWebspace): void
     {
         $this->documentRegistry->getNodeForDocument($this->document)->willReturn($this->node->reveal());
         $this->node->getPath()->willReturn($path);

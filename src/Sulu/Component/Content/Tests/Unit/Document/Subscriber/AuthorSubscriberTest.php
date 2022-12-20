@@ -15,6 +15,7 @@ use PHPCR\NodeInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\ContactBundle\Entity\Contact;
 use Sulu\Bundle\SecurityBundle\Entity\User;
 use Sulu\Component\Content\Document\Behavior\AuthorBehavior;
@@ -32,22 +33,22 @@ class AuthorSubscriberTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var PropertyEncoder
+     * @var ObjectProphecy<PropertyEncoder>
      */
     private $propertyEncoder;
 
     /**
-     * @var UserRepositoryInterface
+     * @var ObjectProphecy<UserRepositoryInterface>
      */
     protected $userRepository;
 
     /**
-     * @var MetadataFactoryInterface
+     * @var ObjectProphecy<MetadataFactoryInterface>
      */
     private $metadataFactory;
 
     /**
-     * @var Metadata
+     * @var ObjectProphecy<Metadata>
      */
     private $metadata;
 
@@ -73,7 +74,7 @@ class AuthorSubscriberTest extends TestCase
         $this->metadataFactory->getMetadataForClass(Argument::any())->willReturn($this->metadata->reveal());
     }
 
-    public function testSetAuthorOnDocument()
+    public function testSetAuthorOnDocument(): void
     {
         $event = $this->prophesize(HydrateEvent::class);
         $node = $this->prophesize(NodeInterface::class);
@@ -97,7 +98,7 @@ class AuthorSubscriberTest extends TestCase
         $this->authorSubscriber->setAuthorOnDocument($event->reveal());
     }
 
-    public function testSetAuthorOnDocumentLocalized()
+    public function testSetAuthorOnDocumentLocalized(): void
     {
         $event = $this->prophesize(HydrateEvent::class);
         $node = $this->prophesize(NodeInterface::class);
@@ -121,7 +122,7 @@ class AuthorSubscriberTest extends TestCase
         $this->authorSubscriber->setAuthorOnDocument($event->reveal());
     }
 
-    public function testSetAuthorOnNode()
+    public function testSetAuthorOnNode(): void
     {
         $event = $this->prophesize(AbstractMappingEvent::class);
         $node = $this->prophesize(NodeInterface::class);
@@ -146,7 +147,7 @@ class AuthorSubscriberTest extends TestCase
         $this->authorSubscriber->setAuthorOnNode($event->reveal());
     }
 
-    public function testSetAuthorOnNodeLocalized()
+    public function testSetAuthorOnNodeLocalized(): void
     {
         $event = $this->prophesize(AbstractMappingEvent::class);
         $node = $this->prophesize(NodeInterface::class);
@@ -171,7 +172,7 @@ class AuthorSubscriberTest extends TestCase
         $this->authorSubscriber->setAuthorOnNode($event->reveal());
     }
 
-    public function testSetAuthorOnNodeDefaultValue()
+    public function testSetAuthorOnNodeDefaultValue(): void
     {
         $event = $this->prophesize(AbstractMappingEvent::class);
         $node = $this->prophesize(NodeInterface::class);
@@ -215,7 +216,7 @@ class AuthorSubscriberTest extends TestCase
         $this->authorSubscriber->setAuthorOnNode($event->reveal());
     }
 
-    public function testSetAuthorOnNodeDefaultValueFalseMetadata()
+    public function testSetAuthorOnNodeDefaultValueFalseMetadata(): void
     {
         $event = $this->prophesize(AbstractMappingEvent::class);
         $node = $this->prophesize(NodeInterface::class);
@@ -249,7 +250,7 @@ class AuthorSubscriberTest extends TestCase
         $this->authorSubscriber->setAuthorOnNode($event->reveal());
     }
 
-    public function testSetAuthorOnNodeDefaultValueNoCreator()
+    public function testSetAuthorOnNodeDefaultValueNoCreator(): void
     {
         $event = $this->prophesize(AbstractMappingEvent::class);
         $node = $this->prophesize(NodeInterface::class);
@@ -283,7 +284,7 @@ class AuthorSubscriberTest extends TestCase
         $this->authorSubscriber->setAuthorOnNode($event->reveal());
     }
 
-    public function testSetAuthorOnNodeDefaultValueNoContact()
+    public function testSetAuthorOnNodeDefaultValueNoContact(): void
     {
         $event = $this->prophesize(AbstractMappingEvent::class);
         $node = $this->prophesize(NodeInterface::class);

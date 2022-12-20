@@ -14,6 +14,7 @@ namespace Sulu\Comonent\DocumentManager\Tests\Unit\Subscriber;
 use PHPCR\NodeInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\DocumentManager\DocumentRegistry;
 use Sulu\Component\DocumentManager\Event\ClearEvent;
 use Sulu\Component\DocumentManager\Event\CopyEvent;
@@ -35,42 +36,42 @@ class GeneralSubscriberTest extends TestCase
     public const DST_NAME = 'foo';
 
     /**
-     * @var NodeManager
+     * @var ObjectProphecy<NodeManager>
      */
     private $nodeManager;
 
     /**
-     * @var DocumentRegistry
+     * @var ObjectProphecy<DocumentRegistry>
      */
     private $documentRegistry;
 
     /**
-     * @var NodeHelperInterface
+     * @var ObjectProphecy<NodeHelperInterface>
      */
     private $nodeHelper;
 
     /**
-     * @var MoveEvent
+     * @var ObjectProphecy<MoveEvent>
      */
     private $moveEvent;
 
     /**
-     * @var CopyEvent
+     * @var ObjectProphecy<CopyEvent>
      */
     private $copyEvent;
 
     /**
-     * @var ClearEvent
+     * @var ObjectProphecy<ClearEvent>
      */
     private $clearEvent;
 
     /**
-     * @var FlushEvent
+     * @var ObjectProphecy<FlushEvent>
      */
     private $flushEvent;
 
     /**
-     * @var RefreshEvent
+     * @var ObjectProphecy<RefreshEvent>
      */
     private $refreshEvent;
 
@@ -80,7 +81,7 @@ class GeneralSubscriberTest extends TestCase
     private $document;
 
     /**
-     * @var NodeInterface
+     * @var ObjectProphecy<NodeInterface>
      */
     private $node;
 
@@ -114,7 +115,7 @@ class GeneralSubscriberTest extends TestCase
     /**
      * It should move a document.
      */
-    public function testHandleMove()
+    public function testHandleMove(): void
     {
         $this->moveEvent->getDocument()->willReturn($this->document);
         $this->moveEvent->getDestId()->willReturn(self::DST_PATH);
@@ -131,7 +132,7 @@ class GeneralSubscriberTest extends TestCase
     /**
      * It should copy a document.
      */
-    public function testHandleCopy()
+    public function testHandleCopy(): void
     {
         $this->copyEvent->getDocument()->willReturn($this->document);
         $this->copyEvent->getDestId()->willReturn(self::DST_PATH);
@@ -150,7 +151,7 @@ class GeneralSubscriberTest extends TestCase
     /**
      * It should clear/reset the PHPCR session.
      */
-    public function testHandleClear()
+    public function testHandleClear(): void
     {
         $this->nodeManager->clear()->shouldBeCalled();
         $this->generalSubscriber->handleClear($this->clearEvent->reveal());
@@ -159,7 +160,7 @@ class GeneralSubscriberTest extends TestCase
     /**
      * It should save the PHPCR session.
      */
-    public function testHandleFlush()
+    public function testHandleFlush(): void
     {
         $this->nodeManager->save()->shouldBeCalled();
         $this->generalSubscriber->handleFlush($this->flushEvent->reveal());

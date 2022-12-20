@@ -14,6 +14,7 @@ namespace Sulu\Component\Rest\Tests\Unit\ListBuilder\Metadata\General\Driver;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\Rest\ListBuilder\FieldDescriptorInterface;
 use Sulu\Component\Rest\ListBuilder\Metadata\AbstractPropertyMetadata;
 use Sulu\Component\Rest\ListBuilder\Metadata\ConcatenationPropertyMetadata;
@@ -32,7 +33,7 @@ class ListXmlLoaderTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ParameterBagInterface
+     * @var ObjectProphecy<ParameterBagInterface>
      */
     private $parameterBag;
 
@@ -63,7 +64,7 @@ class ListXmlLoaderTest extends TestCase
         $this->listXmlLoader = new ListXmlLoader($this->parameterBag->reveal());
     }
 
-    public function testLoadMetadataFromFileComplete()
+    public function testLoadMetadataFromFileComplete(): void
     {
         $result = $this->listXmlLoader->load(__DIR__ . '/Resources/complete.xml');
         $this->assertInstanceOf(ListMetadata::class, $result);
@@ -140,7 +141,7 @@ class ListXmlLoaderTest extends TestCase
         );
     }
 
-    public function testLoadMetadataFromFileMinimal()
+    public function testLoadMetadataFromFileMinimal(): void
     {
         $result = $this->listXmlLoader->load(__DIR__ . '/Resources/minimal.xml');
 
@@ -182,7 +183,7 @@ class ListXmlLoaderTest extends TestCase
         );
     }
 
-    public function testLoadMetadataFromFileOldPropertyTypeSyntax()
+    public function testLoadMetadataFromFileOldPropertyTypeSyntax(): void
     {
         $result = $this->listXmlLoader->load(__DIR__ . '/Resources/old-property-type-syntax.xml');
 
@@ -223,7 +224,7 @@ class ListXmlLoaderTest extends TestCase
         );
     }
 
-    public function testLoadMetadataFromFileFilterType()
+    public function testLoadMetadataFromFileFilterType(): void
     {
         $result = $this->listXmlLoader->load(__DIR__ . '/Resources/filter-type.xml');
 
@@ -243,7 +244,7 @@ class ListXmlLoaderTest extends TestCase
         );
     }
 
-    public function testLoadMetadataFromFileFilterTypeParameters()
+    public function testLoadMetadataFromFileFilterTypeParameters(): void
     {
         $result = $this->listXmlLoader->load(__DIR__ . '/Resources/filter-type-params.xml');
 
@@ -267,7 +268,7 @@ class ListXmlLoaderTest extends TestCase
         );
     }
 
-    public function testLoadMetadataFromFileFilterTypeCollectionParam()
+    public function testLoadMetadataFromFileFilterTypeCollectionParam(): void
     {
         $result = $this->listXmlLoader->load(__DIR__ . '/Resources/filter-type-collection-param.xml');
 
@@ -293,7 +294,7 @@ class ListXmlLoaderTest extends TestCase
         );
     }
 
-    public function testLoadMetadataFromFileFilterTypeCollectionParamEmptyName()
+    public function testLoadMetadataFromFileFilterTypeCollectionParamEmptyName(): void
     {
         $result = $this->listXmlLoader->load(__DIR__ . '/Resources/filter-type-collection-param-empty-name.xml');
 
@@ -319,7 +320,7 @@ class ListXmlLoaderTest extends TestCase
         );
     }
 
-    public function testLoadMetadataFromFileTransformerParameters()
+    public function testLoadMetadataFromFileTransformerParameters(): void
     {
         $result = $this->listXmlLoader->load(__DIR__ . '/Resources/transformer-type-params.xml');
 
@@ -343,7 +344,7 @@ class ListXmlLoaderTest extends TestCase
         );
     }
 
-    public function testLoadMetadataFromFileGroupConcat()
+    public function testLoadMetadataFromFileGroupConcat(): void
     {
         $result = $this->listXmlLoader->load(__DIR__ . '/Resources/group-concat.xml');
 
@@ -376,7 +377,7 @@ class ListXmlLoaderTest extends TestCase
         );
     }
 
-    public function testLoadMetadataFromFileIdentity()
+    public function testLoadMetadataFromFileIdentity(): void
     {
         $result = $this->listXmlLoader->load(__DIR__ . '/Resources/identity.xml');
 
@@ -404,7 +405,7 @@ class ListXmlLoaderTest extends TestCase
         );
     }
 
-    public function testLoadMetadataFromFileCount()
+    public function testLoadMetadataFromFileCount(): void
     {
         $result = $this->listXmlLoader->load(__DIR__ . '/Resources/count.xml');
 

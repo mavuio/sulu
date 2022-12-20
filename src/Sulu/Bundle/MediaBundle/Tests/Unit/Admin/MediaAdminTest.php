@@ -30,32 +30,32 @@ class MediaAdminTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ViewBuilderFactoryInterface|ObjectProphecy
+     * @var ObjectProphecy<ViewBuilderFactoryInterface>
      */
     private $viewBuilderFactory;
 
     /**
-     * @var SecurityCheckerInterface|ObjectProphecy
+     * @var ObjectProphecy<SecurityCheckerInterface>
      */
     private $securityChecker;
 
     /**
-     * @var LocalizationManagerInterface|ObjectProphecy
+     * @var ObjectProphecy<LocalizationManagerInterface>
      */
     private $localizationManager;
 
     /**
-     * @var UrlGeneratorInterface|ObjectProphecy
+     * @var ObjectProphecy<UrlGeneratorInterface>
      */
     private $urlGenerator;
 
     /**
-     * @var WebspaceManagerInterface|ObjectProphecy
+     * @var ObjectProphecy<WebspaceManagerInterface>
      */
     private $webspaceManager;
 
     /**
-     * @var ActivityViewBuilderFactoryInterface|ObjectProphecy
+     * @var ObjectProphecy<ActivityViewBuilderFactoryInterface>
      */
     private $activityViewBuilderFactory;
 
@@ -83,7 +83,7 @@ class MediaAdminTest extends TestCase
         );
     }
 
-    public function testGetSecurityContexts()
+    public function testGetSecurityContexts(): void
     {
         $webspace1 = new Webspace();
         $security1 = new Security();

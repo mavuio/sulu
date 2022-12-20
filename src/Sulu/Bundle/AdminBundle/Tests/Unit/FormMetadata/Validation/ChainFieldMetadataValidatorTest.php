@@ -23,12 +23,12 @@ class ChainFieldMetadataValidatorTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ObjectProphecy&FieldMetadataValidatorInterface
+     * @var ObjectProphecy<FieldMetadataValidatorInterface>
      */
     private $fieldMetadataValidator1;
 
     /**
-     * @var ObjectProphecy&FieldMetadataValidatorInterface
+     * @var ObjectProphecy<FieldMetadataValidatorInterface>
      */
     private $fieldMetadataValidator2;
 
@@ -48,7 +48,7 @@ class ChainFieldMetadataValidatorTest extends TestCase
         ]);
     }
 
-    public function testValidate()
+    public function testValidate(): void
     {
         $fieldMetadata = new FieldMetadata('some_field');
 

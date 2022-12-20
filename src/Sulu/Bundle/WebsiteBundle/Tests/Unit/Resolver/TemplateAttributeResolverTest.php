@@ -13,6 +13,7 @@ namespace Sulu\Bundle\WebsiteBundle\Tests\Unit\Resolver;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\WebsiteBundle\Resolver\RequestAnalyzerResolver;
 use Sulu\Bundle\WebsiteBundle\Resolver\RequestAnalyzerResolverInterface;
 use Sulu\Bundle\WebsiteBundle\Resolver\TemplateAttributeResolver;
@@ -32,7 +33,7 @@ class TemplateAttributeResolverTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var RequestAnalyzerInterface
+     * @var ObjectProphecy<RequestAnalyzerInterface>
      */
     protected $requestAnalyzer;
 
@@ -42,12 +43,12 @@ class TemplateAttributeResolverTest extends TestCase
     protected $requestAnalyzerResolver;
 
     /**
-     * @var RouterInterface
+     * @var ObjectProphecy<RouterInterface>
      */
     protected $router;
 
     /**
-     * @var RequestStack
+     * @var ObjectProphecy<RequestStack>
      */
     protected $requestStack;
 
@@ -57,22 +58,22 @@ class TemplateAttributeResolverTest extends TestCase
     protected $portalInformations;
 
     /**
-     * @var WebspaceManagerInterface
+     * @var ObjectProphecy<WebspaceManagerInterface>
      */
     protected $webspaceManager;
 
     /**
-     * @var Webspace
+     * @var ObjectProphecy<Webspace>
      */
     protected $webspace;
 
     /**
-     * @var Portal
+     * @var ObjectProphecy<Portal>
      */
     protected $portal;
 
     /**
-     * @var Request
+     * @var ObjectProphecy<Request>
      */
     protected $request;
 
@@ -92,7 +93,6 @@ class TemplateAttributeResolverTest extends TestCase
         $webspacePortalName = 'Sulu';
 
         $this->requestAnalyzer = $this->prophesize(RequestAnalyzerInterface::class);
-        $this->requestAnalyzerResolver = $this->prophesize(RequestAnalyzerResolverInterface::class);
         $this->router = $this->prophesize(RouterInterface::class);
         $this->requestStack = $this->prophesize(RequestStack::class);
         $this->request = $this->prophesize(Request::class);
@@ -146,7 +146,7 @@ class TemplateAttributeResolverTest extends TestCase
         );
     }
 
-    public function testResolve()
+    public function testResolve(): void
     {
         $templateAttributeResolver = $this->createTemplateAttributeResolver();
 
@@ -191,7 +191,7 @@ class TemplateAttributeResolverTest extends TestCase
         ], $resolved);
     }
 
-    public function testResolveStaticRoute()
+    public function testResolveStaticRoute(): void
     {
         $templateAttributeResolver = $this->createTemplateAttributeResolver();
 
@@ -244,7 +244,7 @@ class TemplateAttributeResolverTest extends TestCase
         ], $resolved);
     }
 
-    public function testResolveStaticRouteWithoutUrls()
+    public function testResolveStaticRouteWithoutUrls(): void
     {
         $this->request->get('_route')->willReturn('test_static')->shouldBeCalled();
         $this->request->get('_route_params')->willReturn(['host' => 'sulu.io', '_locale' => 'de']);

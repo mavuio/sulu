@@ -18,6 +18,7 @@ use Massive\Bundle\SearchBundle\Search\SearchManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\SearchBundle\Controller\SearchController;
 use Sulu\Bundle\SearchBundle\Search\Configuration\IndexConfiguration;
 use Sulu\Bundle\SearchBundle\Search\Configuration\IndexConfigurationProviderInterface;
@@ -31,32 +32,32 @@ class SearchControllerTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var SearchManagerInterface
+     * @var ObjectProphecy<SearchManagerInterface>
      */
     private $searchManager;
 
     /**
-     * @var ProviderInterface
+     * @var ObjectProphecy<ProviderInterface>
      */
     private $metadataProvider;
 
     /**
-     * @var SecurityCheckerInterface
+     * @var ObjectProphecy<SecurityCheckerInterface>
      */
     private $securityChecker;
 
     /**
-     * @var ViewHandlerInterface
+     * @var ObjectProphecy<ViewHandlerInterface>
      */
     private $viewHandler;
 
     /**
-     * @var ListRestHelperInterface
+     * @var ObjectProphecy<ListRestHelperInterface>
      */
     private $listRestHelper;
 
     /**
-     * @var IndexConfigurationProviderInterface
+     * @var ObjectProphecy<IndexConfigurationProviderInterface>
      */
     private $indexConfigurationProvider;
 
@@ -84,7 +85,7 @@ class SearchControllerTest extends TestCase
         );
     }
 
-    public function testIndexesAction()
+    public function testIndexesAction(): void
     {
         $this->searchManager->getIndexNames()->willReturn(['index1', 'index2']);
 
@@ -104,7 +105,7 @@ class SearchControllerTest extends TestCase
         $this->searchController->indexesAction();
     }
 
-    public function testIndexesActionWithSecurity()
+    public function testIndexesActionWithSecurity(): void
     {
         $this->searchManager->getIndexNames()->willReturn(['index1', 'index2']);
 
@@ -136,7 +137,7 @@ class SearchControllerTest extends TestCase
         $this->searchController->indexesAction();
     }
 
-    public function testIndexesActionWithContexts()
+    public function testIndexesActionWithContexts(): void
     {
         $this->searchManager->getIndexNames()->willReturn(['index1', 'index2']);
 

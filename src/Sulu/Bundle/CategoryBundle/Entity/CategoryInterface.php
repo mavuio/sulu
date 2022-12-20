@@ -163,7 +163,7 @@ interface CategoryInterface extends AuditableInterface
     /**
      * Get single meta by locale or false if does not exists.
      *
-     * @param string $locale
+     * @param ?string $locale
      *
      * @return CategoryTranslationInterface|false
      */
@@ -181,8 +181,6 @@ interface CategoryInterface extends AuditableInterface
     /**
      * Add children.
      *
-     * @param CategoryInterface $child
-     *
      * @return CategoryInterface
      */
     public function addChild(self $child);
@@ -199,8 +197,6 @@ interface CategoryInterface extends AuditableInterface
     /**
      * Remove children.
      *
-     * @param CategoryInterface $child
-     *
      * @return void
      */
     public function removeChild(self $child);
@@ -214,8 +210,6 @@ interface CategoryInterface extends AuditableInterface
 
     /**
      * Set parent.
-     *
-     * @param CategoryInterface|null $parent
      *
      * @return CategoryInterface
      */

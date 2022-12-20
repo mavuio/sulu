@@ -48,12 +48,12 @@ class DoctrineListBuilderTest extends TestCase
     use ReadObjectAttributeTrait;
 
     /**
-     * @var ObjectProphecy|EventDispatcherInterface
+     * @var ObjectProphecy<EventDispatcherInterface>
      */
     private $eventDispatcher;
 
     /**
-     * @var ObjectProphecy|FilterTypeRegistry
+     * @var ObjectProphecy<FilterTypeRegistry>
      */
     private $filterTypeRegistry;
 
@@ -63,22 +63,22 @@ class DoctrineListBuilderTest extends TestCase
     private $doctrineListBuilder;
 
     /**
-     * @var ObjectProphecy|EntityManager
+     * @var ObjectProphecy<EntityManager>
      */
     private $entityManager;
 
     /**
-     * @var ObjectProphecy|ClassMetadata
+     * @var ObjectProphecy<ClassMetadata>
      */
     private $classMetadata;
 
     /**
-     * @var ObjectProphecy|QueryBuilder
+     * @var ObjectProphecy<QueryBuilder>
      */
     private $queryBuilder;
 
     /**
-     * @var ObjectProphecy|AbstractQuery
+     * @var ObjectProphecy<AbstractQuery>
      */
     private $query;
 
@@ -212,7 +212,7 @@ class DoctrineListBuilderTest extends TestCase
                     ),
                     'anotherEntityName' => new DoctrineJoinDescriptor(
                         self::$translationEntityName,
-                        'anotherEntityName' . '.translations',
+                        'anotherEntityName.translations',
                         null,
                         DoctrineJoinDescriptor::JOIN_METHOD_INNER
                     ),
@@ -244,7 +244,7 @@ class DoctrineListBuilderTest extends TestCase
                     ),
                     'anotherEntityName' => new DoctrineJoinDescriptor(
                         self::$translationEntityName,
-                        'anotherEntityName' . '.translations',
+                        'anotherEntityName.translations',
                         null,
                         DoctrineJoinDescriptor::JOIN_METHOD_INNER
                     ),
@@ -283,8 +283,7 @@ class DoctrineListBuilderTest extends TestCase
                 ),
                 'anotherEntityName' => new DoctrineJoinDescriptor(
                     self::$translationEntityName,
-                    'anotherEntityName' . '.translations'
-                ),
+                    'anotherEntityName.translations'),
             ]
         );
 
@@ -1168,6 +1167,7 @@ class DoctrineListBuilderTest extends TestCase
         $user = $this->prophesize(User::class);
         $role = $this->prophesize(Role::class);
         $role->getId()->willReturn(1);
+        $role->getSystem()->willReturn('Sulu');
         $user->getRoleObjects()->willReturn([$role->reveal()]);
 
         $this->doctrineListBuilder->setPermissionCheck($user->reveal(), PermissionTypes::VIEW);
@@ -1189,23 +1189,22 @@ class DoctrineListBuilderTest extends TestCase
 
         $accessQueryBuilder->setParameter('entityClass', self::$entityName)->shouldBeCalled();
 
-        $accessQueryBuilder->leftJoin(
+        $accessQueryBuilder->innerJoin(
             AccessControl::class,
             'accessControl',
             'WITH',
             'accessControl.entityClass = :entityClass AND accessControl.entityId = entity.id'
         )->shouldBeCalled();
 
-        $accessQueryBuilder->leftJoin('accessControl.role', 'role', 'WITH', 'role.system = :system')->shouldBeCalled();
+        $accessQueryBuilder->innerJoin('accessControl.role', 'role')->shouldBeCalled();
 
         $accessQueryBuilder->andWhere(
             'BIT_AND(accessControl.permissions, :permission) <> :permission AND accessControl.permissions IS NOT NULL'
         )->shouldBeCalled();
 
-        $accessQueryBuilder->andWhere('role.id IN(:roleIds) OR role.id IS NULL')->shouldBeCalled();
+        $accessQueryBuilder->andWhere('role.id IN(:roleIds)')->shouldBeCalled();
 
         $accessQueryBuilder->setParameter('roleIds', [1])->shouldBeCalled();
-        $accessQueryBuilder->setParameter('system', 'Sulu')->shouldBeCalled();
         $accessQueryBuilder->setParameter('permission', 64)->shouldBeCalled();
 
         $accessQuery = $this->prophesize(AbstractQuery::class);
@@ -1225,6 +1224,7 @@ class DoctrineListBuilderTest extends TestCase
         $user = $this->prophesize(User::class);
         $role = $this->prophesize(Role::class);
         $role->getId()->willReturn(1);
+        $role->getSystem()->willReturn('Sulu');
         $user->getRoleObjects()->willReturn([$role->reveal()]);
 
         $this->doctrineListBuilder->setPermissionCheck($user->reveal(), PermissionTypes::VIEW);
@@ -1250,23 +1250,22 @@ class DoctrineListBuilderTest extends TestCase
 
         $accessQueryBuilder->setParameter('entityClass', self::$entityName)->shouldBeCalled();
 
-        $accessQueryBuilder->leftJoin(
+        $accessQueryBuilder->innerJoin(
             AccessControl::class,
             'accessControl',
             'WITH',
             'accessControl.entityClass = :entityClass AND accessControl.entityIdInteger = entity.id'
         )->shouldBeCalled();
 
-        $accessQueryBuilder->leftJoin('accessControl.role', 'role', 'WITH', 'role.system = :system')->shouldBeCalled();
+        $accessQueryBuilder->innerJoin('accessControl.role', 'role')->shouldBeCalled();
 
         $accessQueryBuilder->andWhere(
             'BIT_AND(accessControl.permissions, :permission) <> :permission AND accessControl.permissions IS NOT NULL'
         )->shouldBeCalled();
 
-        $accessQueryBuilder->andWhere('role.id IN(:roleIds) OR role.id IS NULL')->shouldBeCalled();
+        $accessQueryBuilder->andWhere('role.id IN(:roleIds)')->shouldBeCalled();
 
         $accessQueryBuilder->setParameter('roleIds', [1])->shouldBeCalled();
-        $accessQueryBuilder->setParameter('system', 'Sulu')->shouldBeCalled();
         $accessQueryBuilder->setParameter('permission', 64)->shouldBeCalled();
 
         $accessQuery = $this->prophesize(AbstractQuery::class);
@@ -1297,6 +1296,7 @@ class DoctrineListBuilderTest extends TestCase
         $user = $this->prophesize(User::class);
         $role = $this->prophesize(Role::class);
         $role->getId()->willReturn(1);
+        $role->getSystem()->willReturn('Sulu');
         $user->getRoleObjects()->willReturn([$role->reveal()]);
 
         $this->doctrineListBuilder->setPermissionCheck($user->reveal(), PermissionTypes::VIEW, \stdClass::class);
@@ -1318,23 +1318,22 @@ class DoctrineListBuilderTest extends TestCase
 
         $accessQueryBuilder->setParameter('entityClass', \stdClass::class)->shouldBeCalled();
 
-        $accessQueryBuilder->leftJoin(
+        $accessQueryBuilder->innerJoin(
             AccessControl::class,
             'accessControl',
             'WITH',
             'accessControl.entityClass = :entityClass AND accessControl.entityId = entity.id'
         )->shouldBeCalled();
 
-        $accessQueryBuilder->leftJoin('accessControl.role', 'role', 'WITH', 'role.system = :system')->shouldBeCalled();
+        $accessQueryBuilder->innerJoin('accessControl.role', 'role')->shouldBeCalled();
 
         $accessQueryBuilder->andWhere(
             'BIT_AND(accessControl.permissions, :permission) <> :permission AND accessControl.permissions IS NOT NULL'
         )->shouldBeCalled();
 
-        $accessQueryBuilder->andWhere('role.id IN(:roleIds) OR role.id IS NULL')->shouldBeCalled();
+        $accessQueryBuilder->andWhere('role.id IN(:roleIds)')->shouldBeCalled();
 
         $accessQueryBuilder->setParameter('roleIds', [1])->shouldBeCalled();
-        $accessQueryBuilder->setParameter('system', 'Sulu')->shouldBeCalled();
         $accessQueryBuilder->setParameter('permission', 64)->shouldBeCalled();
 
         $accessQuery = $this->prophesize(AbstractQuery::class);
@@ -1354,6 +1353,7 @@ class DoctrineListBuilderTest extends TestCase
         $user = $this->prophesize(User::class);
         $role = $this->prophesize(Role::class);
         $role->getId()->willReturn(1);
+        $role->getSystem()->willReturn('Sulu');
         $user->getRoleObjects()->willReturn([$role->reveal()]);
 
         $joinFieldDescriptor = $this->prophesize(DoctrineJoinDescriptor::class);
@@ -1387,23 +1387,22 @@ class DoctrineListBuilderTest extends TestCase
 
         $accessQueryBuilder->setParameter('entityClass', \stdClass::class)->shouldBeCalled();
 
-        $accessQueryBuilder->leftJoin(
+        $accessQueryBuilder->innerJoin(
             AccessControl::class,
             'accessControl',
             'WITH',
             'accessControl.entityClass = :entityClass AND accessControl.entityId = entity.id'
         )->shouldBeCalled();
 
-        $accessQueryBuilder->leftJoin('accessControl.role', 'role', 'WITH', 'role.system = :system')->shouldBeCalled();
+        $accessQueryBuilder->innerJoin('accessControl.role', 'role')->shouldBeCalled();
 
         $accessQueryBuilder->andWhere(
             'BIT_AND(accessControl.permissions, :permission) <> :permission AND accessControl.permissions IS NOT NULL'
         )->shouldBeCalled();
 
-        $accessQueryBuilder->andWhere('role.id IN(:roleIds) OR role.id IS NULL')->shouldBeCalled();
+        $accessQueryBuilder->andWhere('role.id IN(:roleIds)')->shouldBeCalled();
 
         $accessQueryBuilder->setParameter('roleIds', [1])->shouldBeCalled();
-        $accessQueryBuilder->setParameter('system', 'Sulu')->shouldBeCalled();
         $accessQueryBuilder->setParameter('permission', 64)->shouldBeCalled();
 
         $accessQuery = $this->prophesize(AbstractQuery::class);

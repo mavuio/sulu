@@ -192,8 +192,6 @@ class NavigationItem implements \Iterator
 
     /**
      * Adds a child to the navigation item.
-     *
-     * @param NavigationItem $child
      */
     public function addChild(self $child)
     {
@@ -359,6 +357,7 @@ class NavigationItem implements \Iterator
      *
      * @return mixed Can return any type
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->children[$this->position];
@@ -382,6 +381,7 @@ class NavigationItem implements \Iterator
      *
      * @return mixed scalar on success, or null on failure
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->position;

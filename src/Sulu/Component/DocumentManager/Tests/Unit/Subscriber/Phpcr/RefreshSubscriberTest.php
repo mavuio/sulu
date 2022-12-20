@@ -15,6 +15,7 @@ use PHPCR\NodeInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\DocumentManager\DocumentRegistry;
 use Sulu\Component\DocumentManager\Event\HydrateEvent;
 use Sulu\Component\DocumentManager\Event\RefreshEvent;
@@ -28,12 +29,12 @@ class RefreshSubscriberTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var EventDispatcherInterface
+     * @var ObjectProphecy<EventDispatcherInterface>
      */
     private $eventDispatcher;
 
     /**
-     * @var DocumentRegistry
+     * @var ObjectProphecy<DocumentRegistry>
      */
     private $documentRegistry;
 
@@ -53,7 +54,7 @@ class RefreshSubscriberTest extends TestCase
         );
     }
 
-    public function testRefreshDocument()
+    public function testRefreshDocument(): void
     {
         $document = new \stdClass();
         $node = $this->prophesize(NodeInterface::class);
@@ -73,7 +74,7 @@ class RefreshSubscriberTest extends TestCase
         $this->refreshSubscriber->refreshDocument($refreshEvent->reveal());
     }
 
-    public function testRefreshDocumentForDeleteDraft()
+    public function testRefreshDocumentForDeleteDraft(): void
     {
         $document = new \stdClass();
         $node = $this->prophesize(NodeInterface::class);

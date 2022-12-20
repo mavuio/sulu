@@ -14,6 +14,7 @@ namespace Sulu\Bundle\MediaBundle\Tests\Unit\DependencyInjection;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\MediaBundle\DependencyInjection\SuluMediaExtension;
 use Symfony\Component\Process\ExecutableFinder;
 
@@ -22,7 +23,7 @@ class SuluMediaExtensionTest extends AbstractExtensionTestCase
     use ProphecyTrait;
 
     /**
-     * @var ExecutableFinder
+     * @var ObjectProphecy<ExecutableFinder>
      */
     private $executableFinder;
 
@@ -39,7 +40,7 @@ class SuluMediaExtensionTest extends AbstractExtensionTestCase
         ];
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         $this->executableFinder->find(Argument::any())->willReturn(true);
         $this->container->setParameter('kernel.bundles', []);
@@ -93,7 +94,7 @@ class SuluMediaExtensionTest extends AbstractExtensionTestCase
         ]);
     }
 
-    public function testConfigureFileValidator()
+    public function testConfigureFileValidator(): void
     {
         $this->container->setParameter('kernel.bundles', []);
         $this->load([
@@ -118,7 +119,7 @@ class SuluMediaExtensionTest extends AbstractExtensionTestCase
         );
     }
 
-    public function testConfigureFileValidatorWithDeprecatedOptions()
+    public function testConfigureFileValidatorWithDeprecatedOptions(): void
     {
         $this->container->setParameter('kernel.bundles', []);
         $this->load([
@@ -137,7 +138,7 @@ class SuluMediaExtensionTest extends AbstractExtensionTestCase
         );
     }
 
-    public function testConfigureFileValidatorWithDeprecatedAndCorrectOptions()
+    public function testConfigureFileValidatorWithDeprecatedAndCorrectOptions(): void
     {
         $this->container->setParameter('kernel.bundles', []);
         $this->load([

@@ -19,6 +19,7 @@ use Massive\Bundle\SearchBundle\Search\Metadata\IndexMetadata;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Log\LoggerInterface;
 use Sulu\Bundle\MediaBundle\Entity\Collection;
 use Sulu\Bundle\MediaBundle\Entity\File;
@@ -33,28 +34,58 @@ class MediaSearchSubscriberTest extends TestCase
 {
     use ProphecyTrait;
 
+    /**
+     * @var ObjectProphecy<MediaManagerInterface>
+     */
     private $mediaManager;
 
     private $subscriber;
 
+    /**
+     * @var ObjectProphecy<ClassMetadata>
+     */
     private $metadata;
 
+    /**
+     * @var ObjectProphecy<IndexMetadata>
+     */
     private $indexMetadata;
 
+    /**
+     * @var ObjectProphecy<FileVersionMeta>
+     */
     private $fileVersionMeta;
 
+    /**
+     * @var ObjectProphecy<FileVersion>
+     */
     private $fileVersion;
 
+    /**
+     * @var ObjectProphecy<File>
+     */
     private $file;
 
+    /**
+     * @var ObjectProphecy<Media>
+     */
     private $media;
 
+    /**
+     * @var ObjectProphecy<PreIndexEvent>
+     */
     private $event;
 
+    /**
+     * @var ObjectProphecy<Document>
+     */
     private $document;
 
     private $reflection;
 
+    /**
+     * @var ObjectProphecy<Factory>
+     */
     private $factory;
 
     public function setUp(): void
@@ -96,7 +127,7 @@ class MediaSearchSubscriberTest extends TestCase
     /**
      * It should return early if the entity is not a FileVersionMeta instance.
      */
-    public function testNotMedia()
+    public function testNotMedia(): void
     {
         $this->indexMetadata->getName()->willReturn('Foo');
         $this->event->getSubject()->willReturn(new \stdClass());
@@ -108,7 +139,7 @@ class MediaSearchSubscriberTest extends TestCase
     /**
      * It should set the image URL, ID and mime type.
      */
-    public function testSubscriber()
+    public function testSubscriber(): void
     {
         $this->setupSubscriber(
             123,
@@ -117,7 +148,7 @@ class MediaSearchSubscriberTest extends TestCase
         );
         $imageUrl = 'foo';
 
-        $this->mediaManager->addFormatsAndUrl(Argument::any())->will(function($args) use ($imageUrl) {
+        $this->mediaManager->addFormatsAndUrl(Argument::any())->will(function($args) use ($imageUrl): void {
             $mediaApi = $args[0];
             $mediaApi->setFormats([
                 'test_format' => $imageUrl,
@@ -135,7 +166,7 @@ class MediaSearchSubscriberTest extends TestCase
     /**
      * It should log a warning if the media does not have a thumbnail.
      */
-    public function testSubscriberNoThumbnailLog()
+    public function testSubscriberNoThumbnailLog(): void
     {
         $this->setupSubscriber(
             123,
@@ -143,7 +174,7 @@ class MediaSearchSubscriberTest extends TestCase
             321
         );
 
-        $this->mediaManager->addFormatsAndUrl(Argument::any())->will(function($args) {
+        $this->mediaManager->addFormatsAndUrl(Argument::any())->will(function($args): void {
             $mediaApi = $args[0];
             $mediaApi->setFormats([
                 'for' => '/fo',
@@ -163,7 +194,7 @@ class MediaSearchSubscriberTest extends TestCase
      * It should set the image URL to NULL if the media is not in the list of medias with
      * thumbnails.
      */
-    public function testSubscriberNotImage()
+    public function testSubscriberNotImage(): void
     {
         $this->setupSubscriber(
             123,
@@ -171,7 +202,7 @@ class MediaSearchSubscriberTest extends TestCase
             321
         );
 
-        $this->mediaManager->addFormatsAndUrl(Argument::any())->will(function($args) {
+        $this->mediaManager->addFormatsAndUrl(Argument::any())->will(function($args): void {
             $mediaApi = $args[0];
             $mediaApi->setFormats([]);
         });
@@ -186,7 +217,7 @@ class MediaSearchSubscriberTest extends TestCase
         $this->subscriber->handlePreIndex($this->event->reveal());
     }
 
-    private function setupSubscriber($mediaId, $mediaMime, $collectionId)
+    private function setupSubscriber($mediaId, $mediaMime, $collectionId): void
     {
         $this->metadata->getName()->willReturn(FileVersionMeta::class);
         $this->event->getSubject()->willReturn($this->fileVersionMeta->reveal());

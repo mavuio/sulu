@@ -15,12 +15,12 @@ use Massive\Bundle\SearchBundle\Search\Reindex\LocalizedReindexProviderInterface
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\DocumentInspector;
 use Sulu\Bundle\PageBundle\Search\Reindex\StructureProvider;
 use Sulu\Component\Content\Document\Behavior\SecurityBehavior;
 use Sulu\Component\Content\Document\Behavior\StructureBehavior;
 use Sulu\Component\Content\Metadata\Factory\StructureMetadataFactoryInterface;
-use Sulu\Component\DocumentManager\DocumentManager;
 use Sulu\Component\DocumentManager\DocumentManagerInterface;
 use Sulu\Component\DocumentManager\Metadata;
 use Sulu\Component\DocumentManager\MetadataFactoryInterface;
@@ -36,37 +36,37 @@ class StructureProviderTest extends TestCase
     private $provider;
 
     /**
-     * @var DocumentManager
+     * @var ObjectProphecy<DocumentManagerInterface>
      */
     private $documentManager;
 
     /**
-     * @var MetadataFactoryInterface
+     * @var ObjectProphecy<MetadataFactoryInterface>
      */
     private $metadataFactory;
 
     /**
-     * @var StructureMetadataFactoryInterface
+     * @var ObjectProphecy<StructureMetadataFactoryInterface>
      */
     private $structureFactory;
 
     /**
-     * @var Query
+     * @var ObjectProphecy<Query>
      */
     private $query;
 
     /**
-     * @var Metadata
+     * @var ObjectProphecy<Metadata>
      */
     private $metadata1;
 
     /**
-     * @var StructureBehavior
+     * @var ObjectProphecy<StructureBehavior>
      */
     private $structure;
 
     /**
-     * @var DocumentInspector
+     * @var ObjectProphecy<DocumentInspector>
      */
     private $inspector;
 
@@ -100,7 +100,7 @@ class StructureProviderTest extends TestCase
     /**
      * It should provide a batch of documents.
      */
-    public function testDocumentBatch()
+    public function testDocumentBatch(): void
     {
         $maxResults = 10;
         $offset = 5;
@@ -124,7 +124,7 @@ class StructureProviderTest extends TestCase
     /**
      * It should provide all the class FQNs.
      */
-    public function testClassFqns()
+    public function testClassFqns(): void
     {
         $alias = 'a';
         $class = 'Foo';
@@ -144,7 +144,7 @@ class StructureProviderTest extends TestCase
     /**
      * It should NOT return class FQNs that are not mapped to a Structure.
      */
-    public function testClassFqnsNoStructure()
+    public function testClassFqnsNoStructure(): void
     {
         $alias = 'a';
 
@@ -162,7 +162,7 @@ class StructureProviderTest extends TestCase
     /**
      * It should return the total count for a given class FQN.
      */
-    public function testCount()
+    public function testCount(): void
     {
         $class = 'Foo';
         $objects = [new \stdClass(), new \stdClass()];
@@ -183,7 +183,7 @@ class StructureProviderTest extends TestCase
     /**
      * It should get the locales for a given document.
      */
-    public function testGetLocales()
+    public function testGetLocales(): void
     {
         $locales = ['de', 'fr'];
         $this->inspector->getLocales($this->structure->reveal())->willReturn($locales);
@@ -195,7 +195,7 @@ class StructureProviderTest extends TestCase
     /**
      * It should translate a given object.
      */
-    public function testTranslate()
+    public function testTranslate(): void
     {
         $locale = 'de';
         $uuid = '1234';
@@ -210,7 +210,7 @@ class StructureProviderTest extends TestCase
     /**
      * It should not index secure documents which have permissions.
      */
-    public function testSecureDocuments()
+    public function testSecureDocuments(): void
     {
         $classFqn = 'Foo';
         $offset = 0;
@@ -239,7 +239,7 @@ class StructureProviderTest extends TestCase
         ], $results);
     }
 
-    public function testCleanup()
+    public function testCleanup(): void
     {
         $classFqn = 'Foo';
         $this->provider->cleanUp($classFqn);

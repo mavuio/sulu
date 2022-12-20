@@ -14,6 +14,7 @@ namespace Sulu\Bundle\MediaBundle\Tests\Unit\Content\Types;
 use PHPCR\NodeInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\AdminBundle\Metadata\SchemaMetadata\PropertyMetadataMinMaxValueResolver;
 use Sulu\Bundle\MediaBundle\Content\Types\MediaSelectionContentType;
 use Sulu\Bundle\MediaBundle\Media\Manager\MediaManagerInterface;
@@ -35,12 +36,12 @@ class MediaSelectionContentTypeTest extends TestCase
     private $mediaSelection;
 
     /**
-     * @var ReferenceStoreInterface
+     * @var ObjectProphecy<ReferenceStoreInterface>
      */
     private $mediaReferenceStore;
 
     /**
-     * @var RequestAnalyzerInterface
+     * @var ObjectProphecy<RequestAnalyzerInterface>
      */
     private $requestAnalyzer;
 
@@ -50,7 +51,7 @@ class MediaSelectionContentTypeTest extends TestCase
     private $webspace;
 
     /**
-     * @var MediaManagerInterface
+     * @var ObjectProphecy<MediaManagerInterface>
      */
     private $mediaManager;
 
@@ -72,7 +73,7 @@ class MediaSelectionContentTypeTest extends TestCase
         );
     }
 
-    public function testWrite()
+    public function testWrite(): void
     {
         $node = $this->getMockForAbstractClass(
             NodeInterface::class,
@@ -127,7 +128,7 @@ class MediaSelectionContentTypeTest extends TestCase
         $this->mediaSelection->write($node, $property, 0, 'test', 'en', 's');
     }
 
-    public function testWriteWithPassedContainer()
+    public function testWriteWithPassedContainer(): void
     {
         $node = $this->getMockForAbstractClass(
             NodeInterface::class,
@@ -183,7 +184,7 @@ class MediaSelectionContentTypeTest extends TestCase
         $this->mediaSelection->write($node, $property, 0, 'test', 'en', 's');
     }
 
-    public function testRead()
+    public function testRead(): void
     {
         $config = '{"config":{"conf1": 1, "conf2": 2}, "displayOption": "right", "ids": [1,2,3,4]}';
 
@@ -235,7 +236,7 @@ class MediaSelectionContentTypeTest extends TestCase
         $this->mediaSelection->read($node, $property, 'test', 'en', 's');
     }
 
-    public function testReadWithInvalidValue()
+    public function testReadWithInvalidValue(): void
     {
         $config = '[]';
 
@@ -287,7 +288,7 @@ class MediaSelectionContentTypeTest extends TestCase
         $this->mediaSelection->read($node, $property, 'test', 'en', 's');
     }
 
-    public function testReadWithType()
+    public function testReadWithType(): void
     {
         $config = '{"config":{"conf1": 1, "conf2": 2}, "displayOption": "right", "ids": [1,2,3,4]}';
 
@@ -340,7 +341,7 @@ class MediaSelectionContentTypeTest extends TestCase
         $this->mediaSelection->read($node, $property, 'test', 'en', 's');
     }
 
-    public function testReadWithMultipleTypes()
+    public function testReadWithMultipleTypes(): void
     {
         $config = '{"config":{"conf1": 1, "conf2": 2}, "displayOption": "right", "ids": [1,2,3,4]}';
 
@@ -393,7 +394,7 @@ class MediaSelectionContentTypeTest extends TestCase
         $this->mediaSelection->read($node, $property, 'test', 'en', 's');
     }
 
-    public function testGetContentData()
+    public function testGetContentData(): void
     {
         $property = $this->prophesize(PropertyInterface::class);
         $property->getValue()->willReturn(['ids' => [1, 2, 3]]);
@@ -409,7 +410,7 @@ class MediaSelectionContentTypeTest extends TestCase
         $result = $this->mediaSelection->getContentData($property->reveal());
     }
 
-    public function testGetContentDataWithPermissions()
+    public function testGetContentDataWithPermissions(): void
     {
         $property = $this->prophesize(PropertyInterface::class);
         $property->getValue()->willReturn(['ids' => [1, 2, 3]]);
@@ -428,7 +429,7 @@ class MediaSelectionContentTypeTest extends TestCase
         $result = $this->mediaSelection->getContentData($property->reveal());
     }
 
-    public function testPreResolve()
+    public function testPreResolve(): void
     {
         $property = $this->prophesize(PropertyInterface::class);
         $property->getValue()->willReturn(['ids' => [1, 2, 3]]);

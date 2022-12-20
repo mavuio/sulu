@@ -14,6 +14,7 @@ namespace Sulu\Bundle\PageBundle\Tests\Functional\Markup;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\MarkupBundle\Markup\Link\LinkProviderPool;
 use Sulu\Bundle\MarkupBundle\Markup\Link\LinkProviderPoolInterface;
 use Sulu\Bundle\MarkupBundle\Markup\LinkTag;
@@ -35,27 +36,27 @@ class LinkTagTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ContentRepositoryInterface
+     * @var ObjectProphecy<ContentRepositoryInterface>
      */
     private $contentRepository;
 
     /**
-     * @var WebspaceManagerInterface
+     * @var ObjectProphecy<WebspaceManagerInterface>
      */
     private $webspaceManager;
 
     /**
-     * @var RequestStack
+     * @var ObjectProphecy<RequestStack>
      */
     private $requestStack;
 
     /**
-     * @var Request
+     * @var ObjectProphecy<Request>
      */
     private $request;
 
     /**
-     * @var TranslatorInterface
+     * @var ObjectProphecy<TranslatorInterface>
      */
     private $translator;
 
@@ -132,7 +133,7 @@ class LinkTagTest extends TestCase
             [
                 '<sulu-link href="123-123-123">Test-Content</sulu-link>',
                 ['href' => '123-123-123', 'content' => 'Test-Content'],
-                '<a href="/de/test" title="Pagetitle">Test-Content</a>',
+                '<a href="/de/test">Test-Content</a>',
             ],
             [
                 '<sulu-link href="123-123-123" title="Test-Title" target="_blank">Test-Content</sulu-link>',
@@ -150,7 +151,7 @@ class LinkTagTest extends TestCase
     /**
      * @dataProvider provideParseDataDefaultProvider
      */
-    public function testParseAllDefaultProvider($tag, $attributes, $expected)
+    public function testParseAllDefaultProvider($tag, $attributes, $expected): void
     {
         $content = $this->createContent('123-123-123', 'Pagetitle', '/test');
         $this->contentRepository->findByUuids(['123-123-123'], 'de', Argument::type(Mapping::class))
@@ -170,7 +171,7 @@ class LinkTagTest extends TestCase
         $this->assertEquals([$tag => $expected], $result);
     }
 
-    public function testParseAllMultipleTagsDefaultProvider()
+    public function testParseAllMultipleTagsDefaultProvider(): void
     {
         $content1 = $this->createContent('123-123-123', '1', '/test-1');
         $content2 = $this->createContent('312-312-312', '2', '/test-2');
@@ -217,7 +218,7 @@ class LinkTagTest extends TestCase
 
         $this->assertEquals(
             [
-                $tag1 => '<a href="/de/test-1" title="1">Test-Content</a>',
+                $tag1 => '<a href="/de/test-1">Test-Content</a>',
                 $tag2 => '<a href="/de/test-2" title="Test-Title">2</a>',
                 $tag3 => '<a href="/de/test-1" title="Test-Title">Test-Content</a>',
                 $tag4 => '<a href="/de/test-1" title="Test-Title" target="_blank">Test-Content</a>',
@@ -226,7 +227,7 @@ class LinkTagTest extends TestCase
         );
     }
 
-    public function testParseAllMultipleTagsMissingContentDefaultProvider()
+    public function testParseAllMultipleTagsMissingContentDefaultProvider(): void
     {
         $this->contentRepository->findByUuids(['123-123-123'], 'de', Argument::type(Mapping::class))
             ->willReturn([])->shouldBeCalledTimes(1);
@@ -257,7 +258,7 @@ class LinkTagTest extends TestCase
         );
     }
 
-    public function testValidateDefaultProvider()
+    public function testValidateDefaultProvider(): void
     {
         $content = $this->createContent('123-123-123', 'Pagetitle', '/test', 'published-date');
         $this->contentRepository->findByUuids(['123-123-123'], 'de', Argument::type(Mapping::class))
@@ -286,7 +287,7 @@ class LinkTagTest extends TestCase
         $this->assertEquals([], $result);
     }
 
-    public function testValidateInvalidDefaultProvider()
+    public function testValidateInvalidDefaultProvider(): void
     {
         $this->contentRepository->findByUuids(['123-123-123'], 'de', Argument::type(Mapping::class))
             ->willReturn([]);
@@ -308,7 +309,7 @@ class LinkTagTest extends TestCase
         );
     }
 
-    public function testValidateMixedDefaultProvider()
+    public function testValidateMixedDefaultProvider(): void
     {
         $content = $this->createContent('123-123-123', 'Pagetitle', '/test', 'published-date');
         $this->contentRepository->findByUuids(['123-123-123', '312-312-312'], 'de', Argument::type(Mapping::class))

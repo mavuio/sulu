@@ -15,6 +15,7 @@ use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\Persistence\Repository\ORM\OrderByTrait;
 
 class OrderByTraitTest extends TestCase
@@ -22,7 +23,7 @@ class OrderByTraitTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var QueryBuilder
+     * @var ObjectProphecy<QueryBuilder>
      */
     private $queryBuilder;
 
@@ -62,7 +63,7 @@ class OrderByTraitTest extends TestCase
     /**
      * @dataProvider orderByProvider
      */
-    public function testAddOrderBy($alias, $orderBy, $expectedOrderBy)
+    public function testAddOrderBy($alias, $orderBy, $expectedOrderBy): void
     {
         if (0 === \count($expectedOrderBy)) {
             $this->queryBuilder->addOrderBy(Argument::any(), Argument::any())->shouldNotBeCalled();

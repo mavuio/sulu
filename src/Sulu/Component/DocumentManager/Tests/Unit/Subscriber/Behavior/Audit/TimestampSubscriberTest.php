@@ -15,6 +15,7 @@ use PHPCR\NodeInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\DocumentInspector;
 use Sulu\Component\DocumentManager\Behavior\Audit\LocalizedTimestampBehavior;
 use Sulu\Component\DocumentManager\Behavior\Audit\TimestampBehavior;
@@ -31,12 +32,12 @@ class TimestampSubscriberTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var PropertyEncoder
+     * @var ObjectProphecy<PropertyEncoder>
      */
     private $propertyEncoder;
 
     /**
-     * @var DocumentInspector
+     * @var ObjectProphecy<DocumentInspector>
      */
     private $documentInspector;
 
@@ -55,14 +56,14 @@ class TimestampSubscriberTest extends TestCase
         );
     }
 
-    public function testSetTimestampsOnNodeForPersistNotImplementing()
+    public function testSetTimestampsOnNodeForPersistNotImplementing(): void
     {
         $event = $this->prophesize(PersistEvent::class);
         $event->getDocument()->willReturn(new \stdClass())->shouldBeCalled();
         $this->subscriber->setTimestampsOnNodeForPersist($event->reveal());
     }
 
-    public function testSetTimestampsOnNodeForPersistCreatedWhenNull()
+    public function testSetTimestampsOnNodeForPersistCreatedWhenNull(): void
     {
         $event = $this->prophesize(PersistEvent::class);
         $accessor = $this->prophesize(DocumentAccessor::class);
@@ -87,7 +88,7 @@ class TimestampSubscriberTest extends TestCase
         $this->subscriber->setTimestampsOnNodeForPersist($event->reveal());
     }
 
-    public function testSetTimestampsOnNodeForPersistCreatedWhenSet()
+    public function testSetTimestampsOnNodeForPersistCreatedWhenSet(): void
     {
         $event = $this->prophesize(PersistEvent::class);
         $accessor = $this->prophesize(DocumentAccessor::class);
@@ -114,7 +115,7 @@ class TimestampSubscriberTest extends TestCase
         $this->subscriber->setTimestampsOnNodeForPersist($event->reveal());
     }
 
-    public function testSetTimestampsOnNodeForPersistChanged()
+    public function testSetTimestampsOnNodeForPersistChanged(): void
     {
         $event = $this->prophesize(PersistEvent::class);
         $accessor = $this->prophesize(DocumentAccessor::class);
@@ -138,7 +139,7 @@ class TimestampSubscriberTest extends TestCase
         $this->subscriber->setTimestampsOnNodeForPersist($event->reveal());
     }
 
-    public function testSetTimestampsOnNodeForPersistNonLocalized()
+    public function testSetTimestampsOnNodeForPersistNonLocalized(): void
     {
         $event = $this->prophesize(PersistEvent::class);
         $accessor = $this->prophesize(DocumentAccessor::class);
@@ -163,7 +164,7 @@ class TimestampSubscriberTest extends TestCase
         $this->subscriber->setTimestampsOnNodeForPersist($event->reveal());
     }
 
-    public function testSetTimestampOnNodeForPersistLocalizedWithoutLocale()
+    public function testSetTimestampOnNodeForPersistLocalizedWithoutLocale(): void
     {
         $event = $this->prophesize(PersistEvent::class);
         $node = $this->prophesize(NodeInterface::class);
@@ -181,14 +182,14 @@ class TimestampSubscriberTest extends TestCase
         $this->subscriber->setTimestampsOnNodeForPersist($event->reveal());
     }
 
-    public function testSetTimestampsOnNodeForPublishNotImplementing()
+    public function testSetTimestampsOnNodeForPublishNotImplementing(): void
     {
         $event = $this->prophesize(PublishEvent::class);
         $event->getDocument()->willReturn(new \stdClass())->shouldBeCalled();
         $this->subscriber->setTimestampsOnNodeForPublish($event->reveal());
     }
 
-    public function testSetTimestampsOnNodeForPublishCreatedWhenNull()
+    public function testSetTimestampsOnNodeForPublishCreatedWhenNull(): void
     {
         $event = $this->prophesize(PublishEvent::class);
         $accessor = $this->prophesize(DocumentAccessor::class);
@@ -219,7 +220,7 @@ class TimestampSubscriberTest extends TestCase
         $this->subscriber->setTimestampsOnNodeForPublish($event->reveal());
     }
 
-    public function testSetTimestampsOnNodeForPublishChanged()
+    public function testSetTimestampsOnNodeForPublishChanged(): void
     {
         $event = $this->prophesize(PublishEvent::class);
         $accessor = $this->prophesize(DocumentAccessor::class);
@@ -249,7 +250,7 @@ class TimestampSubscriberTest extends TestCase
         $this->subscriber->setTimestampsOnNodeForPublish($event->reveal());
     }
 
-    public function testSetTimestampsOnNodeForPublishNonLocalized()
+    public function testSetTimestampsOnNodeForPublishNonLocalized(): void
     {
         $event = $this->prophesize(PublishEvent::class);
         $accessor = $this->prophesize(DocumentAccessor::class);
@@ -280,7 +281,7 @@ class TimestampSubscriberTest extends TestCase
         $this->subscriber->setTimestampsOnNodeForPublish($event->reveal());
     }
 
-    public function testHydrate()
+    public function testHydrate(): void
     {
         $event = $this->prophesize(HydrateEvent::class);
         $document = $this->prophesize(LocalizedTimestampBehavior::class);
@@ -305,7 +306,7 @@ class TimestampSubscriberTest extends TestCase
         $this->subscriber->setTimestampsOnDocument($event->reveal());
     }
 
-    public function testHydrateWithoutLocalization()
+    public function testHydrateWithoutLocalization(): void
     {
         $event = $this->prophesize(HydrateEvent::class);
         $document = $this->prophesize(TimestampBehavior::class);
@@ -330,7 +331,7 @@ class TimestampSubscriberTest extends TestCase
         $this->subscriber->setTimestampsOnDocument($event->reveal());
     }
 
-    public function testHydrateWithoutTimestampBehavior()
+    public function testHydrateWithoutTimestampBehavior(): void
     {
         $event = $this->prophesize(HydrateEvent::class);
         $accessor = $this->prophesize(DocumentAccessor::class);
@@ -342,7 +343,7 @@ class TimestampSubscriberTest extends TestCase
         $this->subscriber->setTimestampsOnDocument($event->reveal());
     }
 
-    public function testSetChangedForRestore()
+    public function testSetChangedForRestore(): void
     {
         $event = $this->prophesize(RestoreEvent::class);
         $document = $this->prophesize(LocalizedTimestampBehavior::class);
@@ -360,7 +361,7 @@ class TimestampSubscriberTest extends TestCase
         $this->subscriber->setChangedForRestore($event->reveal());
     }
 
-    public function testSetChangedForRestoreNonLocalized()
+    public function testSetChangedForRestoreNonLocalized(): void
     {
         $event = $this->prophesize(RestoreEvent::class);
         $document = $this->prophesize(TimestampBehavior::class);

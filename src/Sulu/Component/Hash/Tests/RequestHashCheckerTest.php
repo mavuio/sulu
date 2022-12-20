@@ -13,6 +13,7 @@ namespace Sulu\Component\Hash\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\Hash\HasherInterface;
 use Sulu\Component\Hash\RequestHashChecker;
 use Sulu\Component\Rest\Exception\InvalidHashException;
@@ -23,7 +24,7 @@ class RequestHashCheckerTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var HasherInterface
+     * @var ObjectProphecy<HasherInterface>
      */
     private $hasher;
 
@@ -54,7 +55,7 @@ class RequestHashCheckerTest extends TestCase
     /**
      * @dataProvider provideCheckHash
      */
-    public function testCheckHash($force, $givenHash, $realHash, $valid)
+    public function testCheckHash($force, $givenHash, $realHash, $valid): void
     {
         $request = new Request(['force' => $force], $givenHash ? ['_hash' => $givenHash] : []);
         $object = new \stdClass();

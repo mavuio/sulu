@@ -22,6 +22,7 @@ use PHPCR\Version\VersionManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\DocumentManager\Behavior\Mapping\LocaleBehavior;
 use Sulu\Component\DocumentManager\Behavior\VersionBehavior;
 use Sulu\Component\DocumentManager\Event\HydrateEvent;
@@ -38,22 +39,22 @@ class VersionSubscriberTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var SessionInterface
+     * @var ObjectProphecy<SessionInterface>
      */
     private $session;
 
     /**
-     * @var Workspace
+     * @var ObjectProphecy<Workspace>
      */
     private $workspace;
 
     /**
-     * @var VersionManagerInterface
+     * @var ObjectProphecy<VersionManagerInterface>
      */
     private $versionManager;
 
     /**
-     * @var PropertyEncoder
+     * @var ObjectProphecy<PropertyEncoder>
      */
     private $propertyEncoder;
 
@@ -90,7 +91,7 @@ class VersionSubscriberTest extends TestCase
         $this->checkpointPathsReflection->setAccessible(true);
     }
 
-    public function testSetVersionMixinOnPersist()
+    public function testSetVersionMixinOnPersist(): void
     {
         $event = $this->prophesize(PersistEvent::class);
 
@@ -104,7 +105,7 @@ class VersionSubscriberTest extends TestCase
         $this->versionSubscriber->setVersionMixin($event->reveal());
     }
 
-    public function testSetVersionMixinOnPersistWithoutVersionBehavior()
+    public function testSetVersionMixinOnPersistWithoutVersionBehavior(): void
     {
         $event = $this->prophesize(PersistEvent::class);
 
@@ -117,7 +118,7 @@ class VersionSubscriberTest extends TestCase
         $this->versionSubscriber->setVersionMixin($event->reveal());
     }
 
-    public function testSetVersionMixinOnPublish()
+    public function testSetVersionMixinOnPublish(): void
     {
         $event = $this->prophesize(PublishEvent::class);
 
@@ -131,7 +132,7 @@ class VersionSubscriberTest extends TestCase
         $this->versionSubscriber->setVersionMixin($event->reveal());
     }
 
-    public function testSetVersionMixinOnPublishWithoutVersionBehavior()
+    public function testSetVersionMixinOnPublishWithoutVersionBehavior(): void
     {
         $event = $this->prophesize(PublishEvent::class);
 
@@ -144,7 +145,7 @@ class VersionSubscriberTest extends TestCase
         $this->versionSubscriber->setVersionMixin($event->reveal());
     }
 
-    public function testSetVersionsOnDocument()
+    public function testSetVersionsOnDocument(): void
     {
         $event = $this->prophesize(HydrateEvent::class);
 
@@ -169,7 +170,7 @@ class VersionSubscriberTest extends TestCase
         $this->versionSubscriber->setVersionsOnDocument($event->reveal());
     }
 
-    public function testSetVersionsOnDocumentWithoutVersionBehavior()
+    public function testSetVersionsOnDocumentWithoutVersionBehavior(): void
     {
         $event = $this->prophesize(HydrateEvent::class);
         $event->getDocument()->willReturn(new \stdClass());
@@ -178,7 +179,7 @@ class VersionSubscriberTest extends TestCase
         $this->versionSubscriber->setVersionsOnDocument($event->reveal());
     }
 
-    public function testRememberCheckoutNodes()
+    public function testRememberCheckoutNodes(): void
     {
         $event = $this->prophesize(PersistEvent::class);
         $node = $this->prophesize(NodeInterface::class);
@@ -194,7 +195,7 @@ class VersionSubscriberTest extends TestCase
         $this->assertEquals(['123-123-13'], $this->checkoutPathsReflection->getValue($this->versionSubscriber));
     }
 
-    public function testRememberCheckoutNodesWithoutVersionBehavior()
+    public function testRememberCheckoutNodesWithoutVersionBehavior(): void
     {
         $event = $this->prophesize(PersistEvent::class);
         $document = new \stdClass();
@@ -206,7 +207,7 @@ class VersionSubscriberTest extends TestCase
         $this->assertEmpty($this->checkoutPathsReflection->getValue($this->versionSubscriber));
     }
 
-    public function testRememberCreateVersionNodes()
+    public function testRememberCreateVersionNodes(): void
     {
         $event = $this->prophesize(PublishEvent::class);
         $node = $this->prophesize(NodeInterface::class);
@@ -228,7 +229,7 @@ class VersionSubscriberTest extends TestCase
         );
     }
 
-    public function testRememberCreateVersionNodesWithoutVersionBehavior()
+    public function testRememberCreateVersionNodesWithoutVersionBehavior(): void
     {
         $event = $this->prophesize(PublishEvent::class);
         $document = new \stdClass();
@@ -238,7 +239,7 @@ class VersionSubscriberTest extends TestCase
         $this->versionSubscriber->rememberCreateVersion($event->reveal());
     }
 
-    public function testApplyVersionOperations()
+    public function testApplyVersionOperations(): void
     {
         ClockMock::register(VersionSubscriber::class);
         ClockMock::withClockMock(true);
@@ -292,7 +293,7 @@ class VersionSubscriberTest extends TestCase
         ClockMock::withClockMock(false);
     }
 
-    public function testApplyVersionOperationsWithMultipleCheckpoints()
+    public function testApplyVersionOperationsWithMultipleCheckpoints(): void
     {
         $this->checkpointPathsReflection->setValue(
             $this->versionSubscriber,
@@ -350,7 +351,7 @@ class VersionSubscriberTest extends TestCase
         $this->versionSubscriber->applyVersionOperations();
     }
 
-    public function testRestoreLocalizedProperties()
+    public function testRestoreLocalizedProperties(): void
     {
         $event = $this->prophesize(RestoreEvent::class);
         $document = $this->prophesize(VersionBehavior::class);

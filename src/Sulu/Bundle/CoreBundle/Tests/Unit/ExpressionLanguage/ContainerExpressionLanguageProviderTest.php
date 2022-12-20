@@ -13,6 +13,7 @@ namespace Sulu\Bundle\CoreBundle\Tests\Unit\ExpressionLanguage;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\CoreBundle\ExpressionLanguage\ContainerExpressionLanguageProvider;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
@@ -27,7 +28,7 @@ class ContainerExpressionLanguageProviderTest extends TestCase
     private $expressionLanguage;
 
     /**
-     * @var ContainerInterface
+     * @var ObjectProphecy<ContainerInterface>
      */
     private $container;
 
@@ -38,7 +39,7 @@ class ContainerExpressionLanguageProviderTest extends TestCase
         $this->expressionLanguage = new ExpressionLanguage(null, [$containerExpressionLanguageProvider]);
     }
 
-    public function testEvaluateWithService()
+    public function testEvaluateWithService(): void
     {
         $testService = new \stdClass();
         $testService->variable = 'test';
@@ -47,7 +48,7 @@ class ContainerExpressionLanguageProviderTest extends TestCase
         $this->assertEquals('test', $this->expressionLanguage->evaluate('service("test_service").variable'));
     }
 
-    public function testEvaluateWithParameter()
+    public function testEvaluateWithParameter(): void
     {
         $this->container->getParameter('test_variable')->willReturn('test');
         $this->assertEquals('test', $this->expressionLanguage->evaluate('parameter("test_variable")'));

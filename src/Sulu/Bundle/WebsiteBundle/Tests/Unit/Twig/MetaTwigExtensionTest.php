@@ -13,6 +13,7 @@ namespace Sulu\Bundle\WebsiteBundle\Tests\Unit\Twig;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\WebsiteBundle\Twig\Content\ContentPathInterface;
 use Sulu\Bundle\WebsiteBundle\Twig\Meta\MetaTwigExtension;
 use Sulu\Component\Localization\Localization;
@@ -25,12 +26,12 @@ class MetaTwigExtensionTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var RequestAnalyzerInterface
+     * @var ObjectProphecy<RequestAnalyzerInterface>
      */
     private $requestAnalyzer;
 
     /**
-     * @var ContentPathInterface
+     * @var ObjectProphecy<ContentPathInterface>
      */
     private $contentPath;
 
@@ -71,7 +72,7 @@ class MetaTwigExtensionTest extends TestCase
     /**
      * Test get alternate links.
      */
-    public function testGetAlternateLinks()
+    public function testGetAlternateLinks(): void
     {
         $extension = new MetaTwigExtension(
             $this->requestAnalyzer->reveal(),
@@ -99,7 +100,7 @@ class MetaTwigExtensionTest extends TestCase
     /**
      * Test get alternate links.
      */
-    public function testGetAlternateLinksDifferentDefaultLocale()
+    public function testGetAlternateLinksDifferentDefaultLocale(): void
     {
         $locale = new Localization();
         $locale->setLanguage('de');
@@ -134,7 +135,7 @@ class MetaTwigExtensionTest extends TestCase
     /**
      * Test get alternate links.
      */
-    public function testGetAlternateLinksUnderscore()
+    public function testGetAlternateLinksUnderscore(): void
     {
         $extension = new MetaTwigExtension(
             $this->requestAnalyzer->reveal(),
@@ -162,7 +163,7 @@ class MetaTwigExtensionTest extends TestCase
     /**
      * test seo meta tags.
      */
-    public function testGetSeoMetaTags()
+    public function testGetSeoMetaTags(): void
     {
         $extension = new MetaTwigExtension(
             $this->requestAnalyzer->reveal(),
@@ -199,7 +200,7 @@ class MetaTwigExtensionTest extends TestCase
     /**
      * Seo titel.
      */
-    public function testGetSeoMetaTagsFallback()
+    public function testGetSeoMetaTagsFallback(): void
     {
         $extension = new MetaTwigExtension(
             $this->requestAnalyzer->reveal(),

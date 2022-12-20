@@ -13,6 +13,7 @@ namespace Sulu\Bundle\WebsiteBundle\Tests\Unit\Sitemap;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\WebsiteBundle\Sitemap\Sitemap;
 use Sulu\Bundle\WebsiteBundle\Sitemap\SitemapProviderInterface;
 use Sulu\Bundle\WebsiteBundle\Sitemap\SitemapProviderPoolInterface;
@@ -28,12 +29,12 @@ class XmlSitemapRendererTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var SitemapProviderPoolInterface
+     * @var ObjectProphecy<SitemapProviderPoolInterface>
      */
     protected $providerPoolInterface;
 
     /**
-     * @var Environment
+     * @var ObjectProphecy<Environment>
      */
     protected $engine;
 
@@ -50,7 +51,7 @@ class XmlSitemapRendererTest extends TestCase
         $this->renderer = new XmlSitemapRenderer($this->providerPoolInterface->reveal(), $this->engine->reveal(), '/');
     }
 
-    public function testRenderIndexNoNeed()
+    public function testRenderIndexNoNeed(): void
     {
         $sitemaps = [new Sitemap('pages', 1)];
 
@@ -63,7 +64,7 @@ class XmlSitemapRendererTest extends TestCase
         $this->assertEquals(null, $this->renderer->renderIndex('http', 'sulu.io'));
     }
 
-    public function testRenderIndexNoNeedMultipleProviders()
+    public function testRenderIndexNoNeedMultipleProviders(): void
     {
         $sitemaps = [
             new Sitemap('test', 0),
@@ -85,7 +86,7 @@ class XmlSitemapRendererTest extends TestCase
         $this->assertEquals(null, $this->renderer->renderIndex('http', 'sulu.io'));
     }
 
-    public function testRenderIndexMorePages()
+    public function testRenderIndexMorePages(): void
     {
         $sitemaps = [new Sitemap('pages', 2)];
 
@@ -103,7 +104,7 @@ class XmlSitemapRendererTest extends TestCase
         $this->assertEquals('<html/>', $this->renderer->renderIndex('http', 'sulu.io'));
     }
 
-    public function testRenderIndexMoreProviders()
+    public function testRenderIndexMoreProviders(): void
     {
         $sitemaps = [new Sitemap('pages', 1), new Sitemap('article', 1)];
 
@@ -124,7 +125,7 @@ class XmlSitemapRendererTest extends TestCase
         $this->assertEquals('<html/>', $this->renderer->renderIndex('http', 'sulu.io'));
     }
 
-    public function testRenderIndexWithSchemeAndDomain()
+    public function testRenderIndexWithSchemeAndDomain(): void
     {
         $sitemaps = [new Sitemap('pages', 1), new Sitemap('article', 1)];
 
@@ -145,7 +146,7 @@ class XmlSitemapRendererTest extends TestCase
         $this->assertEquals('<html/>', $this->renderer->renderIndex('http', 'sulu.io'));
     }
 
-    public function testRenderSitemap()
+    public function testRenderSitemap(): void
     {
         $pagesProvider = $this->prophesize(SitemapProviderInterface::class);
         $this->providerPoolInterface->getProviders()->willReturn(['pages' => $pagesProvider->reveal()]);

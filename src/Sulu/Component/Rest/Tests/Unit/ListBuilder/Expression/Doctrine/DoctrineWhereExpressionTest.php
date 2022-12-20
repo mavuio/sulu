@@ -15,6 +15,7 @@ use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\Rest\ListBuilder\Doctrine\FieldDescriptor\DoctrineFieldDescriptor;
 use Sulu\Component\Rest\ListBuilder\Expression\Doctrine\DoctrineWhereExpression;
 use Sulu\Component\Rest\ListBuilder\ListBuilderInterface;
@@ -38,7 +39,7 @@ class DoctrineWhereExpressionTest extends TestCase
     private $uniqueIdLength = 23;
 
     /**
-     * @var QueryBuilder
+     * @var ObjectProphecy<QueryBuilder>
      */
     private $queryBuilder;
 
@@ -48,7 +49,7 @@ class DoctrineWhereExpressionTest extends TestCase
         $this->queryBuilder->setParameter(Argument::any(), Argument::any())->willReturn($this->queryBuilder->reveal());
     }
 
-    public function testGetStatement()
+    public function testGetStatement(): void
     {
         $fieldDescriptor = new DoctrineFieldDescriptor('name', 'name', self::$entityName);
         $value = 'test';
@@ -74,7 +75,7 @@ class DoctrineWhereExpressionTest extends TestCase
     /**
      * @dataProvider nullProvider
      */
-    public function testGetStatementNullValue($comparator, $expected)
+    public function testGetStatementNullValue($comparator, $expected): void
     {
         $fieldDescriptor = new DoctrineFieldDescriptor('name', 'name', self::$entityName);
         $whereExpression = new DoctrineWhereExpression($fieldDescriptor, null, $comparator);
@@ -85,7 +86,7 @@ class DoctrineWhereExpressionTest extends TestCase
         );
     }
 
-    public function testGetStatementLike()
+    public function testGetStatementLike(): void
     {
         $value = 'test';
         $fieldDescriptor = new DoctrineFieldDescriptor('name', 'name', self::$entityName);
@@ -113,7 +114,7 @@ class DoctrineWhereExpressionTest extends TestCase
     /**
      * @dataProvider andOrProvider
      */
-    public function testGetStatementAndOr($comparator)
+    public function testGetStatementAndOr($comparator): void
     {
         $value = [1, 2, 3];
         $fieldDescriptor = new DoctrineFieldDescriptor('name', 'name', self::$entityName);

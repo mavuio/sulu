@@ -14,6 +14,7 @@ namespace Sulu\Bundle\SnippetBundle\Tests\Unit\Content;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use ProxyManager\Factory\LazyLoadingValueHolderFactory;
 use ProxyManager\Proxy\VirtualProxyInterface;
 use Sulu\Bundle\AdminBundle\Metadata\FormMetadata\FormMetadata;
@@ -36,32 +37,32 @@ class SnippetDataProviderTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ContentQueryExecutorInterface
+     * @var ObjectProphecy<ContentQueryExecutorInterface>
      */
     private $contentQueryExecutor;
 
     /**
-     * @var ContentQueryBuilderInterface
+     * @var ObjectProphecy<ContentQueryBuilderInterface>
      */
     private $snippetQueryBuilder;
 
     /**
-     * @var SuluNodeHelper
+     * @var ObjectProphecy<SuluNodeHelper>
      */
     private $nodeHelper;
 
     /**
-     * @var LazyLoadingValueHolderFactory
+     * @var ObjectProphecy<LazyLoadingValueHolderFactory>
      */
     private $proxyFactory;
 
     /**
-     * @var DocumentManagerInterface
+     * @var ObjectProphecy<DocumentManagerInterface>
      */
     private $documentManager;
 
     /**
-     * @var DocumentManagerInterface
+     * @var ObjectProphecy<ReferenceStoreInterface>
      */
     private $referenceStore;
 
@@ -94,7 +95,7 @@ class SnippetDataProviderTest extends TestCase
         $this->referenceStore->getAll()->willReturn([]);
     }
 
-    public function testEnabledAudienceTargeting()
+    public function testEnabledAudienceTargeting(): void
     {
         $provider = new SnippetDataProvider(
             $this->contentQueryExecutor->reveal(),
@@ -111,7 +112,7 @@ class SnippetDataProviderTest extends TestCase
         $this->assertTrue($configuration->hasAudienceTargeting());
     }
 
-    public function testDisabledAudienceTargeting()
+    public function testDisabledAudienceTargeting(): void
     {
         $provider = new SnippetDataProvider(
             $this->contentQueryExecutor->reveal(),
@@ -128,7 +129,7 @@ class SnippetDataProviderTest extends TestCase
         $this->assertFalse($configuration->hasAudienceTargeting());
     }
 
-    public function testGetTypesConfiguration()
+    public function testGetTypesConfiguration(): void
     {
         /** @var TokenStorageInterface|ObjectProphecy $tokenStorage */
         $tokenStorage = $this->prophesize(TokenStorageInterface::class);
@@ -201,7 +202,7 @@ class SnippetDataProviderTest extends TestCase
         $pageSize,
         $result,
         $hasNextPage
-    ) {
+    ): void {
         $this->contentQueryExecutor->execute(
             $options['webspaceKey'],
             [$options['locale']],
@@ -300,7 +301,7 @@ class SnippetDataProviderTest extends TestCase
         $pageSize,
         $result,
         $hasNextPage
-    ) {
+    ): void {
         foreach ($result as $item) {
             $this->referenceStore->add($item['id'])->shouldBeCalled();
         }
@@ -331,7 +332,7 @@ class SnippetDataProviderTest extends TestCase
     /**
      * @dataProvider provideResolveExcludeDuplicates
      */
-    public function testResolveResourceItemsExcludeDuplicates($filters, $uuids)
+    public function testResolveResourceItemsExcludeDuplicates($filters, $uuids): void
     {
         $options = ['webspaceKey' => 'sulu', 'locale' => 'de'];
 

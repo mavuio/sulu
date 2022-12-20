@@ -16,6 +16,7 @@ use PHPCR\NodeInterface;
 use PHPCR\SessionInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\DocumentManager\Exception\DocumentManagerException;
 use Sulu\Component\DocumentManager\NodeHelper;
 use Sulu\Component\DocumentManager\NodeHelperInterface;
@@ -30,12 +31,12 @@ class NodeHelperTest extends TestCase
     private $nodeHelper;
 
     /**
-     * @var NodeInterface
+     * @var ObjectProphecy<NodeInterface>
      */
     private $node;
 
     /**
-     * @var SessionInterface
+     * @var ObjectProphecy<SessionInterface>
      */
     private $session;
 
@@ -49,7 +50,7 @@ class NodeHelperTest extends TestCase
         $this->node->getSession()->willReturn($this->session->reveal());
     }
 
-    public function testMove()
+    public function testMove(): void
     {
         $destinationNode = $this->prophesize(NodeInterface::class);
         $destinationNode->getPath()->willReturn('/path/to/some/other/node');
@@ -63,7 +64,7 @@ class NodeHelperTest extends TestCase
         $this->nodeHelper->move($this->node->reveal(), '5f2a72d1-e384-4571-9663-51902d62ac86');
     }
 
-    public function testMoveWithDestinationName()
+    public function testMoveWithDestinationName(): void
     {
         $destinationNode = $this->prophesize(NodeInterface::class);
         $destinationNode->getPath()->willReturn('/path/to/some/other/node');
@@ -76,7 +77,7 @@ class NodeHelperTest extends TestCase
         $this->nodeHelper->move($this->node->reveal(), '5f2a72d1-e384-4571-9663-51902d62ac86', 'new-node');
     }
 
-    public function testCopy()
+    public function testCopy(): void
     {
         /** @var Workspace $workspace */
         $workspace = $this->prophesize(Workspace::class);
@@ -93,7 +94,7 @@ class NodeHelperTest extends TestCase
         $this->assertEquals('uuid/node', $this->nodeHelper->copy($this->node->reveal(), 'uuid'));
     }
 
-    public function testCopyWithDestinationName()
+    public function testCopyWithDestinationName(): void
     {
         /** @var Workspace $workspace */
         $workspace = $this->prophesize(Workspace::class);
@@ -109,7 +110,7 @@ class NodeHelperTest extends TestCase
         $this->assertEquals('uuid/new-node', $this->nodeHelper->copy($this->node->reveal(), 'uuid', 'new-node'));
     }
 
-    public function testReorderUuidTarget()
+    public function testReorderUuidTarget(): void
     {
         $parentNode = $this->prophesize(NodeInterface::class);
         $parentNode->getPath()->willReturn('/path/to');
@@ -125,7 +126,7 @@ class NodeHelperTest extends TestCase
         $this->nodeHelper->reorder($this->node->reveal(), 'uuid');
     }
 
-    public function testExceptionTargetNotSibling()
+    public function testExceptionTargetNotSibling(): void
     {
         $this->expectException(
             DocumentManagerException::class,
@@ -143,7 +144,7 @@ class NodeHelperTest extends TestCase
         $this->nodeHelper->reorder($this->node->reveal(), 'uuid');
     }
 
-    public function testOrderAfterLast()
+    public function testOrderAfterLast(): void
     {
         $parentNode = $this->prophesize(NodeInterface::class);
         $parentNode->getPath()->willReturn('/path/to');

@@ -16,12 +16,11 @@ use PHPCR\PropertyInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\ContactBundle\Api\Account;
 use Sulu\Bundle\ContactBundle\Contact\AccountManager;
 use Sulu\Bundle\ContactBundle\Content\Types\SingleAccountSelection;
-use Sulu\Bundle\ContactBundle\Entity\AccountInterface;
 use Sulu\Bundle\WebsiteBundle\ReferenceStore\ReferenceStore;
-use Sulu\Bundle\WebsiteBundle\ReferenceStore\ReferenceStoreInterface;
 use Sulu\Component\Content\Compat\Property;
 use Sulu\Component\Content\Compat\StructureInterface;
 use Sulu\Component\Rest\Exception\EntityNotFoundException;
@@ -36,27 +35,27 @@ class SingleAccountSelectionTest extends TestCase
     private $singleAccountSelection;
 
     /**
-     * @var AccountManager
+     * @var ObjectProphecy<AccountManager>
      */
     private $accountManager;
 
     /**
-     * @var ReferenceStoreInterface
+     * @var ObjectProphecy<ReferenceStore>
      */
     private $accountReferenceStore;
 
     /**
-     * @var NodeInterface
+     * @var ObjectProphecy<NodeInterface>
      */
     private $node;
 
     /**
-     * @var PropertyInterface
+     * @var ObjectProphecy<PropertyInterface>
      */
     private $property;
 
     /**
-     * @var AccountInterface
+     * @var ObjectProphecy<Account>
      */
     private $account;
 
@@ -73,7 +72,7 @@ class SingleAccountSelectionTest extends TestCase
         );
     }
 
-    public function testRead()
+    public function testRead(): void
     {
         $this->node->hasProperty('account')->willReturn(true);
         $this->node->getPropertyValue('account')->willReturn(1);
@@ -91,7 +90,7 @@ class SingleAccountSelectionTest extends TestCase
         $this->assertEquals(1, $property->getValue());
     }
 
-    public function testWrite()
+    public function testWrite(): void
     {
         $this->node->setProperty('account', 1)->shouldBeCalled();
 
@@ -108,7 +107,7 @@ class SingleAccountSelectionTest extends TestCase
         );
     }
 
-    public function testWriteObjectDeprecated()
+    public function testWriteObjectDeprecated(): void
     {
         $this->node->setProperty('account', 1)->shouldBeCalled();
 
@@ -125,7 +124,7 @@ class SingleAccountSelectionTest extends TestCase
         );
     }
 
-    public function testWriteNothing()
+    public function testWriteNothing(): void
     {
         $this->node->hasProperty('account')->shouldBeCalled();
         $property = new Property('account', [], 'single_account_selection');
@@ -143,7 +142,7 @@ class SingleAccountSelectionTest extends TestCase
         );
     }
 
-    public function testDefaultParams()
+    public function testDefaultParams(): void
     {
         $this->assertEquals(
             [],
@@ -151,7 +150,7 @@ class SingleAccountSelectionTest extends TestCase
         );
     }
 
-    public function testViewDataEmpty()
+    public function testViewDataEmpty(): void
     {
         $this->assertEquals(
             [],
@@ -159,7 +158,7 @@ class SingleAccountSelectionTest extends TestCase
         );
     }
 
-    public function testViewData()
+    public function testViewData(): void
     {
         $property = new Property('account', [], 'single_account_selection');
         $property->setValue(1);
@@ -170,14 +169,14 @@ class SingleAccountSelectionTest extends TestCase
         );
     }
 
-    public function testContentDataEmpty()
+    public function testContentDataEmpty(): void
     {
         $this->assertNull(
             $this->singleAccountSelection->getContentData(new Property('account', [], 'single_account_selection'))
         );
     }
 
-    public function testContentData()
+    public function testContentData(): void
     {
         $structure = $this->prophesize(StructureInterface::class);
         $structure->getLanguageCode()->willReturn('de');
@@ -193,7 +192,7 @@ class SingleAccountSelectionTest extends TestCase
         $this->assertEquals($this->account->reveal(), $this->singleAccountSelection->getContentData($property));
     }
 
-    public function testContentDataWithNonExistingAccount()
+    public function testContentDataWithNonExistingAccount(): void
     {
         $structure = $this->prophesize(StructureInterface::class);
         $structure->getLanguageCode()->willReturn('de');
@@ -209,7 +208,7 @@ class SingleAccountSelectionTest extends TestCase
         $this->assertNull($this->singleAccountSelection->getContentData($property));
     }
 
-    public function testPreResolveEmpty()
+    public function testPreResolveEmpty(): void
     {
         $property = new Property('account', [], 'single_account_selection');
         $property->setValue(null);
@@ -219,7 +218,7 @@ class SingleAccountSelectionTest extends TestCase
         $this->singleAccountSelection->preResolve($property);
     }
 
-    public function testPreResolveEmptyArray()
+    public function testPreResolveEmptyArray(): void
     {
         $property = new Property('account', [], 'single_account_selection');
         $property->setValue([]);
@@ -229,7 +228,7 @@ class SingleAccountSelectionTest extends TestCase
         $this->singleAccountSelection->preResolve($property);
     }
 
-    public function testPreResolve()
+    public function testPreResolve(): void
     {
         $property = new Property('account', [], 'single_account_selection');
         $property->setValue(22);

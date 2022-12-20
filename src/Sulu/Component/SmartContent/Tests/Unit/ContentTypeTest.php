@@ -15,6 +15,7 @@ use PHPCR\NodeInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\AudienceTargetingBundle\TargetGroup\TargetGroupStoreInterface;
 use Sulu\Bundle\TagBundle\Tag\TagManagerInterface;
 use Sulu\Bundle\WebsiteBundle\ReferenceStore\ReferenceStoreInterface;
@@ -55,12 +56,12 @@ class ContentTypeTest extends TestCase
     private $request;
 
     /**
-     * @var TagRequestHandlerInterface
+     * @var ObjectProphecy<TagRequestHandlerInterface>
      */
     private $tagRequestHandler;
 
     /**
-     * @var CategoryRequestHandlerInterface
+     * @var ObjectProphecy<CategoryRequestHandlerInterface>
      */
     private $categoryRequestHandler;
 
@@ -70,27 +71,27 @@ class ContentTypeTest extends TestCase
     private $dataProviderPool;
 
     /**
-     * @var DataProviderInterface
+     * @var ObjectProphecy<DataProviderInterface>
      */
     private $pageDataProvider;
 
     /**
-     * @var TargetGroupStoreInterface
+     * @var ObjectProphecy<TargetGroupStoreInterface>
      */
     private $targetGroupStore;
 
     /**
-     * @var ReferenceStoreInterface
+     * @var ObjectProphecy<ReferenceStoreInterface>
      */
     private $categoryReferenceStore;
 
     /**
-     * @var ReferenceStoreInterface
+     * @var ObjectProphecy<ReferenceStoreInterface>
      */
     private $tagReferenceStore;
 
     /**
-     * @var RequestAnalyzerInterface
+     * @var ObjectProphecy<RequestAnalyzerInterface>
      */
     private $requestAnalyzer;
 
@@ -164,7 +165,7 @@ class ContentTypeTest extends TestCase
         return $configuration;
     }
 
-    public function testWrite()
+    public function testWrite(): void
     {
         $smartContent = new SmartContent(
             $this->dataProviderPool,
@@ -230,7 +231,7 @@ class ContentTypeTest extends TestCase
         $smartContent->write($node, $property, 0, 'test', 'en', 's');
     }
 
-    public function testRead()
+    public function testRead(): void
     {
         $smartContent = new SmartContent(
             $this->dataProviderPool,
@@ -287,7 +288,7 @@ class ContentTypeTest extends TestCase
         $smartContent->read($node, $property, 'test', 'en', 's');
     }
 
-    public function testGetViewData()
+    public function testGetViewData(): void
     {
         $smartContent = new SmartContent(
             $this->dataProviderPool,
@@ -405,7 +406,7 @@ class ContentTypeTest extends TestCase
         }
     }
 
-    public function testGetContentData()
+    public function testGetContentData(): void
     {
         $smartContent = new SmartContent(
             $this->dataProviderPool,
@@ -452,7 +453,7 @@ class ContentTypeTest extends TestCase
         );
     }
 
-    public function testGetContentDataNullTagsCategories()
+    public function testGetContentDataNullTagsCategories(): void
     {
         $smartContent = new SmartContent(
             $this->dataProviderPool,
@@ -489,7 +490,7 @@ class ContentTypeTest extends TestCase
         );
     }
 
-    public function testGetContentDataPaged()
+    public function testGetContentDataPaged(): void
     {
         $smartContent = new SmartContent(
             $this->dataProviderPool,
@@ -625,7 +626,7 @@ class ContentTypeTest extends TestCase
         $uuid,
         $expectedData,
         $hasNextPage
-    ) {
+    ): void {
         $smartContent = new SmartContent(
             $this->dataProviderPool,
             $this->tagManager,
@@ -743,7 +744,7 @@ class ContentTypeTest extends TestCase
         $uuid,
         $expectedData,
         $hasNextPage
-    ) {
+    ): void {
         $smartContent = new SmartContent(
             $this->dataProviderPool,
             $this->tagManager,
@@ -978,7 +979,7 @@ class ContentTypeTest extends TestCase
         return $property;
     }
 
-    public function testGetContentDataWithActivatedAudienceTargeting()
+    public function testGetContentDataWithActivatedAudienceTargeting(): void
     {
         $smartContent = new SmartContent(
             $this->dataProviderPool,
@@ -1025,7 +1026,7 @@ class ContentTypeTest extends TestCase
         $smartContent->getContentData($property->reveal());
     }
 
-    public function testGetContentDataWithDeactivatedAudienceTargeting()
+    public function testGetContentDataWithDeactivatedAudienceTargeting(): void
     {
         $smartContent = new SmartContent(
             $this->dataProviderPool,
@@ -1072,7 +1073,7 @@ class ContentTypeTest extends TestCase
         $smartContent->getContentData($property->reveal());
     }
 
-    public function testGetContentDataWithSegmentKey()
+    public function testGetContentDataWithSegmentKey(): void
     {
         $smartContent = new SmartContent(
             $this->dataProviderPool,

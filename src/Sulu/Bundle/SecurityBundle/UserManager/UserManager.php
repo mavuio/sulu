@@ -530,11 +530,9 @@ class UserManager implements UserManagerInterface
     /**
      * Updates an existing UserRole with the given data.
      *
-     * @param $userRoleData
+     * @return bool
      *
      * @throws EntityNotFoundException
-     *
-     * @return bool
      */
     private function updateUserRole(UserRole $userRole, $userRoleData)
     {
@@ -557,11 +555,9 @@ class UserManager implements UserManagerInterface
     /**
      * Adds a new UserRole to the given user.
      *
-     * @param $userRoleData
+     * @return bool
      *
      * @throws EntityNotFoundException
-     *
-     * @return bool
      */
     private function addUserRole(UserInterface $user, $userRoleData)
     {
@@ -597,11 +593,9 @@ class UserManager implements UserManagerInterface
     /**
      * Adds a new UserGroup to the given user.
      *
-     * @param $userGroupData
+     * @return bool
      *
      * @throws EntityNotFoundException
-     *
-     * @return bool
      */
     private function addUserGroup(UserInterface $user, $userGroupData)
     {
@@ -625,11 +619,9 @@ class UserManager implements UserManagerInterface
     /**
      * Updates an existing UserGroup with the given data.
      *
-     * @param $userGroupData
+     * @return bool
      *
      * @throws EntityNotFoundException
-     *
-     * @return bool
      */
     private function updateUserGroup(UserGroup $userGroup, $userGroupData)
     {
@@ -654,9 +646,9 @@ class UserManager implements UserManagerInterface
      *
      * @param int $id
      *
-     * @throws EntityNotFoundException
-     *
      * @return Contact
+     *
+     * @throws EntityNotFoundException
      */
     private function getContact($id)
     {

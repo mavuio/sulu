@@ -13,6 +13,7 @@ namespace Sulu\Component\Content\Tests\Unit\Types\Block;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\HttpCacheBundle\CacheLifetime\CacheLifetimeRequestStore;
 use Sulu\Component\Content\Compat\Block\BlockPropertyType;
 use Sulu\Component\Content\Compat\Metadata;
@@ -24,12 +25,12 @@ class ScheduleBlockVisitorTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var RequestAnalyzerInterface
+     * @var ObjectProphecy<RequestAnalyzerInterface>
      */
     private $requestAnalyzer;
 
     /**
-     * @var CacheLifetimeRequestStore
+     * @var ObjectProphecy<CacheLifetimeRequestStore>
      */
     private $cacheLifetimeRequestStore;
 
@@ -48,7 +49,7 @@ class ScheduleBlockVisitorTest extends TestCase
         );
     }
 
-    public function testShouldNotSkipWithObjectAsSettings()
+    public function testShouldNotSkipWithObjectAsSettings(): void
     {
         $blockPropertyType = new BlockPropertyType('type1', new Metadata([]));
         $blockPropertyType->setSettings(new \stdClass());
@@ -56,7 +57,7 @@ class ScheduleBlockVisitorTest extends TestCase
         $this->assertEquals($blockPropertyType, $this->scheduleBlockVisitor->visit($blockPropertyType));
     }
 
-    public function testShouldNotSkipWithEmptyArrayAsSettings()
+    public function testShouldNotSkipWithEmptyArrayAsSettings(): void
     {
         $blockPropertyType = new BlockPropertyType('type1', new Metadata([]));
         $blockPropertyType->setSettings([]);
@@ -417,7 +418,7 @@ class ScheduleBlockVisitorTest extends TestCase
 
     /** @dataProvider provideVisit
      */
-    public function testVisit($settings, $now, $skip, $requestCacheLifetimes)
+    public function testVisit($settings, $now, $skip, $requestCacheLifetimes): void
     {
         $nowDateTime = new \DateTime($now);
         $this->requestAnalyzer->getDateTime()->willReturn($nowDateTime);

@@ -18,6 +18,7 @@ use Imagine\Image\Palette\RGB;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\MediaBundle\Entity\FileVersion;
 use Sulu\Bundle\MediaBundle\Media\Exception\ImageProxyMediaNotFoundException;
 use Sulu\Bundle\MediaBundle\Media\ImageConverter\Cropper\CropperInterface;
@@ -34,42 +35,42 @@ class ImagineImageConverterTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ImagineInterface
+     * @var ObjectProphecy<ImagineInterface>
      */
     private $imagine;
 
     /**
-     * @var ImagineInterface
+     * @var ObjectProphecy<ImagineInterface>
      */
     private $svgImagine;
 
     /**
-     * @var StorageInterface
+     * @var ObjectProphecy<StorageInterface>
      */
     private $storage;
 
     /**
-     * @var MediaImageExtractorInterface
+     * @var ObjectProphecy<MediaImageExtractorInterface>
      */
     private $mediaImageExtractor;
 
     /**
-     * @var TransformationPoolInterface
+     * @var ObjectProphecy<TransformationPoolInterface>
      */
     private $transformationPool;
 
     /**
-     * @var FocusInterface
+     * @var ObjectProphecy<FocusInterface>
      */
     private $focus;
 
     /**
-     * @var ScalerInterface
+     * @var ObjectProphecy<ScalerInterface>
      */
     private $scaler;
 
     /**
-     * @var CropperInterface
+     * @var ObjectProphecy<CropperInterface>
      */
     private $cropper;
 
@@ -111,7 +112,7 @@ class ImagineImageConverterTest extends TestCase
         );
     }
 
-    public function testConvert()
+    public function testConvert(): void
     {
         $imagineImage = $this->prophesize(ImageInterface::class);
         $palette = $this->prophesize(PaletteInterface::class);
@@ -140,7 +141,7 @@ class ImagineImageConverterTest extends TestCase
         $this->assertEquals('new-image-resource', $this->imagineImageConverter->convert($fileVersion, '640x480', 'jpg'));
     }
 
-    public function testConvertSvg()
+    public function testConvertSvg(): void
     {
         $imagineImage = $this->prophesize(ImageInterface::class);
         $palette = $this->prophesize(PaletteInterface::class);
@@ -169,7 +170,7 @@ class ImagineImageConverterTest extends TestCase
         $this->assertEquals('new-image-resource', $this->imagineImageConverter->convert($fileVersion, '640x480', 'svg'));
     }
 
-    public function testConvertNoFocusOnInset()
+    public function testConvertNoFocusOnInset(): void
     {
         $imagineImage = $this->prophesize(ImageInterface::class);
         $palette = $this->prophesize(PaletteInterface::class);
@@ -197,7 +198,7 @@ class ImagineImageConverterTest extends TestCase
         $this->assertEquals('new-image-resource', $this->imagineImageConverter->convert($fileVersion, '640x480', 'jpg'));
     }
 
-    public function testConvertWithImageExtension()
+    public function testConvertWithImageExtension(): void
     {
         $imagineImage = $this->prophesize(ImageInterface::class);
         $palette = $this->prophesize(PaletteInterface::class);
@@ -223,7 +224,7 @@ class ImagineImageConverterTest extends TestCase
         $this->assertEquals('new-image-resource', $this->imagineImageConverter->convert($fileVersion, '640x480', 'png'));
     }
 
-    public function testConvertCmykToRgb()
+    public function testConvertCmykToRgb(): void
     {
         $imagineImage = $this->prophesize(ImageInterface::class);
         $palette = $this->prophesize(PaletteInterface::class);
@@ -251,7 +252,7 @@ class ImagineImageConverterTest extends TestCase
         $this->assertEquals('new-image-resource', $this->imagineImageConverter->convert($fileVersion, '640x480', 'jpg'));
     }
 
-    public function testConvertNotExistingMedia()
+    public function testConvertNotExistingMedia(): void
     {
         $this->expectException(ImageProxyMediaNotFoundException::class);
 
@@ -265,7 +266,7 @@ class ImagineImageConverterTest extends TestCase
         $this->imagineImageConverter->convert($fileVersion, '640x480', 'jpg');
     }
 
-    public function testConvertAutorotate()
+    public function testConvertAutorotate(): void
     {
         $imagineImage = $this->prophesize(ImageInterface::class);
         $palette = $this->prophesize(PaletteInterface::class);

@@ -18,6 +18,7 @@ use PHPCR\SessionInterface;
 use PHPCR\WorkspaceInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\DocumentManager\Collection\QueryResultCollection;
 use Sulu\Component\DocumentManager\Event\QueryCreateEvent;
 use Sulu\Component\DocumentManager\Event\QueryExecuteEvent;
@@ -30,47 +31,47 @@ class QuerySubscriberTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var SessionInterface
+     * @var ObjectProphecy<SessionInterface>
      */
     private $session;
 
     /**
-     * @var WorkspaceInterface
+     * @var ObjectProphecy<WorkspaceInterface>
      */
     private $workspace;
 
     /**
-     * @var QueryManagerInterface
+     * @var ObjectProphecy<QueryManagerInterface>
      */
     private $queryManager;
 
     /**
-     * @var EventDispatcherInterface
+     * @var ObjectProphecy<EventDispatcherInterface>
      */
     private $dispatcher;
 
     /**
-     * @var QueryInterface
+     * @var ObjectProphecy<QueryInterface>
      */
     private $phpcrQuery;
 
     /**
-     * @var QueryResultInterface
+     * @var ObjectProphecy<QueryResultInterface>
      */
     private $phpcrResult;
 
     /**
-     * @var QueryCreateEvent
+     * @var ObjectProphecy<QueryCreateEvent>
      */
     private $queryCreateEvent;
 
     /**
-     * @var QueryExecuteEvent
+     * @var ObjectProphecy<QueryExecuteEvent>
      */
     private $queryExecuteEvent;
 
     /**
-     * @var Query
+     * @var ObjectProphecy<Query>
      */
     private $query;
 
@@ -103,7 +104,7 @@ class QuerySubscriberTest extends TestCase
     /**
      * It should provide a Query object from a JCR-SQL2 string.
      */
-    public function testHandleCreate()
+    public function testHandleCreate(): void
     {
         $query = 'SELECT * FROM [nt:unstructured]';
         $locale = 'fr';
@@ -128,7 +129,7 @@ class QuerySubscriberTest extends TestCase
     /**
      * It should provide a Query object for a PHPCR query object.
      */
-    public function testHandleCreateFromPhpcrQuery()
+    public function testHandleCreateFromPhpcrQuery(): void
     {
         $locale = 'fr';
         $primarySelector = 'p';
@@ -152,7 +153,7 @@ class QuerySubscriberTest extends TestCase
     /**
      * It should handle query execution and set the result.
      */
-    public function testHandleQueryExecute()
+    public function testHandleQueryExecute(): void
     {
         $locale = 'fr';
         $primarySelector = 'p';

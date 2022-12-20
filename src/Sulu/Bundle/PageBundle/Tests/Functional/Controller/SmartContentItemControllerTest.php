@@ -134,7 +134,7 @@ class SmartContentItemControllerTest extends SuluTestCase
         $this->em->flush();
     }
 
-    private function initPages()
+    private function initPages(): void
     {
         $this->team = $this->savePage(
             'simple',
@@ -174,10 +174,6 @@ class SmartContentItemControllerTest extends SuluTestCase
     }
 
     /**
-     * @param $template
-     * @param $data
-     * @param $parent
-     *
      * @return PageDocument
      */
     private function savePage($template, $data, $parent, $publish = false, $tags = [])
@@ -219,7 +215,7 @@ class SmartContentItemControllerTest extends SuluTestCase
         return $document;
     }
 
-    public function testGetItems()
+    public function testGetItems(): void
     {
         $this->client->jsonRequest(
             'GET',
@@ -270,7 +266,7 @@ class SmartContentItemControllerTest extends SuluTestCase
         );
     }
 
-    public function testGetItemsExcluded()
+    public function testGetItemsExcluded(): void
     {
         $this->client->jsonRequest(
             'GET',
@@ -313,7 +309,7 @@ class SmartContentItemControllerTest extends SuluTestCase
         );
     }
 
-    public function testGetItemsMultipleExcluded()
+    public function testGetItemsMultipleExcluded(): void
     {
         $this->client->jsonRequest(
             'GET',
@@ -352,7 +348,7 @@ class SmartContentItemControllerTest extends SuluTestCase
         );
     }
 
-    public function testGetItemsWithParams()
+    public function testGetItemsWithParams(): void
     {
         $this->client->jsonRequest(
             'GET',
@@ -397,7 +393,7 @@ class SmartContentItemControllerTest extends SuluTestCase
         );
     }
 
-    public function testGetItemsWithParamsAndNoType()
+    public function testGetItemsWithParamsAndNoType(): void
     {
         $this->client->jsonRequest(
             'GET',
@@ -442,7 +438,7 @@ class SmartContentItemControllerTest extends SuluTestCase
         );
     }
 
-    public function testGetItemsLimit()
+    public function testGetItemsLimit(): void
     {
         $this->client->jsonRequest(
             'GET',
@@ -485,7 +481,7 @@ class SmartContentItemControllerTest extends SuluTestCase
         );
     }
 
-    public function testGetItemsTags()
+    public function testGetItemsTags(): void
     {
         $this->client->jsonRequest(
             'GET',

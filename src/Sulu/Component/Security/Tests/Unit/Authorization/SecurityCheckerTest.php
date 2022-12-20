@@ -14,11 +14,14 @@ namespace Sulu\Component\Security\Tests\Unit\Authorization;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\Security\Authorization\SecurityChecker;
 use Sulu\Component\Security\Authorization\SecurityCheckerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 
 class SecurityCheckerTest extends TestCase
 {
@@ -30,12 +33,12 @@ class SecurityCheckerTest extends TestCase
     private $securityChecker;
 
     /**
-     * @var TokenStorageInterface
+     * @var ObjectProphecy<TokenStorageInterface>
      */
     private $tokenStorage;
 
     /**
-     * @var AuthorizationCheckerInterface
+     * @var ObjectProphecy<AuthorizationCheckerInterface>
      */
     private $authorizationChecker;
 
@@ -55,7 +58,7 @@ class SecurityCheckerTest extends TestCase
         );
     }
 
-    public function testIsGrantedContext()
+    public function testIsGrantedContext(): void
     {
         $this->authorizationChecker->isGranted(
             'view',
@@ -67,7 +70,7 @@ class SecurityCheckerTest extends TestCase
         $this->assertTrue($granted);
     }
 
-    public function testIsGrantedObject()
+    public function testIsGrantedObject(): void
     {
         $object = new \stdClass();
 
@@ -81,7 +84,7 @@ class SecurityCheckerTest extends TestCase
         $this->assertTrue($granted);
     }
 
-    public function testIsGrantedFalsyValue()
+    public function testIsGrantedFalsyValue(): void
     {
         $object = null;
 
@@ -89,12 +92,10 @@ class SecurityCheckerTest extends TestCase
         $this->assertTrue($this->securityChecker->checkPermission($object, 'view'));
     }
 
-    public function testIsGrantedFail()
+    public function testIsGrantedFail(): void
     {
-        $this->expectException(
-            'Symfony\Component\Security\Core\Exception\AccessDeniedException',
-            'Permission "view" in security context "sulu.media.collection" not granted'
-        );
+        $this->expectException(AccessDeniedException::class);
+        $this->expectExceptionMessage('Permission "view" in security context "sulu.media.collection" not granted');
 
         $this->authorizationChecker->isGranted(
             'view',
@@ -104,10 +105,29 @@ class SecurityCheckerTest extends TestCase
         $this->securityChecker->checkPermission('sulu.media.collection', 'view');
     }
 
-    public function testIsGrantedWithoutToken()
+    public function testIsGrantedWithoutToken(): void
     {
+        $this->expectException(AccessDeniedException::class);
+        $this->expectExceptionMessage('Permission "view" in security context "sulu.media.collection" not granted');
+
         $this->tokenStorage->getToken()->willReturn(null);
         $this->authorizationChecker->isGranted(Argument::any(), Argument::any())->willReturn(false);
+
+        $this->assertFalse($this->securityChecker->checkPermission('sulu.media.collection', 'view'));
+    }
+
+    public function testIsGrantedWithoutTokenAllowed(): void
+    {
+        $this->tokenStorage->getToken()->willReturn(null);
+        $this->authorizationChecker->isGranted(Argument::any(), Argument::any())->willReturn(true);
+
+        $this->assertTrue($this->securityChecker->checkPermission('sulu.media.collection', 'view'));
+    }
+
+    public function testIsGrantedWithAuthenticationCredentialsNotFoundException(): void
+    {
+        $this->tokenStorage->getToken()->willReturn(null);
+        $this->authorizationChecker->isGranted(Argument::any(), Argument::any())->willThrow(new AuthenticationCredentialsNotFoundException());
 
         $this->assertTrue($this->securityChecker->checkPermission('sulu.media.collection', 'view'));
     }

@@ -14,6 +14,7 @@ namespace Sulu\Bundle\WebsiteBundle\Tests\Unit\Twig\Seo;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\WebsiteBundle\Twig\Content\ContentPathInterface;
 use Sulu\Bundle\WebsiteBundle\Twig\Seo\SeoTwigExtension;
 use Sulu\Component\Localization\Localization;
@@ -34,22 +35,22 @@ class SeoTwigExtensionTest extends TestCase
     private $seoTwigExtension;
 
     /**
-     * @var RequestAnalyzerInterface
+     * @var ObjectProphecy<RequestAnalyzerInterface>
      */
     private $requestAnalyzer;
 
     /**
-     * @var ContentPathInterface
+     * @var ObjectProphecy<ContentPathInterface>
      */
     private $contentPath;
 
     /**
-     * @var RequestStack
+     * @var ObjectProphecy<RequestStack>
      */
     private $requestStack;
 
     /**
-     * @var Request
+     * @var ObjectProphecy<Request>
      */
     private $request;
 
@@ -72,7 +73,7 @@ class SeoTwigExtensionTest extends TestCase
         $this->requestStack->getCurrentRequest()->willReturn($this->request->reveal());
     }
 
-    public function testGetFunctions()
+    public function testGetFunctions(): void
     {
         $result = $this->seoTwigExtension->getFunctions();
 
@@ -96,7 +97,7 @@ class SeoTwigExtensionTest extends TestCase
         $unexpectedResults = [],
         $resourceLocator = '/test',
         $requestSeoData = []
-    ) {
+    ): void {
         $this->markTestSkipped(); // TODO add functional tests for template rendering
 
         $this->request->get('_seo', [])->willReturn($requestSeoData);
@@ -143,7 +144,7 @@ class SeoTwigExtensionTest extends TestCase
         }
     }
 
-    public function testRenderSeoTagsWithoutPortal()
+    public function testRenderSeoTagsWithoutPortal(): void
     {
         $this->markTestSkipped(); // TODO add functional tests for template rendering
 

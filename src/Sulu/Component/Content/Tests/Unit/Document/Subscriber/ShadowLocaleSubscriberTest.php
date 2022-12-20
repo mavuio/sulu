@@ -14,6 +14,7 @@ namespace Sulu\Component\Content\Tests\Unit\Document\Subscriber;
 use PHPCR\NodeInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\DocumentInspector;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\PropertyEncoder;
 use Sulu\Component\Content\Document\Behavior\ShadowLocaleBehavior;
@@ -28,17 +29,17 @@ class ShadowLocaleSubscriberTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var PropertyEncoder
+     * @var ObjectProphecy<PropertyEncoder>
      */
     private $propertyEncoder;
 
     /**
-     * @var DocumentInspector
+     * @var ObjectProphecy<DocumentInspector>
      */
     private $documentInspector;
 
     /**
-     * @var DocumentRegistry
+     * @var ObjectProphecy<DocumentRegistry>
      */
     private $documentRegistry;
 
@@ -60,7 +61,7 @@ class ShadowLocaleSubscriberTest extends TestCase
         );
     }
 
-    public function testHandlePersistEmptyLocale()
+    public function testHandlePersistEmptyLocale(): void
     {
         $document = $this->prophesize(ShadowLocaleBehavior::class);
         $document->isShadowLocaleEnabled()->shouldNotBeCalled();
@@ -73,7 +74,7 @@ class ShadowLocaleSubscriberTest extends TestCase
         $this->shadowLocaleSubscriber->saveShadowProperties($event->reveal());
     }
 
-    public function testHandlePersistForNonConcreteLocale()
+    public function testHandlePersistForNonConcreteLocale(): void
     {
         $this->expectException(
             \RuntimeException::class,
@@ -101,7 +102,7 @@ class ShadowLocaleSubscriberTest extends TestCase
         $this->shadowLocaleSubscriber->saveShadowProperties($event->reveal());
     }
 
-    public function testHandlePersistForSameLocale()
+    public function testHandlePersistForSameLocale(): void
     {
         $this->expectException(\RuntimeException::class, 'Document cannot be a shadow of itself for locale "de"');
 
@@ -118,7 +119,7 @@ class ShadowLocaleSubscriberTest extends TestCase
         $this->shadowLocaleSubscriber->saveShadowProperties($event->reveal());
     }
 
-    public function testHandleHydrate()
+    public function testHandleHydrate(): void
     {
         $document = $this->prophesize(ShadowLocaleBehavior::class);
 

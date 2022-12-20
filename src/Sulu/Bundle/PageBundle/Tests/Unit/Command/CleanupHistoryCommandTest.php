@@ -16,6 +16,7 @@ use PHPCR\NodeInterface;
 use PHPCR\SessionInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\PageBundle\Command\CleanupHistoryCommand;
 use Sulu\Component\PHPCR\SessionManager\SessionManagerInterface;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,27 +27,27 @@ class CleanupHistoryCommandTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var SessionManagerInterface
+     * @var ObjectProphecy<SessionManagerInterface>
      */
     private $sessionManager;
 
     /**
-     * @var SessionInterface
+     * @var ObjectProphecy<SessionInterface>
      */
     private $defaultSession;
 
     /**
-     * @var Workspace
+     * @var ObjectProphecy<Workspace>
      */
     private $defaultWorkspace;
 
     /**
-     * @var SessionInterface
+     * @var ObjectProphecy<SessionInterface>
      */
     private $liveSession;
 
     /**
-     * @var Workspace
+     * @var ObjectProphecy<Workspace>
      */
     private $liveWorkspace;
 
@@ -56,12 +57,12 @@ class CleanupHistoryCommandTest extends TestCase
     private $cleanupHistoryCommand;
 
     /**
-     * @var InputInterface
+     * @var ObjectProphecy<InputInterface>
      */
     private $input;
 
     /**
-     * @var OutputInterface
+     * @var ObjectProphecy<OutputInterface>
      */
     private $output;
 
@@ -87,7 +88,7 @@ class CleanupHistoryCommandTest extends TestCase
         $this->output = $this->prophesize(OutputInterface::class);
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $this->input->getArgument('webspaceKey')->willReturn('sulu_io');
         $this->input->getArgument('locale')->willReturn('de');
@@ -139,7 +140,7 @@ class CleanupHistoryCommandTest extends TestCase
         $executeMethod->invoke($this->cleanupHistoryCommand, $this->input->reveal(), $this->output->reveal());
     }
 
-    public function testExecuteDryRun()
+    public function testExecuteDryRun(): void
     {
         $this->input->getArgument('webspaceKey')->willReturn('sulu_io');
         $this->input->getArgument('locale')->willReturn('de');

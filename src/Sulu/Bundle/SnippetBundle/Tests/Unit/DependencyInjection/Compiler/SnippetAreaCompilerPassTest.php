@@ -13,6 +13,7 @@ namespace Sulu\Bundle\SnippetBundle\Tests\Unit\DependencyInjection\Compiler;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\SnippetBundle\DependencyInjection\Compiler\SnippetAreaCompilerPass;
 use Sulu\Component\Content\Metadata\Factory\StructureMetadataFactoryInterface;
 use Sulu\Component\Content\Metadata\StructureMetadata;
@@ -23,16 +24,16 @@ class SnippetAreaCompilerPassTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ContainerBuilder
+     * @var ObjectProphecy<ContainerBuilder>
      */
     protected $container;
 
     /**
-     * @var StructureMetadataFactoryInterface
+     * @var ObjectProphecy<StructureMetadataFactoryInterface>
      */
     protected $structureFactory;
 
-    public function testWithoutAreas()
+    public function testWithoutAreas(): void
     {
         $compiler = new SnippetAreaCompilerPass();
 
@@ -76,7 +77,7 @@ class SnippetAreaCompilerPassTest extends TestCase
         $compiler->process($this->container->reveal());
     }
 
-    public function testWithAreas()
+    public function testWithAreas(): void
     {
         $compiler = new SnippetAreaCompilerPass();
 

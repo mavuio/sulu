@@ -13,6 +13,7 @@ namespace Sulu\Component\Rest\Tests\Unit\ListBuilder\Filter;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\Rest\ListBuilder\FieldDescriptor;
 use Sulu\Component\Rest\ListBuilder\Filter\InvalidFilterTypeOptionsException;
 use Sulu\Component\Rest\ListBuilder\Filter\TextFilterType;
@@ -28,7 +29,7 @@ class TextFilterTypeTest extends TestCase
     private $textFilterType;
 
     /**
-     * @var ListBuilderInterface
+     * @var ObjectProphecy<ListBuilderInterface>
      */
     private $listBuilder;
 
@@ -49,7 +50,7 @@ class TextFilterTypeTest extends TestCase
     /**
      * @dataProvider provideFilter
      */
-    public function testFilter($fieldName, $value, $expectedOperator, $expectedValue)
+    public function testFilter($fieldName, $value, $expectedOperator, $expectedValue): void
     {
         $fieldDescriptor = $this->prophesize(FieldDescriptor::class);
 
@@ -58,7 +59,7 @@ class TextFilterTypeTest extends TestCase
         $this->listBuilder->where($fieldDescriptor->reveal(), $expectedValue, $expectedOperator)->shouldBeCalled();
     }
 
-    public function testFilterWithInvalidOptions()
+    public function testFilterWithInvalidOptions(): void
     {
         $this->expectException(InvalidFilterTypeOptionsException::class);
 
@@ -66,7 +67,7 @@ class TextFilterTypeTest extends TestCase
         $this->textFilterType->filter($this->listBuilder->reveal(), $fieldDescriptor->reveal(), false);
     }
 
-    public function testFilterWithInvalidOptionsArray()
+    public function testFilterWithInvalidOptionsArray(): void
     {
         $this->expectException(InvalidFilterTypeOptionsException::class);
 

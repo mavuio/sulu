@@ -16,6 +16,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\SecurityBundle\Entity\PermissionInheritanceInterface;
 use Sulu\Bundle\SecurityBundle\EventListener\PermissionInheritanceSubscriber;
 use Sulu\Component\Security\Authorization\AccessControl\AccessControlManagerInterface;
@@ -25,12 +26,12 @@ class PermissionInheritanceSubscriberTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var AccessControlManagerInterface
+     * @var ObjectProphecy<AccessControlManagerInterface>
      */
     private $accessControlManager;
 
     /**
-     * @var EntityManagerInterface
+     * @var ObjectProphecy<EntityManagerInterface>
      */
     private $entityManager;
 
@@ -57,7 +58,7 @@ class PermissionInheritanceSubscriberTest extends TestCase
     /**
      * @dataProvider providePostPersist
      */
-    public function testPostPersist($id, $parentId, $permissions)
+    public function testPostPersist($id, $parentId, $permissions): void
     {
         $entity = $this->prophesize(PermissionInheritanceInterface::class);
         $entity->getId()->willReturn($id);
@@ -72,7 +73,7 @@ class PermissionInheritanceSubscriberTest extends TestCase
         $this->permissionInheritanceSubscriber->postPersist($event);
     }
 
-    public function testPostPersistForOtherEntities()
+    public function testPostPersistForOtherEntities(): void
     {
         $entity = new \stdClass();
         $event = $this->createPostPersistEvent($entity);
@@ -82,7 +83,7 @@ class PermissionInheritanceSubscriberTest extends TestCase
         $this->permissionInheritanceSubscriber->postPersist($event);
     }
 
-    public function testPostPersistWithoutParent()
+    public function testPostPersistWithoutParent(): void
     {
         $entity = $this->prophesize(PermissionInheritanceInterface::class);
         $event = $this->createPostPersistEvent($entity->reveal());

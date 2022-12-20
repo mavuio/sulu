@@ -14,6 +14,7 @@ namespace Sulu\Component\Content\Tests\Unit\Document\Subscriber;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Component\Content\Document\Behavior\NavigationContextBehavior;
 use Sulu\Component\Content\Document\Subscriber\NavigationContextSubscriber;
 use Sulu\Component\DocumentManager\Event\MetadataLoadEvent;
@@ -29,17 +30,17 @@ class NavigationContextSubscriberTest extends TestCase
     private $subscriber;
 
     /**
-     * @var NavigationContextBehavior
+     * @var ObjectProphecy<NavigationContextBehavior>
      */
     private $document;
 
     /**
-     * @var Metadata
+     * @var ObjectProphecy<Metadata>
      */
     private $metadata;
 
     /**
-     * @var MetadataLoadEvent
+     * @var ObjectProphecy<MetadataLoadEvent>
      */
     private $event;
 
@@ -53,7 +54,7 @@ class NavigationContextSubscriberTest extends TestCase
         $this->event->getMetadata()->willReturn($this->metadata);
     }
 
-    public function testLoadMetadata()
+    public function testLoadMetadata(): void
     {
         $this->metadata->getReflectionClass()->willReturn(new \ReflectionClass($this->document->reveal()));
         $this->metadata->addFieldMapping('navigationContexts', Argument::any())->shouldBeCalled();

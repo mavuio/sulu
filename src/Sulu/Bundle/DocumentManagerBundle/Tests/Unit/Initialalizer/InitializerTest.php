@@ -13,6 +13,7 @@ namespace vendor\sulu\sulu\src\Sulu\Bundle\DocumentManagerBundle\Tests\Unit\Init
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\DocumentManagerBundle\Initializer\Initializer;
 use Sulu\Bundle\DocumentManagerBundle\Initializer\InitializerInterface;
 use Symfony\Component\Console\Output\NullOutput;
@@ -23,22 +24,22 @@ class InitializerTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ContainerInterface
+     * @var ObjectProphecy<ContainerInterface>
      */
     private $container;
 
     /**
-     * @var InitializerInterface
+     * @var ObjectProphecy<InitializerInterface>
      */
     private $initializer1;
 
     /**
-     * @var InitializerInterface
+     * @var ObjectProphecy<InitializerInterface>
      */
     private $initializer2;
 
     /**
-     * @var InitializerInterface
+     * @var ObjectProphecy<InitializerInterface>
      */
     private $initializer3;
 
@@ -68,18 +69,18 @@ class InitializerTest extends TestCase
         $this->container->get('service3')->willReturn($this->initializer3->reveal());
     }
 
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $calls = [];
         $output = new NullOutput();
 
-        $this->initializer1->initialize($output, false)->will(function() use (&$calls) {
+        $this->initializer1->initialize($output, false)->will(function() use (&$calls): void {
             $calls[] = 'service1';
         });
-        $this->initializer2->initialize($output, false)->will(function() use (&$calls) {
+        $this->initializer2->initialize($output, false)->will(function() use (&$calls): void {
             $calls[] = 'service2';
         });
-        $this->initializer3->initialize($output, false)->will(function() use (&$calls) {
+        $this->initializer3->initialize($output, false)->will(function() use (&$calls): void {
             $calls[] = 'service3';
         });
 
@@ -90,18 +91,18 @@ class InitializerTest extends TestCase
         ], $calls);
     }
 
-    public function testInitializeWithPurge()
+    public function testInitializeWithPurge(): void
     {
         $calls = [];
         $output = new NullOutput();
 
-        $this->initializer1->initialize($output, true)->will(function() use (&$calls) {
+        $this->initializer1->initialize($output, true)->will(function() use (&$calls): void {
             $calls[] = 'service1';
         });
-        $this->initializer2->initialize($output, true)->will(function() use (&$calls) {
+        $this->initializer2->initialize($output, true)->will(function() use (&$calls): void {
             $calls[] = 'service2';
         });
-        $this->initializer3->initialize($output, true)->will(function() use (&$calls) {
+        $this->initializer3->initialize($output, true)->will(function() use (&$calls): void {
             $calls[] = 'service3';
         });
 
