@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "af6e7a8bd0787f66a2152daccde6ee88",
+    "content-hash": "4d67636aa5a28df1cc935ac165a6e674",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -6537,16 +6537,16 @@
         },
         {
             "name": "sulu/form-bundle",
-            "version": "2.5.0",
+            "version": "2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sulu/SuluFormBundle.git",
-                "reference": "4b52fdfb623e126e43b38fa0acfce3af5b0982a5"
+                "reference": "9cbb4602e76fe8bb1a1626a4221c7f5262f4c771"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sulu/SuluFormBundle/zipball/4b52fdfb623e126e43b38fa0acfce3af5b0982a5",
-                "reference": "4b52fdfb623e126e43b38fa0acfce3af5b0982a5",
+                "url": "https://api.github.com/repos/sulu/SuluFormBundle/zipball/9cbb4602e76fe8bb1a1626a4221c7f5262f4c771",
+                "reference": "9cbb4602e76fe8bb1a1626a4221c7f5262f4c771",
                 "shasum": ""
             },
             "require": {
@@ -6581,6 +6581,7 @@
                 "jackalope/jackalope-doctrine-dbal": "^1.3.2",
                 "jangregor/phpstan-prophecy": "^1.0",
                 "massive/search-bundle": "^2.0",
+                "phpspec/prophecy": "^1.14",
                 "phpstan/phpstan": "^1.0",
                 "phpstan/phpstan-doctrine": "^1.0",
                 "phpstan/phpstan-phpunit": "^1.0",
@@ -6629,9 +6630,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sulu/SuluFormBundle/issues",
-                "source": "https://github.com/sulu/SuluFormBundle/tree/2.5.0"
+                "source": "https://github.com/sulu/SuluFormBundle/tree/2.5.1"
             },
-            "time": "2022-07-15T10:57:03+00:00"
+            "time": "2022-12-21T09:16:18+00:00"
         },
         {
             "name": "sulu/sulu",

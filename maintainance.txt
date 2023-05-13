@@ -1,6 +1,7 @@
 
 
-
 update GlobalBundle:
 
 rsync  -av /www/reference_sulu/mavu_src/GlobalBundle/ ./mavu_src/GlobalBundle/
+
+
