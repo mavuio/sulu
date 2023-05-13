@@ -135,7 +135,7 @@ class ListXmlLoader
         if (null !== $type = XmlUtil::getValueFromXPath('x:transformer/@type', $xpath, $propertyNode)) {
             $propertyMetadata->setType($type);
         } elseif (null !== $type = XmlUtil::getValueFromXPath('@type', $xpath, $propertyNode)) {
-            @\trigger_error('Attribute "type" of list property should not be used anymore! Use "<transformer type="..."/>" inside of property instead.', \E_USER_DEPRECATED);
+            @trigger_deprecation('sulu/sulu', '2.2', 'Attribute "type" of list property should not be used anymore! Use "<transformer type="..."/>" inside of property instead.');
             $propertyMetadata->setType($type);
         }
 
@@ -149,7 +149,7 @@ class ListXmlLoader
             );
         }
 
-        $propertyMetadata->setFilterType(XmlUtil::getValueFromXPath('x:filter/@type', $xpath, $propertyNode));
+        $propertyMetadata->setFilterType((string) XmlUtil::getValueFromXPath('x:filter/@type', $xpath, $propertyNode));
 
         $filterParamNodes = $xpath->query('x:filter/x:params', $propertyNode);
         if (\count($filterParamNodes) > 0) {
@@ -169,7 +169,7 @@ class ListXmlLoader
         $field = $this->getField($xpath, $propertyNode);
 
         $propertyMetadata = new IdentityPropertyMetadata(
-            XmlUtil::getValueFromXPath('@name', $xpath, $propertyNode)
+            (string) XmlUtil::getValueFromXPath('@name', $xpath, $propertyNode)
         );
 
         $propertyMetadata->setField($field);
@@ -180,7 +180,7 @@ class ListXmlLoader
     private function loadCasePropertyMetadata(\DOMXPath $xpath, \DOMElement $propertyNode)
     {
         $propertyMetadata = new CasePropertyMetadata(
-            XmlUtil::getValueFromXPath('@name', $xpath, $propertyNode)
+            (string) XmlUtil::getValueFromXPath('@name', $xpath, $propertyNode)
         );
 
         foreach ($xpath->query('x:field', $propertyNode) as $fieldNode) {
@@ -199,12 +199,12 @@ class ListXmlLoader
         $field = $this->getField($xpath, $propertyNode);
 
         $propertyMetadata = new GroupConcatPropertyMetadata(
-            XmlUtil::getValueFromXPath('@name', $xpath, $propertyNode)
+            (string) XmlUtil::getValueFromXPath('@name', $xpath, $propertyNode)
         );
 
         $propertyMetadata->setField($field);
-        $propertyMetadata->setGlue(XmlUtil::getValueFromXPath('@glue', $xpath, $propertyNode, ' '));
-        $propertyMetadata->setDistinct(XmlUtil::getBooleanValueFromXPath('@distinct', $xpath, $propertyNode, false));
+        $propertyMetadata->setGlue((string) XmlUtil::getValueFromXPath('@glue', $xpath, $propertyNode, ' '));
+        $propertyMetadata->setDistinct(XmlUtil::getBooleanValueFromXPath('@distinct', $xpath, $propertyNode) ?? false);
 
         return $propertyMetadata;
     }
@@ -214,7 +214,7 @@ class ListXmlLoader
         $field = $this->getField($xpath, $propertyNode);
 
         $propertyMetadata = new SinglePropertyMetadata(
-            XmlUtil::getValueFromXPath('@name', $xpath, $propertyNode)
+            (string) XmlUtil::getValueFromXPath('@name', $xpath, $propertyNode)
         );
 
         $propertyMetadata->setField($field);
@@ -227,11 +227,11 @@ class ListXmlLoader
         $field = $this->getField($xpath, $propertyNode);
 
         $propertyMetadata = new CountPropertyMetadata(
-            XmlUtil::getValueFromXPath('@name', $xpath, $propertyNode)
+            (string) XmlUtil::getValueFromXPath('@name', $xpath, $propertyNode)
         );
 
         $propertyMetadata->setField($field);
-        $propertyMetadata->setDistinct(XmlUtil::getBooleanValueFromXPath('@distinct', $xpath, $propertyNode, false));
+        $propertyMetadata->setDistinct(XmlUtil::getBooleanValueFromXPath('@distinct', $xpath, $propertyNode) ?? false);
 
         return $propertyMetadata;
     }
@@ -239,10 +239,10 @@ class ListXmlLoader
     private function loadConcatenationPropertyMetadata(\DOMXPath $xpath, \DOMNode $propertyNode)
     {
         $propertyMetadata = new ConcatenationPropertyMetadata(
-            XmlUtil::getValueFromXPath('@name', $xpath, $propertyNode)
+            (string) XmlUtil::getValueFromXPath('@name', $xpath, $propertyNode)
         );
 
-        $propertyMetadata->setGlue(XmlUtil::getValueFromXPath('@glue', $xpath, $propertyNode, ' '));
+        $propertyMetadata->setGlue((string) (XmlUtil::getValueFromXPath('@glue', $xpath, $propertyNode) ?? ' '));
 
         foreach ($xpath->query('x:field', $propertyNode) as $fieldNode) {
             if (null === $field = $this->getField($xpath, $fieldNode)) {
@@ -271,7 +271,7 @@ class ListXmlLoader
                 $parameters[$name] = $this->getParameters($xpath, $paramNode);
             } else {
                 $value = $this->parameterBag->resolveValue(
-                    \trim(XmlUtil::getValueFromXPath('@value', $xpath, $paramNode))
+                    \trim((string) XmlUtil::getValueFromXPath('@value', $xpath, $paramNode))
                 );
 
                 if (null === $name) {

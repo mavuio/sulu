@@ -18,6 +18,7 @@ use Sulu\Bundle\CustomUrlBundle\Domain\Event\CustomUrlRemovedEvent;
 use Sulu\Bundle\CustomUrlBundle\Domain\Event\CustomUrlRouteRemovedEvent;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\DocumentInspector;
 use Sulu\Bundle\DocumentManagerBundle\Collector\DocumentDomainEventCollectorInterface;
+use Sulu\Component\Content\Document\Behavior\WebspaceBehavior;
 use Sulu\Component\CustomUrl\Document\CustomUrlDocument;
 use Sulu\Component\CustomUrl\Document\RouteDocument;
 use Sulu\Component\CustomUrl\Repository\CustomUrlRepository;
@@ -29,6 +30,7 @@ use Sulu\Component\DocumentManager\MetadataFactoryInterface;
 use Sulu\Component\DocumentManager\PathBuilder;
 use Sulu\Component\Webspace\CustomUrl;
 use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
+use Sulu\Component\Webspace\Webspace;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
@@ -115,7 +117,7 @@ class CustomUrlManager implements CustomUrlManagerInterface
             $this->documentManager->publish($document, CustomUrlDocument::DOCUMENT_LOCALE);
             $this->documentDomainEventCollector->collect(new CustomUrlCreatedEvent($document, $webspaceKey, $data));
         } catch (NodeNameAlreadyExistsException $ex) {
-            throw new TitleAlreadyExistsException($document->getTitle());
+            throw new TitleAlreadyExistsException($document->getTitle(), $ex);
         }
 
         return $document;
@@ -192,9 +194,22 @@ class CustomUrlManager implements CustomUrlManagerInterface
 
     public function findByPage(UuidBehavior $page)
     {
+        $webspaceKeys = \array_map(function(Webspace $webspace) {
+            return $webspace->getKey();
+        }, $this->webspaceManager->getWebspaceCollection()->getWebspaces());
+        if ($page instanceof WebspaceBehavior) {
+            $webspaceKeys = [$page->getWebspaceName()];
+        }
+
+        $descendentPaths = [];
+        foreach ($webspaceKeys as $webspaceKey) {
+            $descendentPaths[] = \sprintf('ISDESCENDANTNODE(a, "/cmf/%s/custom-urls")', $webspaceKey);
+        }
+
         $query = $this->documentManager->createQuery(
             \sprintf(
-                'SELECT * FROM [nt:unstructured] AS a WHERE a.[jcr:mixinTypes] = "sulu:custom_url" AND a.[sulu:target] = "%s"',
+                'SELECT * FROM [nt:unstructured] AS a WHERE (%s) AND a.[jcr:mixinTypes] = "sulu:custom_url" AND a.[sulu:target] = "%s"',
+                \implode(' OR ', $descendentPaths),
                 $page->getUuid()
             )
         );
@@ -261,7 +276,7 @@ class CustomUrlManager implements CustomUrlManagerInterface
                 new CustomUrlModifiedEvent($document, $this->documentInspector->getWebspace($document), $data)
             );
         } catch (NodeNameAlreadyExistsException $ex) {
-            throw new TitleAlreadyExistsException($document->getTitle());
+            throw new TitleAlreadyExistsException($document->getTitle(), $ex);
         }
 
         return $document;

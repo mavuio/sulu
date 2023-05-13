@@ -164,9 +164,10 @@ class MediaController extends AbstractMediaController implements
         $this->mediaListRepresentationFactory = $mediaListRepresentationFactory;
 
         if (null === $this->mediaListBuilderFactory || null === $this->mediaListRepresentationFactory) {
-            @\trigger_error(
-                'Instantiating MediaController without the $mediaListBuilderFactory or $mediaListRepresentationFactory argument is deprecated.',
-                \E_USER_DEPRECATED
+            @trigger_deprecation(
+                'sulu/sulu',
+                '2.3',
+                'Instantiating MediaController without the $mediaListBuilderFactory or $mediaListRepresentationFactory argument is deprecated.'
             );
         }
     }
@@ -443,7 +444,7 @@ class MediaController extends AbstractMediaController implements
             try {
                 $this->mediaManager->delete($id, true);
             } catch (MediaNotFoundException $e) {
-                throw new EntityNotFoundException($this->mediaClass, $id); // will throw 404 Entity not found
+                throw new EntityNotFoundException($this->mediaClass, $id, $e); // will throw 404 Entity not found
             }
         };
 

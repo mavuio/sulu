@@ -32,7 +32,6 @@ class Contact extends ApiEntity implements ContactInterface
      * @var int
      *
      * @Expose
-     *
      * @Groups({"frontend", "partialContact", "fullContact"})
      */
     protected $id;
@@ -43,7 +42,7 @@ class Contact extends ApiEntity implements ContactInterface
     protected $firstName;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $middleName;
 
@@ -134,9 +133,9 @@ class Contact extends ApiEntity implements ContactInterface
     protected $socialMediaProfiles;
 
     /**
-     * @var int
+     * @var int|null
      */
-    protected $formOfAddress = 0;
+    protected $formOfAddress;
 
     /**
      * @var string|null
@@ -180,7 +179,7 @@ class Contact extends ApiEntity implements ContactInterface
     protected $accountContacts;
 
     /**
-     * @var bool
+     * @var bool|null
      */
     protected $newsletter;
 
@@ -294,6 +293,9 @@ class Contact extends ApiEntity implements ContactInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getMiddleName()
     {
         return $this->middleName;
@@ -318,7 +320,6 @@ class Contact extends ApiEntity implements ContactInterface
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("fullName")
      *
      * @return string
@@ -352,7 +353,6 @@ class Contact extends ApiEntity implements ContactInterface
 
     /**
      * @VirtualProperty
-     *
      * @Groups({"fullContact"})
      */
     public function getPosition()
@@ -632,6 +632,9 @@ class Contact extends ApiEntity implements ContactInterface
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getNewsletter()
     {
         return $this->newsletter;

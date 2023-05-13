@@ -50,9 +50,10 @@ class MediaImageExtractor implements MediaImageExtractorInterface
     public function extract($resource/*, string $resourceMimeType*/)
     {
         if (\func_num_args() <= 1) {
-            @\trigger_error(
-                \sprintf('Calling "%s()" without $resourceMimeType parameter is deprecated.', __METHOD__),
-                \E_USER_DEPRECATED
+            @trigger_deprecation(
+                'sulu/sulu',
+                '2.2',
+                \sprintf('Calling "%s()" without $resourceMimeType parameter is deprecated.', __METHOD__)
             );
 
             $mimeType = \mime_content_type($resource);
@@ -124,7 +125,7 @@ class MediaImageExtractor implements MediaImageExtractorInterface
 
             return $this->createTemporaryResource($image->get('png'));
         } catch (RuntimeException $e) {
-            throw new InvalidMimeTypeForPreviewException('image/vnd.adobe.photoshop');
+            throw new InvalidMimeTypeForPreviewException('image/vnd.adobe.photoshop', $e);
         }
     }
 

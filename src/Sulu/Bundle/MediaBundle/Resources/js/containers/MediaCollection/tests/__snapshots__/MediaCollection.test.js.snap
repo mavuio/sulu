@@ -290,7 +290,7 @@ exports[`Render the MediaCollection 1`] = `
     >
       <section>
         <div>
-          <div
+          <ul
             class="masonry"
           >
             <li
@@ -305,6 +305,7 @@ exports[`Render the MediaCollection 1`] = `
                   <div
                     class="description"
                     role="button"
+                    tabindex="0"
                   >
                     <div
                       class="title"
@@ -400,6 +401,7 @@ exports[`Render the MediaCollection 1`] = `
                 <div
                   class="media"
                   role="button"
+                  tabindex="0"
                 >
                   <img
                     alt="Title 1"
@@ -439,6 +441,7 @@ exports[`Render the MediaCollection 1`] = `
                   <div
                     class="description"
                     role="button"
+                    tabindex="0"
                   >
                     <div
                       class="title"
@@ -534,6 +537,7 @@ exports[`Render the MediaCollection 1`] = `
                 <div
                   class="media"
                   role="button"
+                  tabindex="0"
                 >
                   <img
                     alt="Title 1"
@@ -561,7 +565,7 @@ exports[`Render the MediaCollection 1`] = `
                 </div>
               </div>
             </li>
-          </div>
+          </ul>
         </div>
         <div
           class="indicator"
@@ -856,7 +860,7 @@ exports[`Render the MediaCollection for all media 1`] = `
     >
       <section>
         <div>
-          <div
+          <ul
             class="masonry"
           >
             <li
@@ -871,6 +875,7 @@ exports[`Render the MediaCollection for all media 1`] = `
                   <div
                     class="description"
                     role="button"
+                    tabindex="0"
                   >
                     <div
                       class="title"
@@ -966,6 +971,7 @@ exports[`Render the MediaCollection for all media 1`] = `
                 <div
                   class="media"
                   role="button"
+                  tabindex="0"
                 >
                   <img
                     alt="Title 1"
@@ -1005,6 +1011,7 @@ exports[`Render the MediaCollection for all media 1`] = `
                   <div
                     class="description"
                     role="button"
+                    tabindex="0"
                   >
                     <div
                       class="title"
@@ -1100,6 +1107,7 @@ exports[`Render the MediaCollection for all media 1`] = `
                 <div
                   class="media"
                   role="button"
+                  tabindex="0"
                 >
                   <img
                     alt="Title 1"
@@ -1127,7 +1135,7 @@ exports[`Render the MediaCollection for all media 1`] = `
                 </div>
               </div>
             </li>
-          </div>
+          </ul>
         </div>
         <div
           class="indicator"

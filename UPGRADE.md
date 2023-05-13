@@ -1,5 +1,11 @@
 # Upgrade
 
+## 2.5.7
+
+### Constructor of ValidateWebspacesCommand changed
+
+The constructor of `ValidateWebspacesCommand` requires now EventDispatcherInterface instead of activeTheme.
+
 ## 2.5.2
 
 ### Add indexes to route table
@@ -350,6 +356,14 @@ Improve performance of the `Route` table with additional indexes for the databas
 ```sql
 CREATE INDEX idx_resource ON ro_routes (entity_id, entity_class);
 CREATE INDEX idx_history ON ro_routes (history);
+```
+
+### Add indexes to audience targeting table
+
+Only if you use audience targeting: Improve performance of the `AudienceTargeting` table with additional indexes for the database:
+
+```sql
+CREATE INDEX idx_active ON `at_target_groups` (`active`);
 ```
 
 ## 2.4.4

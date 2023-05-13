@@ -123,11 +123,12 @@ class CollectionController extends AbstractRestController implements ClassResour
         if (!$this->collectionClass) {
             $this->collectionClass = CollectionEntity::class;
 
-            @\trigger_error(
+            @trigger_deprecation(
+                'sulu/sulu',
+                '2.1',
                 \sprintf(
                     'Omitting the "collectionClass" argument is deprecated and will not longer work in Sulu 3.0.'
-                ),
-                \E_USER_DEPRECATED
+                )
             );
         }
     }
@@ -315,7 +316,7 @@ class CollectionController extends AbstractRestController implements ClassResour
             try {
                 $this->collectionManager->delete($id);
             } catch (CollectionNotFoundException $cnf) {
-                throw new EntityNotFoundException(self::$entityName, $id); // will throw 404 Entity not found
+                throw new EntityNotFoundException(self::$entityName, $id, $cnf); // will throw 404 Entity not found
             }
         };
 

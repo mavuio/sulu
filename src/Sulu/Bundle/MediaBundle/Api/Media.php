@@ -30,6 +30,7 @@ use Sulu\Bundle\MediaBundle\Media\Exception\FileVersionNotFoundException;
 use Sulu\Bundle\TagBundle\Tag\TagInterface;
 use Sulu\Component\Rest\ApiWrapper;
 use Sulu\Component\Security\Authentication\UserInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * Class Media
@@ -113,7 +114,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("id")
      * @Groups({"partialMedia", "Default"})
      *
@@ -126,7 +126,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("locale")
      *
      * @return string
@@ -166,7 +165,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("collection")
      *
      * @return int
@@ -195,7 +193,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("size")
      *
      * @return int
@@ -219,10 +216,9 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("mimeType")
      *
-     * @return string
+     * @return string|null
      */
     public function getMimeType()
     {
@@ -251,7 +247,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("title")
      *
      * @return string|null
@@ -279,7 +274,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("description")
      *
      * @return string|null
@@ -309,7 +303,6 @@ class Media extends ApiWrapper
      * Returns copyright for media.
      *
      * @VirtualProperty
-     *
      * @SerializedName("copyright")
      *
      * @return string|null
@@ -341,7 +334,6 @@ class Media extends ApiWrapper
      * Returns copyright for media.
      *
      * @VirtualProperty
-     *
      * @SerializedName("credits")
      *
      * @return string|null
@@ -371,7 +363,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("version")
      *
      * @return int
@@ -383,7 +374,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("subVersion")
      *
      * @return int
@@ -415,7 +405,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("versions")
      *
      * @return array
@@ -458,7 +447,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("name")
      *
      * @return string
@@ -470,7 +458,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("type")
      *
      * @return MediaType
@@ -504,7 +491,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("isImage")
      *
      * @return bool
@@ -516,7 +502,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("isVideo")
      *
      * @return bool
@@ -528,7 +513,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("isAudio")
      *
      * @return bool
@@ -540,7 +524,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("isDocument")
      *
      * @return bool
@@ -552,7 +535,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("storageOptions")
      *
      * @return array
@@ -597,7 +579,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("publishLanguages")
      *
      * @return array
@@ -636,7 +617,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("contentLanguages")
      *
      * @return array
@@ -678,7 +658,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("tags")
      *
      * @return string[]
@@ -706,7 +685,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("thumbnails")
      *
      * @return array
@@ -726,7 +704,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("url")
      *
      * @return string
@@ -746,7 +723,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("adminUrl")
      *
      * @return string
@@ -786,7 +762,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("changed")
      *
      * @return \DateTime
@@ -810,7 +785,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("changer")
      *
      * @return string|null
@@ -827,7 +801,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("created")
      *
      * @return \DateTime
@@ -851,7 +824,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("creator")
      *
      * @return string|null
@@ -880,19 +852,23 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("properties")
      *
-     * @return array
+     * @return array|null
      */
     public function getProperties()
     {
-        return $this->getFileVersion()->getProperties();
+        $properties = $this->getFileVersion()->getProperties();
+        if (null === $properties) {
+            return null;
+        }
+        Assert::isArray($properties);
+
+        return $properties;
     }
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("downloadCounter")
      *
      * @return int
@@ -1055,7 +1031,6 @@ class Media extends ApiWrapper
      * Returns the categories of the media.
      *
      * @VirtualProperty
-     *
      * @SerializedName("categories")
      *
      * @return int[]
@@ -1101,7 +1076,6 @@ class Media extends ApiWrapper
      * Returns the target groups of the media.
      *
      * @VirtualProperty
-     *
      * @SerializedName("targetGroups")
      * @Groups({"fullMediaAudienceTargeting"})
      *
@@ -1122,10 +1096,9 @@ class Media extends ApiWrapper
      * Returns the x coordinate of the focus point.
      *
      * @VirtualProperty
-     *
      * @SerializedName("focusPointX")
      *
-     * @return int
+     * @return int|null
      */
     public function getFocusPointX()
     {
@@ -1146,10 +1119,9 @@ class Media extends ApiWrapper
      * Returns the y coordinate of the focus point.
      *
      * @VirtualProperty
-     *
      * @SerializedName("focusPointY")
      *
-     * @return int
+     * @return int|null
      */
     public function getFocusPointY()
     {
@@ -1168,7 +1140,6 @@ class Media extends ApiWrapper
 
     /**
      * @VirtualProperty
-     *
      * @SerializedName("previewImageId")
      *
      * @return ?int
