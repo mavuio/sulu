@@ -1,7 +1,15 @@
 import React from 'react';
-import { Input } from 'sulu-admin-bundle/components';
+import {
+    Input
+} from 'sulu-admin-bundle/components';
 
-import { toJS } from 'mobx';
+import {
+    toJS
+} from 'mobx';
+import {
+    observer
+} from 'mobx-react';
+
 
 // from: https://github.com/Rich-Harris/react-svelte/blob/master/index.js
 class SvelteComponent extends React.Component {
@@ -25,8 +33,6 @@ class SvelteComponent extends React.Component {
             target: this.container.current,
             props: data
         });
-
-          
     }
 
     componentDidUpdate() {
@@ -43,15 +49,14 @@ class SvelteComponent extends React.Component {
 }
 
 
-
-
-
+@observer
 class MavuSvelteField extends React.Component {
     handleInputChange = (newValue) => {
         this.props.onChange(newValue);
         this.props.onFinish();
     };
 
+    
 
     getCacheTimestamp() {
         return Math.floor(Date.now() / 1000 / 3600);
@@ -63,29 +68,39 @@ class MavuSvelteField extends React.Component {
             Widget: false
         };
 
-        const svelteModulePath=props.schemaOptions.svelteModulePath.value;
+        this.observePaths=null;
+
+        if(props.schemaOptions.observe.value) {
+            const json=props.schemaOptions.observe.value.replaceAll("'",'"');
+            this.observePaths=JSON.parse(json)
+        }
+
+
+        const svelteModulePath = props.schemaOptions.svelteModulePath.value;
         const ts = this.getCacheTimestamp();
-        const cssUrl=`${svelteModulePath}.css?${ts}`;
-        const jsUrl=`${svelteModulePath}.js?${ts}`;
+        const cssUrl = `${svelteModulePath}.css?${ts}`;
+        const jsUrl = `${svelteModulePath}.js?${ts}`;
 
         const cssPromise = this.loadCSS(cssUrl);
         const jsPromise = this.loadJS(jsUrl);
 
 
-        Promise.all([cssPromise, jsPromise]).then(([_,module]) => {
-             this.setState({Widget: module.default});
+        Promise.all([cssPromise, jsPromise]).then(([_, module]) => {
+            this.setState({
+                Widget: module.default
+            });
         });
 
     }
 
     loadJS(jsURL) {
-         return new Promise(function (resolve, reject) {
-               import(/* webpackIgnore: true */ jsURL)
+        return new Promise(function (resolve, reject) {
+            import( /* webpackIgnore: true */ jsURL)
                 .then((module) => {
                     resolve(module);
                 })
                 .catch((e) => {
-                    console.log('#log 3656  import rejected',jsURL,e);
+                    console.log('#log 3656  import rejected', jsURL, e);
                     reject()
                 })
         });
@@ -106,9 +121,9 @@ class MavuSvelteField extends React.Component {
         });
     }
 
-
-
-
+    resolvePath(object, path, defaultValue) {
+        return path.split('.').reduce((o, p) => o ? o[p] : defaultValue, object)
+    }
 
     render() {
         const {
@@ -116,16 +131,16 @@ class MavuSvelteField extends React.Component {
             disabled,
             name,
             error,
-            value
+            value,
+            data
         } = this.props;
-
-      
 
         if(!this.state.Widget)
         {
             return (<div>loading...</div>);
         } else {
 
+            this.observePaths.forEach(path => this.resolvePath(this.props,path,null) )
 
             return ( 
             <>
@@ -140,10 +155,8 @@ class MavuSvelteField extends React.Component {
             </>
             );
         }
+
     }
 }
 
 export default MavuSvelteField;
-
-
-
