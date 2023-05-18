@@ -897,7 +897,12 @@ class ContentMapper implements ContentMapperInterface
      */
     private function getPropertyData($document, LegacyProperty $property)
     {
-        return $document->getStructure()->getContentViewProperty($property->getName())->getValue();
+        //mavu 2023-05-18: added try-catch block here:
+        try {
+            return $document->getStructure()->getContentViewProperty($property->getName())->getValue();
+        } catch (\InvalidArgumentException $e) {
+            return '';
+        }
     }
 
     /**
