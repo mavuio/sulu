@@ -20,7 +20,6 @@ use Sulu\Bundle\CategoryBundle\Entity\CategoryTranslationInterface;
 use Sulu\Bundle\CoreBundle\Entity\ApiEntityWrapper;
 use Sulu\Bundle\MediaBundle\Api\Media;
 use Sulu\Bundle\MediaBundle\Entity\CollectionMeta;
-use Sulu\Bundle\SecurityBundle\Entity\User;
 use Sulu\Component\Security\Authentication\UserInterface;
 
 class Category extends ApiEntityWrapper
@@ -116,7 +115,7 @@ class Category extends ApiEntityWrapper
      * @SerializedName("medias")
      * @Groups({"fullCategory","partialCategory"})
      *
-     * @return string
+     * @return array{ids: array<int>}
      */
     public function getMediasRawData()
     {

@@ -88,7 +88,7 @@ class ContentRouteProvider implements RouteProviderInterface
         StructureManagerInterface $structureManager,
         WebspaceManagerInterface $webspaceManager,
         RequestAnalyzerInterface $requestAnalyzer,
-        SecurityCheckerInterface $securityChecker = null,
+        ?SecurityCheckerInterface $securityChecker = null,
         array $defaultOptions = []
     ) {
         $this->documentManager = $documentManager;
@@ -248,10 +248,15 @@ class ContentRouteProvider implements RouteProviderInterface
         } catch (ResourceLocatorNotFoundException $exc) {
             // just do not add any routes to the collection
         } catch (ResourceLocatorMovedException $exc) {
+            $url = $prefix . $exc->getNewResourceLocator();
+            if ($request->getQueryString()) {
+                $url .= '?' . $request->getQueryString();
+            }
+
             // old url resource was moved
             $collection->add(
                 $exc->getNewResourceLocatorUuid() . '_' . \uniqid(),
-                $this->getRedirectRoute($request, $prefix . $exc->getNewResourceLocator())
+                $this->getRedirectRoute($request, $url)
             );
         } catch (RepositoryException $exc) {
             // just do not add any routes to the collection
@@ -297,13 +302,18 @@ class ContentRouteProvider implements RouteProviderInterface
     {
         $requestFormat = $request->getRequestFormat(null);
         $formatSuffix = $requestFormat ? '.' . $requestFormat : '';
+        $urlParts = \explode('?', $url, 2);
+        $url = $urlParts[0] . $formatSuffix;
+        if ($urlParts[1] ?? null) {
+            $url .= '?' . $urlParts[1];
+        }
 
         // redirect to linked page
         return new Route(
             $this->decodePathInfo($request->getPathInfo()),
             [
                 '_controller' => 'sulu_website.redirect_controller::redirectAction',
-                'url' => $url . $formatSuffix,
+                'url' => $url,
             ],
             [],
             $this->defaultOptions

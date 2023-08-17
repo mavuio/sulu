@@ -65,8 +65,8 @@ class BlockContentType extends ComplexContentType implements ContentTypeExportIn
         ContentTypeManagerInterface $contentTypeManager,
         $languageNamespace,
         RequestAnalyzerInterface $requestAnalyzer,
-        TargetGroupStoreInterface $targetGroupStore = null,
-        iterable $blockVisitors = null
+        ?TargetGroupStoreInterface $targetGroupStore = null,
+        ?iterable $blockVisitors = null
     ) {
         $this->contentTypeManager = $contentTypeManager;
         $this->languageNamespace = $languageNamespace;
@@ -347,7 +347,7 @@ class BlockContentType extends ComplexContentType implements ContentTypeExportIn
         $languageCode,
         $segmentKey
     ) {
-        foreach ($node->getProperties($property->getName() . '-*')  as $nodeProperty) {
+        foreach ($node->getProperties($property->getName() . '-*') as $nodeProperty) {
             $node->getProperty($nodeProperty->getName())->remove();
         }
     }

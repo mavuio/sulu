@@ -908,6 +908,84 @@ class ContentRouteProviderTest extends TestCase
         $this->assertEquals('/de/new-test', $route->getDefaults()['url']);
     }
 
+    public function testGetCollectionMovedResourceLocatorWithQueryParameter(): void
+    {
+        $attributes = $this->prophesize(RequestAttributes::class);
+
+        $portal = new Portal();
+        $portal->setKey('portal');
+        $webspace = new Webspace();
+        $webspace->setKey('webspace');
+        $webspace->setTheme('theme');
+        $portal->setWebspace($webspace);
+        $attributes->getAttribute('portal', null)->willReturn($portal);
+
+        $localization = new Localization('de', 'at');
+        $attributes->getAttribute('localization', null)->willReturn($localization);
+        $attributes->getAttribute('matchType', null)->willReturn(RequestAnalyzer::MATCH_TYPE_FULL);
+
+        $attributes->getAttribute('resourceLocator', null)->willReturn('/qwertz/');
+        $attributes->getAttribute('resourceLocatorPrefix', null)->willReturn('/de');
+
+        $this->resourceLocatorStrategy->loadByResourceLocator('/qwertz', 'webspace', 'de_at')
+            ->willThrow(new ResourceLocatorMovedException('/new-test', '123-123-123'));
+
+        $request = new Request(
+            [], [], ['_sulu' => $attributes->reveal()], [], [], [
+                'REQUEST_URI' => \rawurlencode('/de/qwertz/'),
+                'QUERY_STRING' => 'q=search',
+            ]
+        );
+
+        // Test the route provider
+        $contentRouteProvider = $this->createContentRouteProvider();
+        $routes = $contentRouteProvider->getRouteCollectionForRequest($request);
+
+        $this->assertCount(1, $routes);
+        $route = $routes->getIterator()->current();
+        $this->assertEquals('sulu_website.redirect_controller::redirectAction', $route->getDefaults()['_controller']);
+        $this->assertEquals('/de/new-test?q=search', $route->getDefaults()['url']);
+    }
+
+    public function testGetCollectionMovedResourceLocatorWithQueryParameterAndFormat(): void
+    {
+        $attributes = $this->prophesize(RequestAttributes::class);
+
+        $portal = new Portal();
+        $portal->setKey('portal');
+        $webspace = new Webspace();
+        $webspace->setKey('webspace');
+        $webspace->setTheme('theme');
+        $portal->setWebspace($webspace);
+        $attributes->getAttribute('portal', null)->willReturn($portal);
+
+        $localization = new Localization('de', 'at');
+        $attributes->getAttribute('localization', null)->willReturn($localization);
+        $attributes->getAttribute('matchType', null)->willReturn(RequestAnalyzer::MATCH_TYPE_FULL);
+
+        $attributes->getAttribute('resourceLocator', null)->willReturn('/qwertz');
+        $attributes->getAttribute('resourceLocatorPrefix', null)->willReturn('/de');
+
+        $this->resourceLocatorStrategy->loadByResourceLocator('/qwertz', 'webspace', 'de_at')
+            ->willThrow(new ResourceLocatorMovedException('/new-test', '123-123-123'));
+
+        $request = new Request(
+            [], [], ['_sulu' => $attributes->reveal(), '_format' => 'json'], [], [], [
+                'REQUEST_URI' => \rawurlencode('/de/qwertz.json'),
+                'QUERY_STRING' => 'q=search',
+            ]
+        );
+
+        // Test the route provider
+        $contentRouteProvider = $this->createContentRouteProvider();
+        $routes = $contentRouteProvider->getRouteCollectionForRequest($request);
+
+        $this->assertCount(1, $routes);
+        $route = $routes->getIterator()->current();
+        $this->assertEquals('sulu_website.redirect_controller::redirectAction', $route->getDefaults()['_controller']);
+        $this->assertEquals('/de/new-test.json?q=search', $route->getDefaults()['url']);
+    }
+
     public function testGetCollectionForSingleLanguageRequestSlashOnly(): void
     {
         $attributes = $this->prophesize(RequestAttributes::class);
@@ -1204,7 +1282,7 @@ class ContentRouteProviderTest extends TestCase
         $this->assertCount(0, $routes);
     }
 
-    private function createContentRouteProvider(SecurityCheckerInterface $securityChecker = null): ContentRouteProvider
+    private function createContentRouteProvider(?SecurityCheckerInterface $securityChecker = null): ContentRouteProvider
     {
         return new ContentRouteProvider(
             $this->documentManager->reveal(),

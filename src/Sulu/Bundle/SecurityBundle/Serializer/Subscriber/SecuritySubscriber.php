@@ -19,7 +19,6 @@ use JMS\Serializer\Visitor\SerializationVisitorInterface;
 use Sulu\Bundle\PageBundle\Admin\PageAdmin;
 use Sulu\Component\Content\Document\Behavior\SecurityBehavior;
 use Sulu\Component\Content\Document\Behavior\WebspaceBehavior;
-use Sulu\Component\Content\Repository\Content;
 use Sulu\Component\DocumentManager\Behavior\Mapping\LocaleBehavior;
 use Sulu\Component\Security\Authentication\UserInterface;
 use Sulu\Component\Security\Authorization\AccessControl\AccessControlManagerInterface;
@@ -42,7 +41,7 @@ class SecuritySubscriber implements EventSubscriberInterface
 
     public function __construct(
         AccessControlManagerInterface $accessControlManager,
-        TokenStorageInterface $tokenStorage = null
+        ?TokenStorageInterface $tokenStorage = null
     ) {
         $this->accessControlManager = $accessControlManager;
         $this->tokenStorage = $tokenStorage;

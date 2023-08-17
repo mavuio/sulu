@@ -69,9 +69,9 @@ class CollectionRepository extends NestedTreeRepository implements CollectionRep
     public function findCollectionSet(
         $depth = 0,
         $filter = [],
-        CollectionInterface $collection = null,
+        ?CollectionInterface $collection = null,
         $sortBy = [],
-        UserInterface $user = null,
+        ?UserInterface $user = null,
         $permission = null
     ) {
         $ids = $this->getIdsQuery($depth, $filter, $sortBy, $collection)->getScalarResult();
@@ -124,7 +124,7 @@ class CollectionRepository extends NestedTreeRepository implements CollectionRep
         return $queryBuilder->getQuery()->getResult();
     }
 
-    public function countCollections($depth = 0, $filter = [], CollectionInterface $collection = null)
+    public function countCollections($depth = 0, $filter = [], ?CollectionInterface $collection = null)
     {
         $ids = $this->getIdsQuery($depth, $filter, [], $collection, 'DISTINCT collection.id')->getScalarResult();
 
@@ -147,7 +147,10 @@ class CollectionRepository extends NestedTreeRepository implements CollectionRep
             ->where('collection.id = :id')
             ->setParameter('id', $collection->getId());
 
-        return \intval($queryBuilder->getQuery()->getSingleScalarResult());
+        /** @var numeric-string $value */
+        $value = $queryBuilder->getQuery()->getSingleScalarResult();
+
+        return \intval($value);
     }
 
     public function countSubCollections(CollectionInterface $collection)
@@ -162,7 +165,10 @@ class CollectionRepository extends NestedTreeRepository implements CollectionRep
             ->where('collection.id = :id')
             ->setParameter('id', $collection->getId());
 
-        return \intval($queryBuilder->getQuery()->getSingleScalarResult());
+        /** @var numeric-string $value */
+        $value = $queryBuilder->getQuery()->getSingleScalarResult();
+
+        return \intval($value);
     }
 
     public function findCollections($filter = [], $limit = null, $offset = null, $sortBy = [])
@@ -293,6 +299,7 @@ class CollectionRepository extends NestedTreeRepository implements CollectionRep
             ->where('collection.id = :id')
             ->setParameter('id', $id);
 
+        /** @var string */
         return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 
@@ -311,7 +318,7 @@ class CollectionRepository extends NestedTreeRepository implements CollectionRep
         $depth = 0,
         $filter = [],
         $sortBy = [],
-        CollectionInterface $collection = null,
+        ?CollectionInterface $collection = null,
         $select = 'collection.id'
     ) {
         $queryBuilder = $this->createQueryBuilder('collection')
@@ -328,9 +335,9 @@ class CollectionRepository extends NestedTreeRepository implements CollectionRep
             $queryBuilder->setParameter('id', $collection->getId());
         }
 
-        if (\array_key_exists('search', $filter) && null !== $filter['search'] ||
-            \array_key_exists('locale', $filter) ||
-            \count($sortBy) > 0
+        if (\array_key_exists('search', $filter) && null !== $filter['search']
+            || \array_key_exists('locale', $filter)
+            || \count($sortBy) > 0
         ) {
             $queryBuilder->leftJoin('collection.meta', 'collectionMeta');
             $queryBuilder->leftJoin('collection.defaultMeta', 'defaultMeta');
@@ -402,9 +409,12 @@ class CollectionRepository extends NestedTreeRepository implements CollectionRep
             ->andWhere('subCollection.lft > collection.lft AND subCollection.rgt < collection.rgt')
             ->setParameter('id', $id);
 
+        /** @var array<array{id: numeric-string}> $result */
+        $result = $queryBuilder->getQuery()->getScalarResult();
+
         return \array_map(function($collection) {
             return (int) $collection['id'];
-        }, $queryBuilder->getQuery()->getScalarResult());
+        }, $result);
     }
 
     public function supportsDescendantType(string $type): bool
@@ -484,6 +494,7 @@ class CollectionRepository extends NestedTreeRepository implements CollectionRep
 
     public function countUnauthorizedDescendantCollections(int $ancestorId, UserInterface $user, int $permission): int
     {
+        /** @var int */
         return $this
             ->createUnauthorizedDescendantCollectionsQueryBuilder('collection', $ancestorId, $user, $permission)
             ->select('COUNT(collection.id)')

@@ -14,7 +14,6 @@ namespace Sulu\Bundle\MediaBundle\Controller;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use HandcraftedInTheAlps\RestRoutingBundle\Routing\ClassResourceInterface;
 use Sulu\Bundle\MediaBundle\Admin\MediaAdmin;
-use Sulu\Bundle\MediaBundle\Api\Collection;
 use Sulu\Bundle\MediaBundle\Api\RootCollection;
 use Sulu\Bundle\MediaBundle\Collection\Manager\CollectionManagerInterface;
 use Sulu\Bundle\MediaBundle\Entity\Collection as CollectionEntity;
@@ -107,7 +106,7 @@ class CollectionController extends AbstractRestController implements ClassResour
         CollectionManagerInterface $collectionManager,
         array $defaultCollectionType,
         array $permissions,
-        string $collectionClass = null
+        ?string $collectionClass = null
     ) {
         parent::__construct($viewHandler, $tokenStorage);
 
@@ -415,8 +414,8 @@ class CollectionController extends AbstractRestController implements ClassResour
 
     private function checkSystemCollection($id, $parent)
     {
-        if ((null !== $id && $this->systemCollectionManager->isSystemCollection(\intval($id))) ||
-            (null !== $parent && $this->systemCollectionManager->isSystemCollection(\intval($parent)))
+        if ((null !== $id && $this->systemCollectionManager->isSystemCollection(\intval($id)))
+            || (null !== $parent && $this->systemCollectionManager->isSystemCollection(\intval($parent)))
         ) {
             throw new AccessDeniedException('Permission "update" or "create" is not granted for system collections');
         }

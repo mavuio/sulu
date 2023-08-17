@@ -189,19 +189,19 @@ class WorkflowStageSubscriber implements EventSubscriberInterface
     private function setNodeWorkflowStageToTestForCopy(NodeInterface $node)
     {
         $workflowStageNameFilter = $this->propertyEncoder->localizedSystemName(self::WORKFLOW_STAGE_FIELD, '*');
+        /** @var PropertyInterface<mixed> $property */
         foreach ($node->getProperties($workflowStageNameFilter) as $property) {
-            /* @var PropertyInterface $property */
             $property->setValue(WorkflowStage::TEST);
         }
 
         $publishedNameFilter = $this->propertyEncoder->localizedSystemName(self::PUBLISHED_FIELD, '*');
+        /** @var PropertyInterface<mixed> $property */
         foreach ($node->getProperties($publishedNameFilter) as $property) {
-            /* @var PropertyInterface $property */
             $property->setValue(null);
         }
 
+        /** @var NodeInterface<mixed> $node */
         foreach ($node->getNodes() as $node) {
-            /* @var NodeInterface $node */
             $this->setNodeWorkflowStageToTestForCopy($node);
         }
     }
@@ -260,7 +260,7 @@ class WorkflowStageSubscriber implements EventSubscriberInterface
      * @param int $workflowStage
      * @param \DateTime $publishDate
      */
-    private function setWorkflowStageOnNode(NodeInterface $node, $locale, $workflowStage, \DateTime $publishDate = null)
+    private function setWorkflowStageOnNode(NodeInterface $node, $locale, $workflowStage, ?\DateTime $publishDate = null)
     {
         $node->setProperty(
             $this->propertyEncoder->localizedSystemName(self::WORKFLOW_STAGE_FIELD, $locale),

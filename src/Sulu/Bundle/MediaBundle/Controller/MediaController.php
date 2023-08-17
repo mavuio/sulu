@@ -17,7 +17,6 @@ use HandcraftedInTheAlps\RestRoutingBundle\Routing\ClassResourceInterface;
 use Sulu\Bundle\MediaBundle\Admin\MediaAdmin;
 use Sulu\Bundle\MediaBundle\Entity\Collection;
 use Sulu\Bundle\MediaBundle\Entity\CollectionRepositoryInterface;
-use Sulu\Bundle\MediaBundle\Entity\Media;
 use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
 use Sulu\Bundle\MediaBundle\Media\Exception\CollectionNotFoundException;
 use Sulu\Bundle\MediaBundle\Media\Exception\MediaNotFoundException;
@@ -144,8 +143,8 @@ class MediaController extends AbstractMediaController implements
         FieldDescriptorFactoryInterface $fieldDescriptorFactory,
         string $mediaClass,
         string $collectionClass,
-        MediaListBuilderFactory $mediaListBuilderFactory = null,
-        MediaListRepresentationFactory $mediaListRepresentationFactory = null
+        ?MediaListBuilderFactory $mediaListBuilderFactory = null,
+        ?MediaListRepresentationFactory $mediaListRepresentationFactory = null
     ) {
         parent::__construct($viewHandler, $tokenStorage);
 

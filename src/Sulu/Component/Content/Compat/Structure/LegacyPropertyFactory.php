@@ -23,7 +23,6 @@ use Sulu\Component\Content\Compat\StructureInterface;
 use Sulu\Component\Content\Mapper\Translation\TranslatedProperty;
 use Sulu\Component\Content\Metadata\BlockMetadata;
 use Sulu\Component\Content\Metadata\ItemMetadata;
-use Sulu\Component\Content\Metadata\Property;
 use Sulu\Component\Content\Metadata\PropertyMetadata;
 use Sulu\Component\Content\Metadata\SectionMetadata;
 use Sulu\Component\DocumentManager\NamespaceRegistry;
@@ -50,7 +49,7 @@ class LegacyPropertyFactory
      *
      * @return PropertyInterface
      */
-    public function createTranslatedProperty($property, $locale, StructureInterface $structure = null)
+    public function createTranslatedProperty($property, $locale, ?StructureInterface $structure = null)
     {
         if ($property instanceof ItemMetadata) {
             $property = $this->createProperty($property, $structure);
@@ -69,7 +68,7 @@ class LegacyPropertyFactory
      *
      * @return PropertyInterface $property
      */
-    public function createProperty(ItemMetadata $property, StructureInterface $structure = null)
+    public function createProperty(ItemMetadata $property, ?StructureInterface $structure = null)
     {
         if ($property instanceof SectionMetadata) {
             return $this->createSectionProperty($property, $structure);
@@ -156,7 +155,7 @@ class LegacyPropertyFactory
         return $parameters;
     }
 
-    private function createSectionProperty(SectionMetadata $property, StructureInterface $structure = null)
+    private function createSectionProperty(SectionMetadata $property, ?StructureInterface $structure = null)
     {
         $sectionProperty = new SectionProperty(
             $property->getName(),
@@ -174,7 +173,7 @@ class LegacyPropertyFactory
         return $sectionProperty;
     }
 
-    private function createBlockProperty(BlockMetadata $property, StructureInterface $structure = null)
+    private function createBlockProperty(BlockMetadata $property, ?StructureInterface $structure = null)
     {
         $blockProperty = new BlockProperty(
             $property->getName(),

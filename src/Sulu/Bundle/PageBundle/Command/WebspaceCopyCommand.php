@@ -17,6 +17,7 @@ use Sulu\Bundle\MarkupBundle\Markup\TagMatchGroup;
 use Sulu\Bundle\PageBundle\Document\BasePageDocument;
 use Sulu\Bundle\PageBundle\Document\HomeDocument;
 use Sulu\Bundle\PageBundle\Document\PageDocument;
+use Sulu\Bundle\PageBundle\EventListener\PageRemoveSubscriber;
 use Sulu\Component\Content\Compat\PropertyParameter;
 use Sulu\Component\Content\Document\LocalizationState;
 use Sulu\Component\Content\Document\RedirectType;
@@ -210,7 +211,9 @@ class WebspaceCopyCommand extends Command
         );
         foreach ($homeDocument->getChildren() as $child) {
             $this->output->writeln('<info>Processing: </info>' . $child->getPath());
-            $this->documentManager->remove($child);
+            $this->documentManager->remove($child, [
+                PageRemoveSubscriber::FORCE_REMOVE_CHILDREN_OPTION => true,
+            ]);
             $this->documentManager->flush();
         }
     }
@@ -289,7 +292,7 @@ class WebspaceCopyCommand extends Command
      */
     protected function recursiveCopy(
         BasePageDocument $documentSource,
-        BasePageDocument $parentDocumentDestination = null,
+        ?BasePageDocument $parentDocumentDestination = null,
         $localeDestination
     ) {
         if (LocalizationState::GHOST === $this->documentInspector->getLocalizationState($documentSource)) {
