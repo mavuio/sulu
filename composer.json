@@ -58,7 +58,7 @@
         "scheb/2fa-trusted-device": "^6.1",
         "scienta/doctrine-json-functions": "~4.3",
         "sulu/form-bundle": "^2.5",
-        "sulu/sulu": "dev-2.5dev#v2.5.9 as 2.5.9",
+        "sulu/sulu": "dev-2.5dev#v2.5.10 as 2.5.10",
         "sulu/sulu-rector": "^0.1.2",
         "sulu/web-twig": "^2.5",
         "symfony/config": "^6.2",
@@ -155,7 +155,8 @@
             "symfony/flex": true,
             "symfony/runtime": true,
             "symfony/thanks": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "php-http/discovery": true
         },
         "optimize-autoloader": true,
         "sort-packages": true
