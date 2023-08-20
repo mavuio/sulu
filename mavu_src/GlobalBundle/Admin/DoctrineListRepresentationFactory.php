@@ -61,7 +61,7 @@ class DoctrineListRepresentationFactory
             if ($key == "blockType") {
                 $listBuilder->where($fieldDescriptors[$key], $value, 'LIKE');
                 // hide default-styles
-                $listBuilder->where($fieldDescriptors['name'], 'Default Style for %', 'NOT LIKE');
+                $listBuilder->where($fieldDescriptors['slug'], '%-default', 'NOT LIKE');
                 // $listBuilder->where($fieldDescriptors[$key], 'common','LIKE');
 
             } else {

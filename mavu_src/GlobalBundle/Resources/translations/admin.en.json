@@ -1,3 +1,4 @@
 {
-    "mavu_global.customizable_error": "{customMessage}"
+    "mavu_global.customizable_error": "{customMessage}",
+    "mavu.global.tab_teaserdata": "Teaser-Data"
 }

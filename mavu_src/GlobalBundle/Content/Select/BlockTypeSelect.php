@@ -22,6 +22,8 @@ class BlockTypeSelect
             ['name' => 'expander', 'title' => 'expander', 'defaultClasses' => 'c1:pb-8 c1:pt-4 c1:pl-8'],
             ['name' => 'section', 'title' => 'section', 'defaultClasses' => ''],
             ['name' => 'headline', 'title' => 'Headline (standalone)', 'defaultClasses' => ''],
+            ['name' => 'boxes', 'title' => 'boxes', 'defaultClasses' => ''],
+
             // [ 'name'=>'common', 'title'=>'common'],
         ];
     }

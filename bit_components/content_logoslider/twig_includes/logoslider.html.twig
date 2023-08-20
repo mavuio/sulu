@@ -1,0 +1,32 @@
+{% set swiper_conf = {  autoplay: { delay: 3000 , pauseOnMouseEnter: true , disableOnInteraction: false}, loop: true} %}
+
+{% extends ['@bit_component_overrides/content_logoslider/twig_includes/logoslider_override.html.twig','@bit_components/content_logoslider/twig_includes/no_override.html.twig'] %}
+
+{% block content  %}
+	<div class="ce ce-{{block.type}} c0  {{block | extract_classes('') }}">
+
+		<div x-data="loadComponent('Swiper', {{ swiper_conf | json_encode}})" class="swiper">
+
+			<div class="swiper-wrapper">
+				{% for item in block.items %}
+					{% if item.link %}
+						{% set block_view =  mavu_get_by_path(block_views,item.path) %}
+						<a class="swiper-slide" href="{{ item.link }}" {%- if block_view.link.target ?? false -%} target="{{block_view.link.target}}" {%- endif -%} {%- if block_view.link.title ?? false -%} title="{{block_view.link.title}}" {%- endif -%}>
+						{% else %}
+							<div class="swiper-slide">
+							{% endif %}
+
+							<img src="{{ item.image.thumbnails[item.image_format|default('original') ~ "_web"] }}" class="object-contain w-full h-full" {%- if item.title ?? false -%} title="{{item.title}}" {%- endif -%}>
+
+							{% if item.link %}
+							</a>
+					{% else %}
+						</div>
+					{% endif %}
+
+				{% endfor %}
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

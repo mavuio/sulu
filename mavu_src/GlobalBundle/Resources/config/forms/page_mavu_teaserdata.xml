@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<form xmlns="http://schemas.sulu.io/template/template"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/form-1.0.xsd">
+    <key>page_mavu_teaserdata</key>
+
+    <properties>
+
+        <property name="currentTab" type="mavu_svelte_field">
+            <params>
+                <param name="svelteModulePath" value="/be_assets/teaserdata_preview" />
+                <param name="observe" value="['data.ext.mavu_teaserdata']" />
+            </params>
+        </property>
+
+        <property name="ext/mavu_teaserdata/title" type="text_line">
+            <meta>
+                <title>Teaser-Title</title>
+                <info_text>you can use '~' to insert conditional breaks in the title</info_text>
+            </meta>
+            <params>
+                <param name="soft_max_length" value="80" />
+            </params>
+        </property>
+
+        <property name="ext/mavu_teaserdata/text" type="text_area">
+            <meta>
+                <title>Text</title>
+                                <info_text>you can use '~' to insert conditional breaks in the text</info_text>
+
+            </meta>
+            <params>
+                <param name="soft_max_length" value="300" />
+            </params>
+        </property>
+
+        <property name="ext/mavu_teaserdata/image" type="single_media_selection">
+            <meta>
+                <title>OG: Image</title>
+                <info_text>
+                    Format min: 1200x630px, max: 2400x1260px
+                </info_text>
+            </meta>
+            <params>
+                <param name="types" value="image"/>
+            </params>
+        </property>
+
+
+    </properties>
+</form>

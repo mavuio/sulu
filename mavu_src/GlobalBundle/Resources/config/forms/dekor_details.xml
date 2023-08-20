@@ -42,10 +42,14 @@
         </property>
 
 
-        <property name="rawCss" type="text_area"  colspan="12" visibleCondition="__parent.useRawCss == true">
+        <property name="rawCss" type="mavu_svelte_field"  colspan="12" visibleCondition="__parent.useRawCss == true">
             <meta>
                 <title>raw CSS (PostCSS Format)</title>
             </meta>
+            <params>
+                <param name="svelteModulePath" value="/be_assets/codearea" />
+            </params>
+
         </property>
 
          

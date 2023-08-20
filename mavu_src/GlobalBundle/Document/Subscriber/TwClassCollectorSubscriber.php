@@ -179,8 +179,6 @@ class TwClassCollectorSubscriber implements EventSubscriberInterface
         DocumentAccessor $accessor,
         $classes
     ) {
-
-
         $encoding = $this->getPropertyEncoding($document);
         // $accessor->set(self::TW_CLASSES, "DUMMY CLASSES");
         $node->setProperty(

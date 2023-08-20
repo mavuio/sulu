@@ -223,6 +223,7 @@ class JsonImportCore
         try {
             $page = $this->documentManager->find('/cmf/mainsite/contents' . $url);
             $data = $page->getStructure()->toArray();
+            $data['type'] = $page->getStructureType();
             if ($withExtensions) {
                 $data['extensions'] = $page->getExtensionsData()->toArray();
             }
@@ -259,11 +260,11 @@ class JsonImportCore
 
         $pageDocument->setNavigationContexts($data['navigationContexts'] ?? ["main"]);
         $pageDocument->setLocale($locale);
+
         if (array_key_exists('title', $data)) {
             $pageDocument->setTitle($data['title']);
         }
         $pageDocument->setResourceSegment($data['url']);
-        $pageDocument->setStructureType('default');
         $pageDocument->setWorkflowStage(WorkflowStage::PUBLISHED);
         if (array_key_exists('blocks', $data)) {
             $pageDocument->getStructure()->bind($data);
@@ -275,8 +276,9 @@ class JsonImportCore
 
         if (array_key_exists('type', $data)) {
             $pageDocument->setStructureType($data['type']);
+        } else {
+            $pageDocument->setStructureType('default');
         }
-
 
 
         $this->documentManager->persist(
