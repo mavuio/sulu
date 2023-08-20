@@ -68,12 +68,12 @@ class MavuSvelteField extends React.Component {
             Widget: false
         };
 
-        this.observePaths=null;
+        // this.observePaths=null;
 
-        if(props.schemaOptions.observe.value) {
-            const json=props.schemaOptions.observe.value.replaceAll("'",'"');
-            this.observePaths=JSON.parse(json)
-        }
+        // if(props.schemaOptions.observe.value) {
+        //     const json=props.schemaOptions.observe.value.replaceAll("'",'"');
+        //     this.observePaths=JSON.parse(json)
+        // }
 
 
         const svelteModulePath = props.schemaOptions.svelteModulePath.value;
@@ -121,9 +121,9 @@ class MavuSvelteField extends React.Component {
         });
     }
 
-    resolvePath(object, path, defaultValue) {
-        return path.split('.').reduce((o, p) => o ? o[p] : defaultValue, object)
-    }
+    // resolvePath(object, path, defaultValue) {
+    //     return path.split('.').reduce((o, p) => o ? o[p] : defaultValue, object)
+    // }
 
     render() {
         const {
@@ -140,7 +140,7 @@ class MavuSvelteField extends React.Component {
             return (<div>loading...</div>);
         } else {
 
-            this.observePaths.forEach(path => this.resolvePath(this.props,path,null) )
+            // this.observePaths.forEach(path => this.resolvePath(this.props,path,null) )
 
             return ( 
             <>
