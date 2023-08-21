@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8cc086d4cddaf49941d0e098ac5706d",
+    "content-hash": "66844112e7f9232c6d63bb4271431311",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -12186,23 +12186,21 @@
         },
         {
             "name": "tarsana/functional",
-            "version": "2.2.2",
+            "version": "dev-tarsana_custom",
             "source": {
                 "type": "git",
-                "url": "https://github.com/tarsana/functional.git",
-                "reference": "77ab9cbe8e44865edb686c07cc0848d8a950ed19"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tarsana/functional/zipball/77ab9cbe8e44865edb686c07cc0848d8a950ed19",
-                "reference": "77ab9cbe8e44865edb686c07cc0848d8a950ed19",
-                "shasum": ""
+                "url": "https://github.com/mavuio/tarsana_functional",
+                "reference": "baf0595d71f137026c5469876d3445fd44f6264e"
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "autoload": {
+                "psr-4": {
+                    "Tarsana\\Functional\\": "src/Classes/",
+                    "Tarsana\\UnitTests\\Functional\\": "tests/"
+                },
                 "files": [
                     "src/Internal/_functions.php",
                     "src/Internal/_stream.php",
@@ -12213,13 +12211,8 @@
                     "src/string.php",
                     "src/list.php",
                     "src/math.php"
-                ],
-                "psr-4": {
-                    "Tarsana\\Functional\\": "src/Classes/",
-                    "Tarsana\\UnitTests\\Functional\\": "tests/"
-                }
+                ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -12230,11 +12223,7 @@
                 }
             ],
             "description": "functional programming library for PHP",
-            "support": {
-                "issues": "https://github.com/tarsana/functional/issues",
-                "source": "https://github.com/tarsana/functional/tree/master"
-            },
-            "time": "2018-07-21T01:02:03+00:00"
+            "time": "2023-08-21T13:51:53+00:00"
         },
         {
             "name": "toflar/psr6-symfony-http-cache-store",
@@ -15889,11 +15878,18 @@
             "version": "dev-2.5dev",
             "alias": "2.5.10",
             "alias_normalized": "2.5.10.0"
+        },
+        {
+            "package": "tarsana/functional",
+            "version": "dev-tarsana_custom",
+            "alias": "2.2.3",
+            "alias_normalized": "2.2.3.0"
         }
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "sulu/sulu": 20
+        "sulu/sulu": 20,
+        "tarsana/functional": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
