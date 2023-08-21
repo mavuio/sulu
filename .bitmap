@@ -17,7 +17,7 @@
     },
     "global_bundle": {
         "scope": "mavuio.mavu_sulu",
-        "version": "0.0.3",
+        "version": "0.0.1",
         "mainFile": "_bit_index.js",
         "rootDir": "mavu_src/GlobalBundle"
     },

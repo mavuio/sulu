@@ -13,7 +13,6 @@ use Mavu\GlobalBundle\Core\TwClassesCore;
 use Mavu\GlobalBundle\Core\JsonImportCore;
 use Mavu\GlobalBundle\Form\Types\DateType;
 use Mavu\GlobalBundle\Twig\TransExtension;
-use Mavu\GlobalBundle\Twig\AccessorExtension;
 use Mavu\GlobalBundle\Twig\FindIconExtension;
 use Mavu\GlobalBundle\Twig\FindPageExtension;
 use Mavu\GlobalBundle\Core\InformationProvider;
@@ -21,7 +20,6 @@ use Mavu\GlobalBundle\Twig\BlockPathsExtension;
 use Mavu\GlobalBundle\Twig\DecodeJsonExtension;
 use Mavu\GlobalBundle\Admin\MavuTeaserdataAdmin;
 use Symfony\Cmf\Api\Slugifier\SlugifierInterface;
-use Mavu\GlobalBundle\Twig\ComponentConfExtension;
 use Mavu\GlobalBundle\Content\Types\DekorSelection;
 use Mavu\GlobalBundle\Content\Types\MavuSvelteField;
 use Mavu\GlobalBundle\Twig\MergedMediaMetaExtension;
@@ -38,7 +36,6 @@ use Mavu\GlobalBundle\Admin\DoctrineListRepresentationFactory;
 use Mavu\GlobalBundle\Document\Subscriber\TeaserDataSubscriber;
 use Sulu\Bundle\DocumentManagerBundle\Bridge\DocumentInspector;
 use Mavu\GlobalBundle\Structure\MavuTeaserdataStructureExtension;
-
 use Mavu\GlobalBundle\Document\Subscriber\TwClassCollectorSubscriber;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\expr;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -87,13 +84,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->tag('twig.extension');
 
     $services->set(BlockPathsExtension::class)
-        ->tag('twig.extension');
-
-    $services->set(AccessorExtension::class)
-        ->tag('twig.extension');
-
-
-    $services->set(ComponentConfExtension::class)
         ->tag('twig.extension');
 
     $services->set(DecodeJsonExtension::class)
