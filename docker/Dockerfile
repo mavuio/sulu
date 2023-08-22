@@ -22,13 +22,15 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
  && apt-get clean \
  && node -v
 
+RUN npm install -g pnpm
+
 COPY docker/s6-overlay/s6-rc.d/pnpm_updates /etc/s6-overlay/s6-rc.d/pnpm_updates
 COPY docker/s6-overlay/s6-rc.d/user/contents.d/pnpm_updates /etc/s6-overlay/s6-rc.d/user/contents.d/pnpm_updates
 COPY docker/s6-overlay/scripts/pnpm_update.sh /etc/s6-overlay/scripts/pnpm_update.sh
 
 COPY docker/php.ini /etc/php/8.2/cli/conf.d/custom.ini
 
+COPY . /var/www/html
 
 
-RUN npm install -g pnpm
 
