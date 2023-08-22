@@ -7,6 +7,11 @@ ENV PHP_MEMORY_LIMIT="1024M"
 ENV SSL_MODE="off"
 ENV PHP_SESSION_COOKIE_SECURE=0
 
+ENV NPM_BINARY="/usr/bin/pnpm"
+ENV DUMMY_API_KEY="loremipsum"
+ENV MAILER_DSN="smtp://190548mail2:max.tost.drosten.maui@smtp.easyname.com:465"
+
+
 
 # Install PHP Imagemagick using regular Ubuntu commands
 RUN apt-get update \
@@ -39,6 +44,7 @@ COPY docker/s6-overlay/scripts/setup_datadir.sh /etc/s6-overlay/scripts/setup_da
 
 
 COPY docker/php.ini /etc/php/8.2/cli/conf.d/custom.ini
+
 
 WORKDIR /var/www/html 
 COPY . .
