@@ -1,0 +1,2 @@
+foreground { echo "Calling setup_datadir.sh..." }
+/etc/s6-overlay/scripts/setup_datadir.sh
