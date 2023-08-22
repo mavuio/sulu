@@ -1,0 +1,2 @@
+foreground { echo "Calling pnpm_update.sh..." }
+/etc/s6-overlay/scripts/pnpm_update.sh

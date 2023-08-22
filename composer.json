@@ -22,19 +22,14 @@
         "docs": "http://docs.sulu.io/",
         "chat": "https://sulu.io/services-and-support#chat"
     },
-    "repositories": [{
-            "type": "path",
-            "url": "/www/sulu",
-            "options": {
-                "versions": {
-                    "sulu/sulu": "dev-2.5.4local"
-                }
-            },
-            "canonical": false
-        },
+    "repositories": [
         {
             "type": "git",
             "url": "https://github.com/mavuio/sulu"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/mavuio/tarsana_functional"
         }
     ],
     "require": {
@@ -73,7 +68,7 @@
         "symfony/runtime": "^6.2",
         "symfony/security-bundle": "^6.2",
         "symfony/twig-bundle": "^6.2",
-        "tarsana/functional": "^2.2",
+        "tarsana/functional": "dev-tarsana_custom as 2.2.3",
         "twig/extra-bundle": "^3.3",
         "twig/intl-extra": "^3.3"
     },

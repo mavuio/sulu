@@ -7,7 +7,7 @@ framework:
     # Remove or comment this section to explicitly disable session support.
     session:
         handler_id: ~
-        cookie_secure: auto
+        cookie_secure: false
         cookie_samesite: lax
         name: SULUSESSID # This avoids conflicts with other applications running on the same domain
 
