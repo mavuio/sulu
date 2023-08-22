@@ -65,7 +65,7 @@ class BlockPathsExtension extends AbstractExtension
         if (is_array($content)) {
             foreach ($content as $idx => &$item) {
                 $item['path'] = $path . "[{$idx}]";
-                foreach (["maincol", "leftcol", "middlecol", "rightcol"] as $fieldname) {
+                foreach (["maincol", "leftcol", "middlecol", "rightcol", "items"] as $fieldname) {
                     if (array_key_exists($fieldname, $item)) {
                         $this->recursiveAddPathsInPlace($item[$fieldname], $item['path'] . "[{$fieldname}]");
                     }

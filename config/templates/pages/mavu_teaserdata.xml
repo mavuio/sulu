@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+
+<template xmlns="http://schemas.sulu.io/template/template"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+
+    <key>mavu_teaserdata</key>
+
+    <controller>not in use</controller>
+    <view>not in use</view>
+    <cacheLifetime>1</cacheLifetime>
+    <internal>true</internal>
+
+    <properties>
+
+        <property name="title" type="text_line">
+            <meta>
+                <title>Teaser-Title</title>
+            </meta>
+        </property>
+
+        <property name="text" type="text_area">
+            <meta>
+                <title>Text</title>
+            </meta>
+        </property>
+
+        <property name="image" type="single_media_selection">
+            <meta>
+                <title>Image</title>
+            </meta>
+        </property>
+
+        <property name="auto_text" type="text_area">
+            <meta>
+                <title>Auto: Text</title>
+            </meta>
+        </property>
+
+        <property name="auto_image" type="single_media_selection">
+            <meta>
+                <title>Auto: Image</title>
+            </meta>
+        </property>
+
+    </properties>
+</template>
