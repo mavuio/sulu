@@ -5,9 +5,9 @@ set -e
 
 echo "UPDATING PNPM..."
 cd /var/www/html/fe_assets 
-pnpm install
+CI=1 pnpm install
 cd /var/www/html/fe_assets2 
-pnpm install
+CI=1 pnpm install
 echo "UPDATING PNPM... done"
 
 exit 0

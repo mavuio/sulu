@@ -33,9 +33,16 @@ COPY docker/s6-overlay/s6-rc.d/pnpm_updates /etc/s6-overlay/s6-rc.d/pnpm_updates
 COPY docker/s6-overlay/s6-rc.d/user/contents.d/pnpm_updates /etc/s6-overlay/s6-rc.d/user/contents.d/pnpm_updates
 COPY docker/s6-overlay/scripts/pnpm_update.sh /etc/s6-overlay/scripts/pnpm_update.sh
 
+COPY docker/s6-overlay/s6-rc.d/setup_datadir /etc/s6-overlay/s6-rc.d/setup_datadir
+COPY docker/s6-overlay/s6-rc.d/user/contents.d/setup_datadir /etc/s6-overlay/s6-rc.d/user/contents.d/setup_datadir
+COPY docker/s6-overlay/scripts/setup_datadir.sh /etc/s6-overlay/scripts/setup_datadir.sh
+
+
 COPY docker/php.ini /etc/php/8.2/cli/conf.d/custom.ini
 
-COPY . /var/www/html
+WORKDIR /var/www/html 
+COPY . .
+RUN composer install --no-scripts --no-progress
 
 
 

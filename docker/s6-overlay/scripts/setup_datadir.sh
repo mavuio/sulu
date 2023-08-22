@@ -3,10 +3,11 @@
 # Exit on error
 set -e
 
-cd /var/www/html/data
-mkdir data/var
-mkdir data/vendor
-mkdir data/public/uploads
-mkdir data/public/fe_assets2
+echo "SETUP DATA-DIR"
+
+cd /var/www/html
+mkdir -p data/var
+mkdir -p data/public/uploads
+mkdir -p data/public/fe_assets2
 
 exit 0
