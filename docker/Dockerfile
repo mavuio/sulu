@@ -48,7 +48,6 @@ COPY docker/php.ini /etc/php/8.2/cli/conf.d/custom.ini
 
 WORKDIR /var/www/html 
 COPY . .
-RUN composer install --no-scripts --no-progress
 
 
 
