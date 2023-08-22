@@ -3,6 +3,11 @@ FROM serversideup/php:8.2-fpm-nginx
 
 ENV NODE_VERSION="16"
 
+ENV PHP_MEMORY_LIMIT="1024M"
+ENV SSL_MODE="off"
+ENV PHP_SESSION_COOKIE_SECURE=0
+
+
 # Install PHP Imagemagick using regular Ubuntu commands
 RUN apt-get update \
     && apt-get install -y --no-install-recommends php8.2-imagick \
