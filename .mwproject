@@ -1,3 +1,2 @@
-MW_TARGET=manfred@reference_sulu.mavu.io:/var/www/reference_sulu/
-
+MW_TARGET="docker;root@dokku1.mavu.io;reference-sulu.web.1:/var/www/html"
 
