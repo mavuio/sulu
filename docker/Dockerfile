@@ -7,6 +7,7 @@ ENV PHP_MEMORY_LIMIT="1024M"
 ENV SSL_MODE="off"
 ENV PHP_SESSION_COOKIE_SECURE=0
 
+ENV PHP_OPEN_BASEDIR="/var/www:/dev/stdout:/tmp"
 ENV NPM_BINARY="/usr/bin/pnpm"
 ENV DUMMY_API_KEY="loremipsum"
 ENV MAILER_DSN="smtp://190548mail2:max.tost.drosten.maui@smtp.easyname.com:465"

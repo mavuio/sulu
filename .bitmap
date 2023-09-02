@@ -15,6 +15,12 @@
         "mainFile": "_bit_index.js",
         "rootDir": "bit_components/content_logoslider"
     },
+    "docker": {
+        "scope": "mavuio.mavu_sulu",
+        "version": "0.0.1",
+        "mainFile": "_bit_index.js",
+        "rootDir": "docker"
+    },
     "global_bundle": {
         "scope": "mavuio.mavu_sulu",
         "version": "0.0.3",

@@ -26,7 +26,7 @@ l[1] = lib.addRow(l[0]);
 
 [
     ['cd /www/reference_sulu', "fswatch -o /www/reference_sulu/mavu_src /www/reference_sulu/templates  /www/reference_sulu/public/be_assets  /www/reference_sulu/public/fe_assets  | xargs -n1 -I {} osascript -e 'tell application \"Vivaldi Snapshot\" to tell the active tab of its first window to reload' "],
-    ['cd /www/reference_sulu', 'git status', 'sleep 3;echo https://reference_sulu.mavu.io.test'],
+    ['cd /www/reference_sulu', 'git status', 'sleep 3;echo https://sulu_reference_docker.mavu.io.test/admin/'],
     ['cd /www/reference_sulu', 'ssh  -t manfred@test.reference_sulu.mavu.io', 'cd /var/www/reference_sulu/']
 
 ].reduce(lib.sendCmds, r);
