@@ -19,7 +19,7 @@ use Sulu\Component\Webspace\Analyzer\RequestAnalyzerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
 /**
  * Basic class to render Website from phpcr content.
@@ -55,10 +55,7 @@ abstract class WebsiteController extends AbstractController
         $viewTemplate = $structure->getView() . '.' . $requestFormat . '.twig';
 
         if (!$this->container->get('twig')->getLoader()->exists($viewTemplate)) {
-            throw new HttpException(
-                406,
-                \sprintf('Page does not exist in "%s" format.', $requestFormat)
-            );
+            throw new NotAcceptableHttpException(\sprintf('Page does not exist in "%s" format.', $requestFormat));
         }
 
         // get attributes to render template
@@ -66,7 +63,7 @@ abstract class WebsiteController extends AbstractController
 
         // if partial render only content block else full page
         if ($partial) {
-            $content = $this->renderBlock(
+            $content = $this->renderBlockView(
                 $viewTemplate,
                 'content',
                 $data
@@ -121,19 +118,23 @@ abstract class WebsiteController extends AbstractController
 
     /**
      * Returns rendered part of template specified by block.
+     *
+     * @param string $view
+     * @param string $block
+     * @param array<string, mixed> $parameters
      */
-    protected function renderBlock($template, $block, $attributes = [])
+    protected function renderBlockView($view, $block, $parameters = []): string
     {
         $twig = $this->container->get('twig');
-        $attributes = $twig->mergeGlobals($attributes);
+        $parameters = $twig->mergeGlobals($parameters);
 
-        $template = $twig->load($template);
+        $template = $twig->load($view);
 
         $level = \ob_get_level();
         \ob_start();
 
         try {
-            $rendered = $template->renderBlock($block, $attributes);
+            $rendered = $template->renderBlock($block, $parameters);
             \ob_end_clean();
 
             return $rendered;

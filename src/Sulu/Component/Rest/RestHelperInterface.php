@@ -21,6 +21,8 @@ interface RestHelperInterface
      *
      * @param ListBuilderInterface $listBuilder The ListBuilder to initialize
      * @param FieldDescriptorInterface[] $fieldDescriptors The FieldDescriptors available for this object type
+     *
+     * @return void
      */
     public function initializeListBuilder(ListBuilderInterface $listBuilder, array $fieldDescriptors);
 
@@ -31,9 +33,6 @@ interface RestHelperInterface
      * @param \Traversable $entities The list of entities to work on
      * @param array $requestEntities The entities as retrieved from the request
      * @param callable $get The
-     * @param callable $add
-     * @param callable $update
-     * @param callable $delete
      *
      * @return bool
      */

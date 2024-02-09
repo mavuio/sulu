@@ -1,5 +1,13 @@
 # Upgrade
 
+## 2.5.11
+
+### Rename WebsiteController::renderBlock to WebsiteController::renderBlockView
+
+In Symfony 6.4, an independent `renderBlock` method was introduced to its `AbstractController`.
+This change poses issues for projects upgrading to Symfony 6.4, as the `renderBlock` method in Sulu is incompatible with Symfony's `renderBlock` method.
+To address this issue, we have to rename the Sulu `renderBlock` method to `renderBlockView`.
+
 ## 2.5.7
 
 ### Constructor of ValidateWebspacesCommand changed
@@ -346,6 +354,14 @@ framework:
 
 It should also be considered to remove the **SwiftMailer** and **SwiftMailerBundle**
 from your application and replace it with [**Symfony Mailer**](https://symfony.com/doc/6.1/mailer.html).
+
+## 2.4.15
+
+### Remove Node 12 Support for Custm Admin Builds
+
+Changes in the JS ecosystem not longer allows us to test Sulu Admin
+against Node 12. With this release so Sulu custom build may not longer
+work on Node 12, we recommend updating your CI to atleast Node 14.
 
 ## 2.4.6
 
