@@ -572,6 +572,28 @@ class ContentMapper implements ContentMapperInterface
         $siblingDocuments = $this->inspector->getChildren($parentDocument);
 
         $siblings = \array_values($siblingDocuments->toArray()); // get indexed array
+
+        // mavu/mwuits 2024-02-13: sort the siblings by sulu:order
+
+        \usort($siblings, function($a, $b) {
+            // Compare $a and $b
+            $ao = $a->getSuluOrder();
+            $bo = $b->getSuluOrder();
+
+            // Return -1 if $a is less than $b
+            // Return 1 if $a is greater than $b
+            // Return 0 if they are equal
+
+            if ($ao == $bo) {
+                return 0;
+            }
+            if ($ao < $bo) {
+                return -1;
+            }
+
+            return 1;
+        });
+
         $countSiblings = \count($siblings);
         $currentPosition = \array_search($document, $siblings) + 1;
 
