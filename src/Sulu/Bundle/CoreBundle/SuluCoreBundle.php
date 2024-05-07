@@ -12,7 +12,6 @@
 namespace Sulu\Bundle\CoreBundle;
 
 use Sulu\Bundle\CoreBundle\DependencyInjection\Compiler\CsvHandlerCompilerPass;
-use Sulu\Bundle\CoreBundle\DependencyInjection\Compiler\JmsObjectConstructorCompilerPass;
 use Sulu\Bundle\CoreBundle\DependencyInjection\Compiler\ListBuilderMetadataProviderCompilerPass;
 use Sulu\Bundle\CoreBundle\DependencyInjection\Compiler\RegisterContentTypesCompilerPass;
 use Sulu\Bundle\CoreBundle\DependencyInjection\Compiler\RegisterLocalizationProvidersPass;
@@ -23,9 +22,15 @@ use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * @final
+ */
 class SuluCoreBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    /**
+     * @internal
+     */
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
@@ -49,7 +54,5 @@ class SuluCoreBundle extends Bundle
                 'alias'
             )
         );
-
-        $container->addCompilerPass(new JmsObjectConstructorCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1024);
     }
 }

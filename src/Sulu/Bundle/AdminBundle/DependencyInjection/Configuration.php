@@ -21,14 +21,8 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * @var bool
-     */
-    private $debug;
-
-    public function __construct(bool $debug)
+    public function __construct(private bool $debug)
     {
-        $this->debug = $debug;
     }
 
     public function getConfigTreeBuilder(): TreeBuilder
@@ -45,6 +39,12 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->children()
                             ->arrayNode('routes')
+                                ->children()
+                                    ->scalarNode('list')->end()
+                                    ->scalarNode('detail')->end()
+                                ->end()
+                            ->end()
+                            ->arrayNode('views')
                                 ->children()
                                     ->scalarNode('list')->end()
                                     ->scalarNode('detail')->end()

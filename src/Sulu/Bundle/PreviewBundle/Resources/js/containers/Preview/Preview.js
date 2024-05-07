@@ -163,6 +163,13 @@ class Preview extends React.Component<Props> {
             formStore,
         } = this.props;
 
+        this.localeDisposer = reaction(
+            () => toJS(formStore.locale),
+            (locale) => {
+                this.previewStore.restart(locale);
+            }
+        );
+
         if (previewStore.resourceKey !== formStore.resourceKey) {
             return;
         }
@@ -170,6 +177,10 @@ class Preview extends React.Component<Props> {
         this.dataDisposer = reaction(
             () => toJS(formStore.data),
             (data) => {
+                if (this.iframeRef === null && !this.previewWindow) {
+                    return;
+                }
+
                 this.updatePreview(data);
             }
         );
@@ -182,17 +193,10 @@ class Preview extends React.Component<Props> {
                 }
             }
         );
-
-        this.localeDisposer = reaction(
-            () => toJS(formStore.locale),
-            () => {
-                this.previewStore.restart();
-            }
-        );
     };
 
     updatePreview = debounce((data: Object) => {
-        if (this.shouldUpdateFormStore) {
+        if (this.shouldUpdateFormStore && !!this.previewStore.token) {
             const {previewStore} = this;
             previewStore.update(data).then(this.setContent);
         }
@@ -200,19 +204,18 @@ class Preview extends React.Component<Props> {
 
     setContent = (previewContent: string) => {
         const previewDocument = this.getPreviewDocument();
-
         if (!previewDocument) {
             return;
         }
 
         const preservedScrollPosition = this.getPreviewScrollPosition();
-
         previewDocument.open(); // This will lose in Firefox the and safari previewDocument.location
         previewDocument.write(previewContent);
         previewDocument.close();
 
-        setTimeout(() => this.setPreviewScrollPosition(preservedScrollPosition), 100);
-
+        if (preservedScrollPosition) {
+            setTimeout(() => this.setPreviewScrollPosition(preservedScrollPosition), 0);
+        }
     };
 
     componentWillUnmount() {
@@ -252,8 +255,7 @@ class Preview extends React.Component<Props> {
         return this.iframeRef.contentDocument;
     };
 
-
-    getPreviewWindow = (): ?Window => {
+    getPreviewWindow = (): ?any => {
         if (this.previewWindow) {
             return this.previewWindow;
         }
@@ -265,20 +267,21 @@ class Preview extends React.Component<Props> {
         return this.iframeRef.contentWindow;
     };
 
-    getPreviewScrollPosition = ()  => {
-        const win = this.getPreviewWindow();
-        if(win) {
-            return win.document.documentElement.scrollTop || win.pageYOffset || win.document.body.scrollTop;
+    getPreviewScrollPosition = (): ?number => {
+        const previewWindow = this.getPreviewWindow();
+        if (previewWindow) {
+            return previewWindow.document?.documentElement?.scrollTop
+                || previewWindow.pageYOffset
+                || previewWindow.document?.body?.scrollTop;
         }
     };
 
-    setPreviewScrollPosition = (pos)  => {
-        const win = this.getPreviewWindow();
-        if(win) {
-            win.scrollTo({ top: pos});
+    setPreviewScrollPosition = (pos) => {
+        const previewWindow = this.getPreviewWindow();
+        if (previewWindow) {
+            previewWindow.scrollTo({top: pos});
         }
-    }
-
+    };
 
     @action setIframe = (iframeRef: ?Object) => {
         this.iframeRef = iframeRef;

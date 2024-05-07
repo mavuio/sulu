@@ -11,24 +11,18 @@
 
 namespace Sulu\Bundle\AdminBundle\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'sulu:admin:info')]
 class InfoCommand extends Command
 {
-    protected static $defaultName = 'sulu:admin:info';
-
-    /**
-     * @var string string
-     */
-    private $suluVersion;
-
-    public function __construct(string $suluVersion)
+    public function __construct(private string $suluVersion)
     {
         parent::__construct();
-        $this->suluVersion = $suluVersion;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

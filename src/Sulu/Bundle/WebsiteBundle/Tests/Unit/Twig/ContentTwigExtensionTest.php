@@ -130,14 +130,10 @@ class ContentTwigExtensionTest extends TestCase
         $this->webspace->getKey()
             ->willReturn('sulu_test');
 
-        $locale = new Localization();
-        $locale->setCountry('us');
-        $locale->setLanguage('en');
-
         $this->webspaceManager->findWebspaceByKey('sulu_test')->willReturn($this->webspace->reveal());
 
         $this->requestAnalyzer->getWebspace()->willReturn($this->webspace->reveal());
-        $this->requestAnalyzer->getCurrentLocalization()->willReturn($locale);
+        $this->requestAnalyzer->getCurrentLocalization()->willReturn(new Localization('en', 'us'));
 
         $this->sessionManager->getSession()->willReturn($this->session->reveal());
         $this->sessionManager->getContentNode('sulu_test')->willReturn($this->startPageNode->reveal());
@@ -161,7 +157,9 @@ class ContentTwigExtensionTest extends TestCase
             $this->requestAnalyzer->reveal(),
             $this->logger->reveal(),
             $this->securityChecker->reveal(),
-            $this->webspaceManager->reveal()
+            $this->webspaceManager->reveal(),
+            null,
+            []
         );
     }
 
@@ -597,6 +595,134 @@ class ContentTwigExtensionTest extends TestCase
                 'content' => [
                     'myTemplateProperty' => 'content',
                     'excerptTitle' => 'test-title',
+                ],
+            ],
+            $result
+        );
+    }
+
+    public function testLoadWithEnabledUrlsAttribute(): void
+    {
+        $this->extension = new ContentTwigExtension(
+            $this->contentMapper->reveal(),
+            $this->structureResolver->reveal(),
+            $this->sessionManager->reveal(),
+            $this->requestAnalyzer->reveal(),
+            $this->logger->reveal(),
+            $this->securityChecker->reveal(),
+            $this->webspaceManager->reveal(),
+            null,
+            ['urls' => true]
+        );
+
+        $pageDocument = $this->prophesize(WebspaceBehavior::class);
+        $pageDocument->willImplement(SecurityBehavior::class);
+
+        $testStructure = $this->prophesize(StructureBridge::class);
+        $testStructure->getDocument()->willReturn($pageDocument);
+        $testStructure->getWebspaceKey()->willReturn('sulu_test');
+
+        $this->webspace->getSecurity()->willReturn(null)->shouldBeCalled();
+        $this->webspace->hasWebsiteSecurity()->willReturn(false)->shouldBeCalled();
+
+        $this->contentMapper->load('123-123-123', 'sulu_test', 'en_us')->willReturn($testStructure->reveal());
+
+        $this->structureResolver->resolve(
+            $testStructure->reveal(),
+            false,
+            ['property-1', 'invalid-property-name']
+        )->willReturn([
+            'id' => 'some-uuid',
+            'template' => 'test',
+            'view' => [
+                'property-1' => 'view',
+            ],
+            'content' => [
+                'property-1' => 'content',
+            ],
+            'urls' => [
+                'en' => '/english-url',
+                'de' => '/german-url',
+            ],
+        ])->shouldBeCalled();
+
+        $result = $this->extension->load('123-123-123', ['property-1', 'invalid-property-name']);
+
+        $this->assertSame(
+            [
+                'id' => 'some-uuid',
+                'template' => 'test',
+                'view' => [
+                    'property-1' => 'view',
+                ],
+                'content' => [
+                    'property-1' => 'content',
+                ],
+                'urls' => [
+                    'en' => '/english-url',
+                    'de' => '/german-url',
+                ],
+            ],
+            $result
+        );
+    }
+
+    public function testLoadWithDisabledUrlsAttribute(): void
+    {
+        $this->extension = new ContentTwigExtension(
+            $this->contentMapper->reveal(),
+            $this->structureResolver->reveal(),
+            $this->sessionManager->reveal(),
+            $this->requestAnalyzer->reveal(),
+            $this->logger->reveal(),
+            $this->securityChecker->reveal(),
+            $this->webspaceManager->reveal(),
+            null,
+            ['urls' => false]
+        );
+
+        $pageDocument = $this->prophesize(WebspaceBehavior::class);
+        $pageDocument->willImplement(SecurityBehavior::class);
+
+        $testStructure = $this->prophesize(StructureBridge::class);
+        $testStructure->getDocument()->willReturn($pageDocument);
+        $testStructure->getWebspaceKey()->willReturn('sulu_test');
+
+        $this->webspace->getSecurity()->willReturn(null)->shouldBeCalled();
+        $this->webspace->hasWebsiteSecurity()->willReturn(false)->shouldBeCalled();
+
+        $this->contentMapper->load('123-123-123', 'sulu_test', 'en_us')->willReturn($testStructure->reveal());
+
+        $this->structureResolver->resolve(
+            $testStructure->reveal(),
+            false,
+            ['property-1', 'invalid-property-name']
+        )->willReturn([
+            'id' => 'some-uuid',
+            'template' => 'test',
+            'view' => [
+                'property-1' => 'view',
+            ],
+            'content' => [
+                'property-1' => 'content',
+            ],
+            'urls' => [
+                'en' => '/english-url',
+                'de' => '/german-url',
+            ],
+        ])->shouldBeCalled();
+
+        $result = $this->extension->load('123-123-123', ['property-1', 'invalid-property-name']);
+
+        $this->assertSame(
+            [
+                'id' => 'some-uuid',
+                'template' => 'test',
+                'view' => [
+                    'property-1' => 'view',
+                ],
+                'content' => [
+                    'property-1' => 'content',
                 ],
             ],
             $result

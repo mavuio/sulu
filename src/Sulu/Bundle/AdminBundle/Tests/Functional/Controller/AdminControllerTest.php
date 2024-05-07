@@ -40,15 +40,15 @@ class AdminControllerTest extends SuluTestCase
 
         $response = \json_decode($this->client->getResponse()->getContent() ?: '');
 
-        $this->assertObjectHasAttribute('sulu_admin', $response);
-        $this->assertObjectHasAttribute('navigation', $response->sulu_admin);
-        $this->assertObjectHasAttribute('resources', $response->sulu_admin);
-        $this->assertObjectHasAttribute('routes', $response->sulu_admin);
-        $this->assertObjectHasAttribute('fieldTypeOptions', $response->sulu_admin);
+        $this->assertTrue(\property_exists($response, 'sulu_admin'));
+        $this->assertTrue(\property_exists($response->sulu_admin, 'navigation'));
+        $this->assertTrue(\property_exists($response->sulu_admin, 'resources'));
+        $this->assertTrue(\property_exists($response->sulu_admin, 'routes'));
+        $this->assertTrue(\property_exists($response->sulu_admin, 'fieldTypeOptions'));
         $this->assertIsArray($response->sulu_admin->navigation);
         $this->assertIsArray($response->sulu_admin->routes);
         $this->assertIsObject($response->sulu_admin->resources);
-        $this->assertObjectHasAttribute('sulu_preview', $response);
+        $this->assertTrue(\property_exists($response, 'sulu_preview'));
 
         $this->assertEquals('en', $response->sulu_admin->localizations[0]->localization);
         $this->assertEquals('en_us', $response->sulu_admin->localizations[1]->localization);
@@ -71,15 +71,15 @@ class AdminControllerTest extends SuluTestCase
 
         $response = \json_decode($this->client->getResponse()->getContent() ?: '');
 
-        $this->assertObjectHasAttribute('sulu_admin', $response);
-        $this->assertObjectHasAttribute('navigation', $response->sulu_admin);
-        $this->assertObjectHasAttribute('resources', $response->sulu_admin);
-        $this->assertObjectHasAttribute('routes', $response->sulu_admin);
-        $this->assertObjectHasAttribute('fieldTypeOptions', $response->sulu_admin);
+        $this->assertTrue(\property_exists($response, 'sulu_admin'));
+        $this->assertTrue(\property_exists($response->sulu_admin, 'navigation'));
+        $this->assertTrue(\property_exists($response->sulu_admin, 'resources'));
+        $this->assertTrue(\property_exists($response->sulu_admin, 'routes'));
+        $this->assertTrue(\property_exists($response->sulu_admin, 'fieldTypeOptions'));
         $this->assertIsArray($response->sulu_admin->navigation);
         $this->assertIsArray($response->sulu_admin->routes);
         $this->assertIsObject($response->sulu_admin->resources);
-        $this->assertObjectHasAttribute('sulu_preview', $response);
+        $this->assertTrue(\property_exists($response, 'sulu_preview'));
 
         $this->assertEquals('en', $response->sulu_admin->localizations[0]->localization);
         $this->assertEquals('en_us', $response->sulu_admin->localizations[1]->localization);
@@ -93,7 +93,7 @@ class AdminControllerTest extends SuluTestCase
         $collectionType = new LoadCollectionTypes();
         $collectionType->load($this->getEntityManager());
 
-        $this->client->request('GET', '/admin/');
+        $crawler = $this->client->request('GET', '/admin/');
 
         $response = $this->client->getResponse();
         $this->assertHttpStatusCode(200, $response);
@@ -101,14 +101,14 @@ class AdminControllerTest extends SuluTestCase
         $this->assertIsString($html);
 
         // extract json from html
-        $html = \explode('SULU_CONFIG = Object.freeze(', $html, 2)[1] ?? null;
-        $this->assertIsString($html, 'Could not extract "Sulu_CONFIG" from response object.');
-        $json = \explode(');', $html, 2)[0] ?? null;
-        $this->assertIsString($json, 'Could not find end of "SULU_CONFIG" in the response content.');
-        $config = \json_decode($json, true);
+        $applicationElement = $crawler->filter('#application')->first();
+        $this->assertEquals(1, $applicationElement->count(), 'Failed getting the application element');
+        $configJson = $applicationElement->attr('data-config');
+        $this->assertIsString($configJson, 'Failed to retrieve the configuration json');
+        $config = \json_decode($configJson, true);
 
         // test config object
-        $this->assertIsArray($config, 'Extracted "SULU_CONFIG" is not a valid json object.');
+        $this->assertIsArray($config, 'Extracted config is not a valid json object.');
         $this->assertSame([
             'initialLoginState' => true,
             'translations' => [
@@ -127,11 +127,13 @@ class AdminControllerTest extends SuluTestCase
                 'translations' => '/admin/translations',
                 'generateUrl' => '/admin/api/resourcelocators?action=generate',
                 'routing' => '/admin/js/routing',
+                'has_single_sign_on' => false,
             ],
             'suluVersion' => '_._._',
             'appVersion' => null,
             'passwordPattern' => null,
             'passwordInfoTranslationKey' => null,
+            'hasSingleSignOn' => false,
         ], $config);
     }
 

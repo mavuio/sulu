@@ -11,6 +11,7 @@
 
 namespace Sulu\Bundle\AdminBundle\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,28 +21,12 @@ use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\Process\Process;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+#[AsCommand(name: 'sulu:admin:update-build', description: 'Updates the administration application JavaScript build by downloading the official build from the sulu/skeleton repository or building the assets via npm.')]
 class UpdateBuildCommand extends Command
 {
     public const EXIT_CODE_ABORTED_MANUAL_BUILD = 1;
     public const EXIT_CODE_COULD_NOT_INSTALL_NPM_PACKAGES = 2;
     public const EXIT_CODE_COULD_NOT_BUILD_ADMIN_ASSETS = 3;
-
-    protected static $defaultName = 'sulu:admin:update-build';
-
-    /**
-     * @var HttpClientInterface
-     */
-    private $httpClient;
-
-    /**
-     * @var string
-     */
-    private $projectDir;
-
-    /**
-     * @var string
-     */
-    private $suluVersion;
 
     public const ASSETS_DIR = \DIRECTORY_SEPARATOR . 'assets' . \DIRECTORY_SEPARATOR . 'admin' . \DIRECTORY_SEPARATOR;
 
@@ -51,21 +36,12 @@ class UpdateBuildCommand extends Command
 
     public const VERSION_REGEX = '/^\d+\.\d+\.\d+(-(alpha|beta|RC)\d+)?$/';
 
-    public function __construct(HttpClientInterface $httpClient, string $projectDir, string $suluVersion)
-    {
+    public function __construct(
+        private HttpClientInterface $httpClient,
+        private string $projectDir,
+        private string $suluVersion,
+    ) {
         parent::__construct();
-
-        $this->httpClient = $httpClient;
-        $this->projectDir = $projectDir;
-        $this->suluVersion = $suluVersion;
-    }
-
-    protected function configure()
-    {
-        $this->setDescription(
-            'Updates the administration application JavaScript build by downloading the official build '
-            . 'from the sulu/skeleton repository or building the assets via npm.'
-        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -357,7 +333,9 @@ class UpdateBuildCommand extends Command
     {
         $filesToCleanup = [
             'package-lock.json',
+            'bun.lockb',
             'yarn.lock',
+            'pnpm-lock.yaml',
             'node_modules',
         ];
 

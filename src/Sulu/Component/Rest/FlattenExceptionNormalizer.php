@@ -15,7 +15,6 @@ use Sulu\Component\Rest\Exception\ReferencingResourcesFoundExceptionInterface;
 use Sulu\Component\Rest\Exception\RemoveDependantResourcesFoundExceptionInterface;
 use Sulu\Component\Rest\Exception\TranslationErrorMessageExceptionInterface;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
-use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -43,9 +42,19 @@ class FlattenExceptionNormalizer implements ContextAwareNormalizerInterface
     }
 
     /**
+     * @return array<class-string, bool>
+     */
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            FlattenException::class => false,
+        ];
+    }
+
+    /**
      * @return array<int|string, mixed>
      */
-    public function normalize($exception, $format = null, array $context = [])
+    public function normalize($exception, $format = null, array $context = []): array
     {
         /** @var array<int|string, mixed> $data */
         $data = $this->decoratedNormalizer->normalize($exception, $format, $context);

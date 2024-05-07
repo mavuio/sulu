@@ -32,6 +32,7 @@ use Sulu\Component\Content\ContentTypeManager;
 use Sulu\Component\Content\ContentTypeManagerInterface;
 use Sulu\Component\Content\Document\Behavior\ExtensionBehavior;
 use Sulu\Component\Content\Document\Behavior\LocalizedAuthorBehavior;
+use Sulu\Component\Content\Document\Behavior\LocalizedLastModifiedBehavior;
 use Sulu\Component\Content\Document\Behavior\OrderBehavior;
 use Sulu\Component\Content\Document\Behavior\RedirectTypeBehavior;
 use Sulu\Component\Content\Document\Behavior\ResourceSegmentBehavior;
@@ -60,9 +61,10 @@ use Sulu\Component\DocumentManager\NamespaceRegistry;
 use Sulu\Component\PHPCR\SessionManager\SessionManagerInterface;
 use Sulu\Component\Security\Authorization\AccessControl\AccessControlManagerInterface;
 use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\Security as SymfonyCoreSecurity;
 
 /**
  * Maps content nodes to phpcr nodes with content types and provides utility function to handle content nodes.
@@ -147,7 +149,7 @@ class ContentMapper implements ContentMapperInterface
     private $permissions;
 
     /**
-     * @var ?Security
+     * @var Security|SymfonyCoreSecurity|null
      */
     private $security;
 
@@ -166,7 +168,7 @@ class ContentMapper implements ContentMapperInterface
         NamespaceRegistry $namespaceRegistry,
         AccessControlManagerInterface $accessControlManager,
         $permissions,
-        ?Security $security = null
+        Security|SymfonyCoreSecurity|null $security = null
     ) {
         $this->contentTypeManager = $contentTypeManager;
         $this->structureManager = $structureManager;
@@ -828,6 +830,10 @@ class ContentMapper implements ContentMapperInterface
         if (isset($url)) {
             $documentData['url'] = $url;
             $documentData['urls'] = $this->inspector->getLocalizedUrlsForPage($document);
+        }
+
+        if ($document instanceof LocalizedLastModifiedBehavior) {
+            $documentData['lastModified'] = $document->getLastModified();
         }
 
         if ($document instanceof LocalizedAuthorBehavior) {

@@ -62,6 +62,7 @@ class StructureXmlLoader extends AbstractLoader
         'navContexts',
         'shadow-on',
         'shadow-base',
+        'lastModified',
         'author',
         'authored',
         'type',
@@ -137,7 +138,7 @@ class StructureXmlLoader extends AbstractLoader
     /**
      * @param string $resource
      */
-    public function load($resource, $type = null)
+    public function load($resource, $type = null): StructureMetadata
     {
         if (null === $type) {
             $type = 'page';

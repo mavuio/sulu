@@ -22,6 +22,7 @@ class CategoryRepository extends NestedTreeRepository implements CategoryReposit
 {
     public function createNew()
     {
+        /** @var class-string<CategoryInterface> */
         $className = $this->getClassName();
 
         return new $className();
@@ -218,7 +219,7 @@ class CategoryRepository extends NestedTreeRepository implements CategoryReposit
         @trigger_deprecation('sulu/sulu', '1.4', __METHOD__ . '() is deprecated and will be removed in 2.0. Use findChildrenCategoriesByParentKey() instead.');
 
         $queryBuilder = $this->getCategoryQuery()
-            ->from('SuluCategoryBundle:Category', 'parent')
+            ->from(\Sulu\Bundle\CategoryBundle\Entity\Category::class, 'parent')
             ->andWhere('parent.key = :key')
             ->andWhere('category.parent = parent');
 
@@ -230,6 +231,7 @@ class CategoryRepository extends NestedTreeRepository implements CategoryReposit
         $query = $queryBuilder->getQuery();
         $query->setParameter('key', $key);
 
+        /** @var CategoryInterface[] */
         return $query->getResult();
     }
 

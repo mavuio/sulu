@@ -11,6 +11,7 @@
 
 namespace Sulu\Bundle\AdminBundle\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,43 +21,24 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+#[AsCommand(name: 'sulu:admin:download-language', description: 'Downloads the currently approved translations for the given language.')]
 class DownloadLanguageCommand extends Command
 {
-    protected static $defaultName = 'sulu:admin:download-language';
-
     /**
-     * @var HttpClientInterface
+     * @param array<string> $defaultLanguages
      */
-    private $httpClient;
-
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var string
-     */
-    private $projectDir;
-
-    /**
-     * @var string[]
-     */
-    private $defaultLanguages;
-
-    public function __construct(HttpClientInterface $httpClient, Filesystem $filesystem, string $projectDir, array $defaultLanguages)
-    {
-        $this->httpClient = $httpClient;
-        $this->filesystem = $filesystem;
-        $this->projectDir = $projectDir;
-        $this->defaultLanguages = $defaultLanguages;
+    public function __construct(
+        private HttpClientInterface $httpClient,
+        private Filesystem $filesystem,
+        private string $projectDir,
+        private array $defaultLanguages,
+    ) {
         parent::__construct();
     }
 
     protected function configure()
     {
-        $this->setDescription('Downloads the currently approved translations for the given language.')
-            ->addArgument('languages', InputArgument::IS_ARRAY, 'The languages to download', $this->defaultLanguages)
+        $this->addArgument('languages', InputArgument::IS_ARRAY, 'The languages to download', $this->defaultLanguages)
             ->addOption(
                 'translation-endpoint',
                 null,

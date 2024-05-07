@@ -118,9 +118,17 @@ class PageTreeRouteContentType extends SimpleContentType
             ];
         }
 
-        $page = $this->getAttribute('page', $value, ['uuid' => null, 'path' => '/']);
+        // Fallback for string value, because the ArticleBundle had a bug where only the route path was saved and not all neccassary values.
+        // https://github.com/sulu/SuluArticleBundle/pull/658
+        $pageDefault = ['uuid' => null, 'path' => '/'];
+        if (\is_array($value)) {
+            $page = $this->getAttribute('page', $value, $pageDefault) ?? $pageDefault;
+            $suffix = $this->getAttribute('suffix', $value);
+        } else {
+            $page = $pageDefault;
+            $suffix = null;
+        }
 
-        $suffix = $this->getAttribute('suffix', $value);
         if (!$suffix) {
             $suffix = $this->generateSuffix($node, $languageCode);
         } else {
@@ -136,18 +144,22 @@ class PageTreeRouteContentType extends SimpleContentType
         $node->setProperty($propertyName . '-suffix', $suffix);
 
         $pagePropertyName = $propertyName . '-page';
-        if ($node->hasProperty($pagePropertyName)) {
-            $node->getProperty($pagePropertyName)->remove();
-        }
-
+        $pagePathPropertyName = $pagePropertyName . '-path';
         if (!$page['uuid']) {
+            if ($node->hasProperty($pagePropertyName)) {
+                $node->getProperty($pagePropertyName)->remove();
+            }
+            if ($node->hasProperty($pagePathPropertyName)) {
+                $node->getProperty($pagePathPropertyName)->remove();
+            }
+
             // no parent-page given
 
             return;
         }
 
         $node->setProperty($pagePropertyName, $page['uuid']);
-        $node->setProperty($pagePropertyName . '-path', $page['path']);
+        $node->setProperty($pagePathPropertyName, $page['path']);
     }
 
     public function getContentData(PropertyInterface $property)

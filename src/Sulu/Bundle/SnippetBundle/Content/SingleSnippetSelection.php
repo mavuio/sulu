@@ -11,6 +11,9 @@
 
 namespace Sulu\Bundle\SnippetBundle\Content;
 
+use Sulu\Bundle\ReferenceBundle\Application\Collector\ReferenceCollectorInterface;
+use Sulu\Bundle\ReferenceBundle\Infrastructure\Sulu\ContentType\ReferenceContentTypeInterface;
+use Sulu\Bundle\SnippetBundle\Document\SnippetDocument;
 use Sulu\Bundle\SnippetBundle\Snippet\DefaultSnippetManagerInterface;
 use Sulu\Bundle\SnippetBundle\Snippet\SnippetResolverInterface;
 use Sulu\Bundle\SnippetBundle\Snippet\WrongSnippetTypeException;
@@ -20,7 +23,7 @@ use Sulu\Component\Content\Compat\Structure\PageBridge;
 use Sulu\Component\Content\PreResolvableContentTypeInterface;
 use Sulu\Component\Content\SimpleContentType;
 
-class SingleSnippetSelection extends SimpleContentType implements PreResolvableContentTypeInterface
+class SingleSnippetSelection extends SimpleContentType implements PreResolvableContentTypeInterface, ReferenceContentTypeInterface
 {
     /**
      * @var SnippetResolverInterface
@@ -37,14 +40,29 @@ class SingleSnippetSelection extends SimpleContentType implements PreResolvableC
      */
     private $snippetReferenceStore;
 
+    /**
+     * @var ReferenceStoreInterface|null
+     */
+    private $snippetAreaReferenceStore;
+
     public function __construct(
         SnippetResolverInterface $snippetResolver,
         DefaultSnippetManagerInterface $defaultSnippetManager,
-        ReferenceStoreInterface $snippetReferenceStore
+        ReferenceStoreInterface $snippetReferenceStore,
+        ?ReferenceStoreInterface $snippetAreaReferenceStore = null
     ) {
         $this->snippetResolver = $snippetResolver;
         $this->defaultSnippetManager = $defaultSnippetManager;
         $this->snippetReferenceStore = $snippetReferenceStore;
+        $this->snippetAreaReferenceStore = $snippetAreaReferenceStore;
+
+        if (null === $this->snippetAreaReferenceStore) {
+            @trigger_deprecation(
+                'sulu/sulu',
+                '2.6',
+                'Instantiating the SingleSnippetSelection without the $snippetAreaReferenceStore argument is deprecated!'
+            );
+        }
 
         parent::__construct('SingleSnippetSelection', null);
     }
@@ -123,10 +141,25 @@ class SingleSnippetSelection extends SimpleContentType implements PreResolvableC
     {
         try {
             $snippet = $this->defaultSnippetManager->load($webspaceKey, $snippetArea, $locale);
+            $this->snippetAreaReferenceStore?->add($snippetArea);
         } catch (WrongSnippetTypeException $exception) {
             return null;
         }
 
         return $snippet ? $snippet->getUuid() : null;
+    }
+
+    public function getReferences(PropertyInterface $property, ReferenceCollectorInterface $referenceCollector, string $propertyPrefix = ''): void
+    {
+        $data = $property->getValue();
+        if (!\is_string($data)) {
+            return;
+        }
+
+        $referenceCollector->addReference(
+            SnippetDocument::RESOURCE_KEY,
+            $data,
+            $propertyPrefix . $property->getName()
+        );
     }
 }

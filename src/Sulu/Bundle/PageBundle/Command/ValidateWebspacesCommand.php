@@ -20,16 +20,16 @@ use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
 use Sulu\Component\Webspace\StructureProvider\WebspaceStructureProvider;
 use Sulu\Component\Webspace\Webspace;
 use Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
 
+#[AsCommand(name: 'sulu:content:validate:webspaces', description: 'Dumps webspaces and will show an error when template could not be loaded')]
 class ValidateWebspacesCommand extends Command
 {
-    protected static $defaultName = 'sulu:content:validate:webspaces';
-
     /**
      * @var OutputInterface
      */
@@ -95,11 +95,6 @@ class ValidateWebspacesCommand extends Command
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    protected function configure()
-    {
-        $this->setDescription('Dumps webspaces and will show an error when template could not be loaded');
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->output = $output;
@@ -111,8 +106,8 @@ class ValidateWebspacesCommand extends Command
 
         foreach ($webspaces as $webspace) {
             $this->eventDispatcher->dispatch(new PreRenderEvent(new RequestAttributes([
-                        'webspace' => $webspace,
-                    ])), Events::PRE_RENDER);
+                'webspace' => $webspace,
+            ])), Events::PRE_RENDER);
 
             $this->outputWebspace($webspace);
         }
